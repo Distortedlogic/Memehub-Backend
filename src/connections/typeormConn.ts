@@ -7,7 +7,7 @@ export const createTypeormConnection = async () => {
   let retries = 5;
   while (retries) {
     try {
-      await createConnection({
+      const conn = await createConnection({
         type: "postgres",
         url: process.env.DATABASE_URL,
         synchronize: !__prod__,
@@ -23,7 +23,7 @@ export const createTypeormConnection = async () => {
       });
       // await createConnection("memedata");
       // if (__prod__) await conn.runMigrations();
-      return;
+      return conn;
     } catch (error) {
       retries--;
       console.log("error", error);

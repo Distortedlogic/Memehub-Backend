@@ -77,7 +77,7 @@ StartCron();
         httpOnly: true,
         secure: __prod__,
         sameSite: "lax",
-        domain: __prod__ ? "memehub.lol" : undefined,
+        domain: __prod__ ? ".memehub.lol" : undefined,
       },
       store: new RedisStore({
         client: redis,

@@ -72,6 +72,6 @@
     "docker:build": "docker build -f <envsubst < Dockerfile.prod -t dokku/backend:latest .",
     "docker:dokku-push": "docker save dokku/backend:latest | bzip2 | ssh  -o StrictHostKeyChecking=no ubuntu@ec2-3-236-121-24.compute-1.amazonaws.com \"bunzip2 | docker load\"",
     "dokku:deploy": "ssh  -o StrictHostKeyChecking=no ubuntu@ec2-3-236-121-24.compute-1.amazonaws.com \"dokku tags:deploy backend latest\"",
-    "ci:docker": "npm run docker:build && npm run docker:dokku-push && npm run dokku:deploy"
+    "ci:docker": "npm run docker:dokku-push && npm run dokku:deploy"
   }
 }

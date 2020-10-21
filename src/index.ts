@@ -26,7 +26,7 @@ import {
   usersByClanIdLoader,
 } from "./helpers/userLoaders";
 import { StartCron } from "./tasks/cron";
-import { COOKIE_NAME, __prod__ } from "./utils/constants";
+import { COOKIE_NAME } from "./utils/constants";
 
 useContainer(Container);
 const RedisStore = connectRedis(session);
@@ -77,7 +77,7 @@ StartCron();
         httpOnly: true,
         secure: false,
         sameSite: "lax",
-        domain: __prod__ ? ".memehub.lol" : undefined,
+        domain: undefined,
       },
       store: new RedisStore({
         client: redis,

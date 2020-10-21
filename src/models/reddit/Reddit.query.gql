@@ -1,0 +1,8 @@
+query BestOfReddit($take: Int!, $skip: Int!) {
+  bestOfReddit(take: $take, skip: $skip) {
+    items {
+      ...redditMeme
+    }
+    hasMore
+  }
+}

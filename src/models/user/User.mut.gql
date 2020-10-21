@@ -1,0 +1,36 @@
+mutation ChangePassword($token: String!, $newPassword: String!) {
+  changePassword(token: $token, newPassword: $newPassword) {
+    ...userResponse
+  }
+}
+
+mutation ForgotPassword($email: String!) {
+  forgotPassword(email: $email)
+}
+
+mutation Register($email: String!, $password: String!, $username: String!) {
+  register(email: $email, password: $password, username: $username) {
+    ...userResponse
+  }
+}
+mutation HiveLogin(
+  $message: String!
+  $signedMessage: String!
+  $username: String!
+) {
+  hiveLogin(
+    message: $message
+    signedMessage: $signedMessage
+    username: $username
+  ) {
+    ...userResponse
+  }
+}
+mutation Login($username: String!, $password: String!) {
+  login(username: $username, password: $password) {
+    ...userResponse
+  }
+}
+mutation Logout {
+  logout
+}

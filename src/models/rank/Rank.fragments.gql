@@ -1,0 +1,7 @@
+fragment rank on Rank {
+  user {
+    ...user
+  }
+  totalPoints
+  rank
+}

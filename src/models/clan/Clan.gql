@@ -1,0 +1,43 @@
+fragment clan on Clan {
+  id
+  name
+  size
+  createdAt
+  leader {
+    ...user
+  }
+  users {
+    ...user
+  }
+}
+
+query Clans($take: Int!, $skip: Int!) {
+  clans(take: $take, skip: $skip) {
+    items {
+      ...clan
+    }
+    hasMore
+  }
+}
+
+query MyClan {
+  clan {
+    id
+    creatorId
+    name
+    size
+    createdAt
+  }
+}
+
+mutation CreateClan($name: String!) {
+  createClan(name: $name)
+}
+
+mutation LeaveClan {
+  leaveClan
+}
+
+mutation JoinClan($clanId: Int!) {
+  joinClan(clanId: $clanId)
+}

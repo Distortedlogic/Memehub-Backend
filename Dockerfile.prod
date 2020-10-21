@@ -1,0 +1,29 @@
+FROM node:latest as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --silent
+COPY . .
+RUN npm run build
+
+FROM node:latest as deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --silent --production
+
+FROM gcr.io/distroless/nodejs:latest
+WORKDIR /app
+# ADD nginx.conf.sigil /app
+COPY --from=build /app/dist .
+COPY --from=deps /app .
+COPY .env.example .
+
+ENV NODE_ENV=production \
+  CORS_ORIGIN=$CORS_ORIGIN \
+  HIVE_ACCOUNT=$HIVE_ACCOUNT \
+  ACTIVE_WIF=$ACTIVE_WIF \
+  RC_THRESHOLD=$RC_THRESHOLD \
+  AWS_ID=$AWS_ID \
+  AWS_KEY=$AWS_KEY \
+  SECRET=$SECRET
+
+CMD ["src/index.js"]

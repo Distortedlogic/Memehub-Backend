@@ -1,0 +1,42 @@
+fragment user on User {
+  id
+  avatar
+  username
+  isHive
+}
+
+fragment stats on User {
+  rank {
+    rank
+  }
+  totalPoints
+  numMemeVotesGiven
+  numMemeUpvotesRecieved
+  numMemeDownvotesRecieved
+  numMemeCommentsRecieved
+  numCommentVotesGiven
+  numCommentUpvotesRecieved
+  numCommentDownvotesRecieved
+  numFollowing
+  numFollowers
+}
+
+fragment userProfile on User {
+  ...user
+  ...stats
+  following {
+    ...user
+  }
+  followers {
+    ...user
+  }
+}
+
+fragment userResponse on UserResponse {
+  errors {
+    ...errors
+  }
+  user {
+    ...user
+  }
+}

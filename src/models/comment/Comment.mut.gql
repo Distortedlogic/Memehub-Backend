@@ -1,0 +1,14 @@
+mutation PostComment($text: String!, $memeId: Int!) {
+  postComment(text: $text, memeId: $memeId)
+}
+
+mutation UpVoteComment($commentId: Int!) {
+  upVoteComment(commentId: $commentId) {
+    ...userComment
+  }
+}
+mutation DownVoteComment($commentId: Int!) {
+  downVoteComment(commentId: $commentId) {
+    ...userComment
+  }
+}

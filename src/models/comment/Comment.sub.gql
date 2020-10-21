@@ -1,0 +1,5 @@
+subscription NewComments($userId: Int!) {
+  newComments(userId: $userId) {
+    ...myComment
+  }
+}

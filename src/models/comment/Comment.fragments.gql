@@ -1,0 +1,21 @@
+fragment myComment on Comment {
+  id
+  ups
+  downs
+  ratio
+  createdAt
+  text
+}
+
+fragment comment on Comment {
+  ...myComment
+  hasUpvoted
+  hasDownvoted
+}
+
+fragment userComment on Comment {
+  ...comment
+  user {
+    ...user
+  }
+}

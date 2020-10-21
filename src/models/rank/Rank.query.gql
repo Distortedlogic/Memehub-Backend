@@ -1,0 +1,8 @@
+query Ranking($td: Int!, $take: Int!, $skip: Int!) {
+  ranking(td: $td, take: $take, skip: $skip) {
+    items {
+      ...rank
+    }
+    hasMore
+  }
+}

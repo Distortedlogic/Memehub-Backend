@@ -1,0 +1,26 @@
+query Users {
+  users {
+    ...user
+  }
+}
+query Me {
+  me {
+    ...user
+  }
+}
+
+query UserProfile($userId: Int!) {
+  user(userId: $userId) {
+    ...userProfile
+  }
+}
+
+query MyProfile {
+  me {
+    ...userProfile
+  }
+}
+
+query IsHive {
+  isHive
+}

@@ -1,0 +1,25 @@
+fragment myMeme on Meme {
+  id
+  ups
+  downs
+  ratio
+  createdAt
+  title
+  url
+  numComments
+  community
+}
+
+fragment meme on Meme {
+  ...myMeme
+  hasUpvoted
+  hasDownvoted
+}
+
+fragment userMeme on Meme {
+  ...meme
+  user {
+    ...user
+    isFollowing
+  }
+}

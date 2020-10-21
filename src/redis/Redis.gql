@@ -1,0 +1,3 @@
+mutation RedisGet($key: String!) {
+  redisGet(key: $key)
+}

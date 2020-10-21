@@ -1,5 +1,4 @@
 docker build --build-arg CORS_ORIGIN=${CORS_ORIGIN} \
-  --build-arg CORS_ORIGIN=${CORS_ORIGIN} \
   --build-arg CORS_ORIGIN=${HIVE_ACCOUNT} \
   --build-arg CORS_ORIGIN=${ACTIVE_WIF} \
   --build-arg CORS_ORIGIN=${RC_THRESHOLD} \

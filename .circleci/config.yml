@@ -34,11 +34,11 @@ jobs:
             tar -xz -C /tmp -f /tmp/docker-$VER.tgz
             mv /tmp/docker/* /usr/bin
       - run: docker build --build-arg CORS_ORIGIN=$CORS_ORIGIN
-          --build-arg CORS_ORIGIN=$HIVE_ACCOUNT
-          --build-arg CORS_ORIGIN=$ACTIVE_WIF
-          --build-arg CORS_ORIGIN=$RC_THRESHOLD
-          --build-arg CORS_ORIGIN=$AWS_ID
-          --build-arg CORS_ORIGIN=$AWS_KEY
-          --build-arg CORS_ORIGIN=$SECRET
+          --build-arg HIVE_ACCOUNT=$HIVE_ACCOUNT
+          --build-arg ACTIVE_WIF=$ACTIVE_WIF
+          --build-arg RC_THRESHOLD=$RC_THRESHOLD
+          --build-arg AWS_ID=$AWS_ID
+          --build-arg AWS_KEY=$AWS_KEY
+          --build-arg SECRET=$SECRET
           -f Dockerfile.prod -t dokku/backend:latest .
       - run: npm run ci:docker

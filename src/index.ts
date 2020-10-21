@@ -75,7 +75,7 @@ StartCron();
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
-        secure: __prod__,
+        secure: false,
         sameSite: "lax",
         domain: __prod__ ? ".memehub.lol" : undefined,
       },

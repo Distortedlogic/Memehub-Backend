@@ -1,1 +1,0 @@
-ssh -i \Users\jerme\.ssh\aws.pem ubuntu@ec2-3-236-121-24.compute-1.amazonaws.com "docker pull distortedlogic/backend:v${VERSION} && docker tag distortedlogic/backend:v${VERSION} dokku/backend:v${VERSION} && dokku deploy backend ${VERSION}"

@@ -9,7 +9,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
       - image: redislabs/redismod:latest
-    working_directory: ~/repo/web/backend
+    working_directory: ~/repo
     steps:
       - checkout:
           path: ~/repo

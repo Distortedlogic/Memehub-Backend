@@ -1,40 +1,42 @@
 version: 2.1
 orbs:
   docker: circleci/docker@1.5.0
+jobs:
+  test:
+    docker:
+      - image: node:latest
+      - image: postgres:latest
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+      - image: redislabs/redismod:latest
+    working_directory: ~/repo
+    steps:
+      - checkout:
+          path: ~/repo
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{checksum "package.json"}}
+            - v1-dependencies-
+      - run: npm i
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{checksum "package.json"}}
+      - run: npm run build
+      - run:
+          name: Build Backend Docker Image
+          command: docker build --build-arg CORS_ORIGIN=$CORS_ORIGIN
+            --build-arg HIVE_ACCOUNT=$HIVE_ACCOUNT
+            --build-arg ACTIVE_WIF=$ACTIVE_WIF
+            --build-arg RC_THRESHOLD=$RC_THRESHOLD
+            --build-arg AWS_ID=$AWS_ID
+            --build-arg AWS_KEY=$AWS_KEY
+            --build-arg SECRET=$SECRET
+            -f Dockerfile.prod -t dokku/backend:latest .
+      - run: npm run ci:docker
 workflows:
   build-docker-image-only:
     jobs:
-      - test:
-          docker:
-            - image: node:latest
-            - image: postgres:latest
-              environment:
-                POSTGRES_USER: postgres
-                POSTGRES_PASSWORD: postgres
-                POSTGRES_DB: postgres
-            - image: redislabs/redismod:latest
-          working_directory: ~/repo
-          steps:
-            - checkout:
-                path: ~/repo
-            - restore_cache:
-                keys:
-                  - v1-dependencies-{{checksum "package.json"}}
-                  - v1-dependencies-
-            - run: npm i
-            - save_cache:
-                paths:
-                  - node_modules
-                key: v1-dependencies-{{checksum "package.json"}}
-            - run: npm run build
-            - run:
-                name: Build Backend Docker Image
-                command: docker build --build-arg CORS_ORIGIN=$CORS_ORIGIN
-                  --build-arg HIVE_ACCOUNT=$HIVE_ACCOUNT
-                  --build-arg ACTIVE_WIF=$ACTIVE_WIF
-                  --build-arg RC_THRESHOLD=$RC_THRESHOLD
-                  --build-arg AWS_ID=$AWS_ID
-                  --build-arg AWS_KEY=$AWS_KEY
-                  --build-arg SECRET=$SECRET
-                  -f Dockerfile.prod -t dokku/backend:latest .
-            - run: npm run ci:docker
+      - test

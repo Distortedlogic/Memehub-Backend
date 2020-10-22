@@ -25,6 +25,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
       - run: npm run build
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: false
       - run:
           name: Build Backend Docker Image
           command: docker build --build-arg CORS_ORIGIN=$CORS_ORIGIN

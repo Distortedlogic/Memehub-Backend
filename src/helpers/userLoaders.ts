@@ -1,7 +1,7 @@
 import DataLoader from "dataloader";
 import { getConnection, In } from "typeorm";
 import { User } from "../models/user/User.entity";
-import { Redditors } from "./../generated/memedata/entities/Redditors";
+import { Redditor } from "./../models/reddit/Redditor.entity";
 
 export const userByIdLoader = () =>
   new DataLoader<number, User>(async (userIds) => {
@@ -10,9 +10,9 @@ export const userByIdLoader = () =>
   });
 
 export const redditorByUsernameLoader = () =>
-  new DataLoader<string, Redditors>(async (usernames) => {
+  new DataLoader<string, Redditor>(async (usernames) => {
     const redditors = await getConnection("memedata")
-      .getRepository(Redditors)
+      .getRepository(Redditor)
       .createQueryBuilder("redditor")
       .select("redditor")
       .where("redditor.username IN (:...redditors)", { redditors: usernames })

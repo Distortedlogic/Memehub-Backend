@@ -1,13 +1,13 @@
 import { Ctx, FieldResolver, Resolver, Root } from "type-graphql";
 import { ServerContext } from "../../ServerContext";
-import { RedditMemes } from "./../../generated/memedata/entities/RedditMemes";
-import { Redditors } from "./../../generated/memedata/entities/Redditors";
+import { RedditMeme } from "./RedditMeme.entity";
+import { Redditor } from "./Redditor.entity";
 
-@Resolver(RedditMemes)
+@Resolver(RedditMeme)
 export class RedditFieldResolver {
-  @FieldResolver(() => Redditors)
+  @FieldResolver(() => Redditor)
   async redditor(
-    @Root() redditMeme: RedditMemes,
+    @Root() redditMeme: RedditMeme,
     @Ctx() { redditorByUsernameLoader }: ServerContext
   ) {
     return redditorByUsernameLoader.load(redditMeme.username);

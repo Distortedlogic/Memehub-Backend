@@ -1,20 +1,12 @@
 import { Field, Float, Int, ObjectType } from "type-graphql";
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { Redditors } from "./Redditors";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Redditor } from "./Redditor.entity";
 
 @ObjectType()
-@Index("reddit_memes_pkey", ["id"], { unique: true })
-@Entity("reddit_memes", { schema: "public" })
-export class RedditMemes {
+@Entity("reddit_memes")
+export class RedditMeme {
   @Field(() => Int)
-  @PrimaryGeneratedColumn({ type: "integer", name: "id" })
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Field(() => String)
@@ -54,11 +46,12 @@ export class RedditMemes {
   @Column("integer", { name: "timestamp" })
   timestamp: number;
 
-  @Column("timestamp without time zone", { name: "datetime" })
-  datetime: Date;
+  @Field(() => Date)
+  @Column("timestamp without time zone", { name: "created_at" })
+  createdAt: Date;
 
   @Field(() => Float)
-  @Column("double precision", { name: "upvote_ratio", precision: 53 })
+  @Column("double precision", { name: "upvote_ratio" })
   upvoteRatio: number;
 
   @Field(() => Int)
@@ -76,7 +69,10 @@ export class RedditMemes {
   @Column("float8", { name: "features", nullable: true, array: true })
   features: number[] | null;
 
-  @ManyToOne(() => Redditors, (redditors) => redditors.redditMemes)
-  @JoinColumn([{ name: "redditor_id", referencedColumnName: "id" }])
-  redditor: Redditors;
+  @Field(() => Int)
+  @Column("int", { name: "redditor_id", nullable: true })
+  redditorId: number;
+
+  @ManyToOne(() => Redditor, (redditor) => redditor.redditMemes)
+  redditor: Redditor;
 }

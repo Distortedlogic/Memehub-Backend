@@ -1,7 +1,4 @@
 import { createConnection } from "typeorm";
-import { __prod__ } from "./../utils/constants";
-
-console.log("dirname", __dirname);
 
 export const createTypeormConnection = async () => {
   let retries = 5;
@@ -10,7 +7,7 @@ export const createTypeormConnection = async () => {
       const conn = await createConnection({
         type: "postgres",
         url: process.env.DATABASE_URL,
-        synchronize: !__prod__,
+        synchronize: true,
         logging: false,
         entities: ["src/models/**/*.entity*.{js,ts}"],
         migrations: ["src/migration/**/*.{js,ts}"],

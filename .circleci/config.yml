@@ -1,6 +1,8 @@
-version: 2
+version: 2.1
+orbs:
+  docker: circleci/docker@1.5.0
 jobs:
-  build:
+  build-and-deploy:
     docker:
       - image: node:latest
       - image: postgres:latest
@@ -22,7 +24,9 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
-      - run: npm run build
+      - run:
+          name: Build
+          command: npm run build
       - setup_remote_docker:
           docker_layer_caching: false
       - run:
@@ -43,3 +47,9 @@ jobs:
             --build-arg AWS_KEY=$AWS_KEY
             --build-arg SECRET=$SECRET
             -f Dockerfile.prod -t dokku/backend:latest .
+      - run: docker save dokku/backend:latest | bzip2 | ssh  -o StrictHostKeyChecking=no ubuntu@ec2-3-236-121-24.compute-1.amazonaws.com \"bunzip2 | docker load\"
+      - run: ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-236-121-24.compute-1.amazonaws.com \"dokku tags:deploy backend latest\"
+workflows:
+  build-docker-image-only:
+    jobs:
+      - build-and-deploy

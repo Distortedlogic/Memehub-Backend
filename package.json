@@ -68,10 +68,6 @@
     "server-dev": "nodemon --exec ts-node src/index.ts",
     "env-types": "npx gen-env-types .env -o src/generated/env.d.ts -e .",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
-    "memedata-gen": "npx typeorm-model-generator -h 127.0.0.1 -d postgres -p 5432 -u postgres -x postgres -e postgres -o src/generated/memedata/",
-    "docker:build": "docker build -f <envsubst < Dockerfile.prod -t dokku/backend:latest .",
-    "docker:dokku-push": "docker save dokku/backend:latest | bzip2 | ssh  -o StrictHostKeyChecking=no ubuntu@ec2-3-236-121-24.compute-1.amazonaws.com \"bunzip2 | docker load\"",
-    "dokku:deploy": "ssh  -o StrictHostKeyChecking=no ubuntu@ec2-3-236-121-24.compute-1.amazonaws.com \"dokku tags:deploy backend latest\"",
-    "ci:docker": "npm run docker:dokku-push && npm run dokku:deploy"
+    "memedata-gen": "npx typeorm-model-generator -h 127.0.0.1 -d postgres -p 5432 -u postgres -x postgres -e postgres -o src/generated/memedata/"
   }
 }

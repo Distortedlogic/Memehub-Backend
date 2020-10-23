@@ -47,8 +47,10 @@ jobs:
             --build-arg AWS_KEY=$AWS_KEY
             --build-arg SECRET=$SECRET
             -f Dockerfile.prod -t distortedlogic/backend:latest .
+      - run: docker login -u distortedlogic -p $DOCKERHUB_TOKEN
       - run: docker push distortedlogic/backend:latest
 workflows:
   build-docker-image-only:
     jobs:
-      - build-and-deploy
+      - build-and-deploy:
+          context: dockerhub

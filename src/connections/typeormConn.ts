@@ -6,7 +6,7 @@ export const createTypeormConnection = async () => {
     try {
       const conn = await createConnection({
         type: "postgres",
-        url: process.env.DATABASE_URL,
+        url: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@sitedata:5432/${process.env.POSTGRES_DB}`,
         synchronize: true,
         logging: false,
         entities: ["src/models/**/*.entity*.{js,ts}"],

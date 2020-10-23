@@ -3,7 +3,7 @@ export const createRedisConnection = async () => {
   let retries = 5;
   while (retries) {
     try {
-      const conn = new Redis(process.env.REDIS_URL);
+      const conn = new Redis("redis://redis:6379");
       return conn;
     } catch (error) {
       retries--;

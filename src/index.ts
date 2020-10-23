@@ -28,6 +28,8 @@ import {
 import { StartCron } from "./tasks/cron";
 import { COOKIE_NAME, __prod__ } from "./utils/constants";
 
+const port = 5000;
+
 useContainer(Container);
 const RedisStore = connectRedis(session);
 StartCron();
@@ -112,12 +114,12 @@ StartCron();
   const httpServer = http.createServer(app);
   apolloServer.installSubscriptionHandlers(httpServer);
 
-  httpServer.listen(process.env.PORT, () => {
+  httpServer.listen(port, () => {
     console.log(
-      `🚀 Server ready at http://localhost:${process.env.PORT}${apolloServer.graphqlPath}`
+      `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
     );
     console.log(
-      `🚀 Subscriptions ready at ws://localhost:${process.env.PORT}${apolloServer.subscriptionsPath}`
+      `🚀 Subscriptions ready at ws://localhost:${port}${apolloServer.subscriptionsPath}`
     );
   });
 })();

@@ -53,4 +53,6 @@ workflows:
   build-docker-image-only:
     jobs:
       - build-and-deploy:
-          context: dockerhub
+          context:
+            - dockerhub
+            - shared

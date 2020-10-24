@@ -1,7 +1,7 @@
 import { createConnection } from "typeorm";
 
 export const createTypeormConnection = async () => {
-  let retries = 5;
+  let retries = 50;
   while (retries) {
     try {
       const conn = await createConnection({

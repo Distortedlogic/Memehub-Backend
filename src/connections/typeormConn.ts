@@ -1,4 +1,5 @@
 import { createConnection } from "typeorm";
+import { __prod__ } from "./../utils/constants";
 
 export const createTypeormConnection = async () => {
   let retries = 50;
@@ -7,7 +8,7 @@ export const createTypeormConnection = async () => {
       const conn = await createConnection({
         type: "postgres",
         url: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@sitedata:5432/${process.env.POSTGRES_DB}`,
-        synchronize: true,
+        synchronize: !__prod__,
         logging: false,
         entities: ["src/models/**/*.entity*.{js,ts}"],
         migrations: ["src/migration/**/*.{js,ts}"],
@@ -19,7 +20,7 @@ export const createTypeormConnection = async () => {
         },
       });
       // await createConnection("memedata");
-      // if (__prod__) await conn.runMigrations();
+      if (__prod__) await conn.runMigrations();
       return conn;
     } catch (error) {
       retries--;

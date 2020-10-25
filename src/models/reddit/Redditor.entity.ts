@@ -1,7 +1,7 @@
 import { Field, Int, ObjectType } from "type-graphql";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RedditMeme } from "./RedditMeme.entity";
-import { RedditScore } from "./RedditScore.entity.";
+import { RedditScore } from "./RedditScore.entity";
 
 @ObjectType()
 @Entity("redditors")

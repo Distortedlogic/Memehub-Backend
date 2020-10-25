@@ -40,11 +40,11 @@ jobs:
       - run: 
           name: "echo an env var that is part of our context"
           command: |
-            echo $POSTGRES_PASSWORD
-            echo $POSTGRES_USER
-            echo $POSTGRES_DB
-            echo $DOCKERHUB_TOKEN
-            echo $CORS_ORIGIN
+            echo "$POSTGRES_PASSWORD"
+            echo "$POSTGRES_USER"
+            echo "$POSTGRES_DB"
+            echo "$DOCKERHUB_TOKEN"
+            echo "$CORS_ORIGIN"
       - run: 
           name: "printenv"
           command: printenv

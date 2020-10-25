@@ -12,7 +12,6 @@ import Container from "typedi";
 import { useContainer } from "typeorm";
 import { createHiveConnection } from "./connections/hiveConnection";
 import { createRedisConnection } from "./connections/redisConn";
-import { createTypeormConnection } from "./connections/typeormConn";
 import { isFollowingLoader } from "./helpers/followLoader";
 import {
   commentDownVotedLoader,
@@ -35,7 +34,7 @@ const RedisStore = connectRedis(session);
 StartCron();
 
 (async () => {
-  await createTypeormConnection();
+  // await createTypeormConnection();
   const redis = await createRedisConnection();
   const hive = await createHiveConnection();
 

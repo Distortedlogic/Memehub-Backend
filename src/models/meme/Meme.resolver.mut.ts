@@ -43,6 +43,7 @@ export class MemeResolver {
     @Arg("clanId", () => Int, { nullable: true }) clanId?: number,
     @Arg("templateName", { nullable: true }) templateName?: string
   ): Promise<Meme | undefined> {
+    console.log("postMeme fired");
     const { userId, Key } = session;
     if (!Key) return undefined;
     try {

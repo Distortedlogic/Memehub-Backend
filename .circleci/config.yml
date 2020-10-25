@@ -37,6 +37,17 @@ jobs:
             curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
             tar -xz -C /tmp -f /tmp/docker-$VER.tgz
             mv /tmp/docker/* /usr/bin
+      - run: 
+          name: "echo an env var that is part of our context"
+          command: |
+            echo $POSTGRES_PASSWORD
+            echo $POSTGRES_USER
+            echo $POSTGRES_DB
+            echo $DOCKERHUB_TOKEN
+            echo $CORS_ORIGIN
+      - run: 
+          name: "printenv"
+          command: printenv
       - run:
           name: Build Backend Docker Image
           command: docker build
@@ -50,13 +61,18 @@ jobs:
             --build-arg AWS_ID=$AWS_ID
             --build-arg AWS_KEY=$AWS_KEY
             --build-arg SECRET=$SECRET
-            -f Dockerfile.prod -t distortedlogic/backend:latest .
+            -f Dockerfile.prod
+            -t distortedlogic/backend:latest .
       - run: docker login -u distortedlogic -p $DOCKERHUB_TOKEN
       - run: docker push distortedlogic/backend:latest
 workflows:
   build-docker-image-only:
     jobs:
       - build-and-deploy:
+          filters:
+            branches:
+              only:
+                - master
           context:
             - dockerhub
             - shared

@@ -94,25 +94,25 @@ StartCron();
     })
   );
 
-  app.use("/graphql", (req, res, next) => {
-    console.log("request", req);
-    const startHrTime = process.hrtime();
-    res.on("finish", () => {
-      console.log("request", req);
-      console.log("response", res);
-      if (req.body && req.body.operationName) {
-        const elapsedHrTime = process.hrtime(startHrTime);
-        const elapsedTimeInMs =
-          elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
-        console.log({
-          time: new Date(),
-          name: req.body.operationName,
-          msg: `Exec Time - ${elapsedTimeInMs}ms`,
-        });
-      }
-    });
-    next();
-  });
+  // app.use("/graphql", (req, res, next) => {
+  //   console.log("request", req);
+  //   const startHrTime = process.hrtime();
+  //   res.on("finish", () => {
+  //     console.log("request", req);
+  //     console.log("response", res);
+  //     if (req.body && req.body.operationName) {
+  //       const elapsedHrTime = process.hrtime(startHrTime);
+  //       const elapsedTimeInMs =
+  //         elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
+  //       console.log({
+  //         time: new Date(),
+  //         name: req.body.operationName,
+  //         msg: `Exec Time - ${elapsedTimeInMs}ms`,
+  //       });
+  //     }
+  //   });
+  //   next();
+  // });
 
   apolloServer.applyMiddleware({ app, cors: false });
   const httpServer = http.createServer(app);

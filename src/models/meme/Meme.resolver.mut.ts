@@ -1,8 +1,8 @@
 import AWS from "aws-sdk";
 import { Arg, Ctx, Int, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { getConnection } from "typeorm";
 import { Auth } from "../../middleware/auth";
 import { ServerContext } from "../../ServerContext";
-import { Template } from "../template/Template.entity";
 import { Meme } from "./Meme.entity";
 import { MemeVote } from "./MemeVote.entity";
 
@@ -39,9 +39,7 @@ export class MemeResolver {
     @Ctx()
     { req: { session } }: ServerContext,
     @Arg("title", () => String) title?: string,
-    @Arg("community", () => String) community?: string,
-    @Arg("clanId", () => Int, { nullable: true }) clanId?: number,
-    @Arg("templateName", { nullable: true }) templateName?: string
+    @Arg("community", () => String) community?: string
   ): Promise<Meme | undefined> {
     console.log("postMeme fired");
     const { userId, Key } = session;
@@ -61,18 +59,26 @@ export class MemeResolver {
       title,
       userId,
       community,
-      clanId,
-      season: 0,
     }).save();
-    if (templateName) {
-      await Template.create({
-        name: templateName,
-        baseMemeId: meme.id,
-        season: 0,
-      }).save();
-    }
     session.Key = null;
     return meme;
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(Auth)
+  async setIsHive(@Arg("memeId", () => Int) memeId: number): Promise<boolean> {
+    try {
+      await getConnection()
+        .createQueryBuilder()
+        .update(Meme)
+        .set({ isHive: true })
+        .where("id = :id", { id: memeId })
+        .execute();
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
   @Mutation(() => Meme)

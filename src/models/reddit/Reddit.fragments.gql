@@ -1,4 +1,4 @@
-fragment redditMeme on RedditMemes {
+fragment redditMeme on RedditMeme {
   id
   title
   subreddit

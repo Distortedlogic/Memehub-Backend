@@ -5,20 +5,17 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Clan } from "../clan/Clan.entity";
 import { Comment } from "../comment/Comment.entity";
 import { CommentVote } from "../comment/CommentVote.entity";
 import { Follow } from "../follow/Follow.entity";
 import { Meme } from "../meme/Meme.entity";
 import { MemeVote } from "../meme/MemeVote.entity";
 import { Rank } from "../rank/Rank.entity";
-import { Wager } from "../wager/Wager.entity";
 
 const starterPic = "/defaultAvatar.png";
 
@@ -80,34 +77,11 @@ export class User extends BaseEntity {
 
   @Field(() => Int)
   @Column("int", { nullable: true })
-  clanCreatedId: number;
-
-  @Field(() => Clan)
-  @OneToOne(() => Clan, (clan) => clan.creator)
-  clanCreated: Clan;
-
-  @Field(() => Int)
-  @Column("int", { nullable: true })
   rankId: number;
 
   @Field(() => Rank)
   @OneToOne(() => Rank, (rank) => rank.user)
   rank: Rank;
-
-  @Field(() => Int)
-  @Column("int", { nullable: true })
-  clanId: number | null;
-
-  @Field(() => Clan, { nullable: true })
-  @ManyToOne(() => Clan, (clan) => clan.users, {
-    cascade: true,
-    onDelete: "CASCADE",
-  })
-  clan: Clan;
-
-  @Field(() => [Wager])
-  @OneToMany(() => Wager, (wager) => wager.user)
-  wagers: Wager[];
 
   @Field(() => Date)
   @CreateDateColumn()

@@ -20,11 +20,7 @@ import {
   memeDownVotedLoader,
   memeUpVotedLoader,
 } from "./helpers/hasVotedLoaders";
-import {
-  redditorByUsernameLoader,
-  userByIdLoader,
-  usersByClanIdLoader,
-} from "./helpers/userLoaders";
+import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
 import { StartCron } from "./tasks/cron";
 import { COOKIE_NAME, __prod__ } from "./utils/constants";
 
@@ -62,8 +58,7 @@ StartCron();
       memeDownVotedLoader: memeDownVotedLoader(),
       commentUpVotedLoader: commentUpVotedLoader(),
       commentDownVotedLoader: commentDownVotedLoader(),
-      usersByClanIdLoader: usersByClanIdLoader(),
-      redditorByUsernameLoader: redditorByUsernameLoader(),
+      redditorByIdLoader: redditorByIdLoader(),
       isFollowingLoader: isFollowingLoader(),
     }),
     uploads: false,

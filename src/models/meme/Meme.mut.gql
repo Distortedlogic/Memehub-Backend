@@ -1,18 +1,10 @@
-mutation PostMeme(
-  $title: String!
-  $community: String!
-  $clanId: Int
-  $templateName: String
-) {
-  postMeme(
-    title: $title
-    community: $community
-    clanId: $clanId
-    templateName: $templateName
-  ) {
-    url
-    id
+mutation PostMeme($title: String!, $community: String!) {
+  postMeme(title: $title, community: $community) {
+    ...myMeme
   }
+}
+mutation SetIsHive($memeId: Int!) {
+  setIsHive(memeId: $memeId)
 }
 mutation GetSignedUrl($path: String!, $filename: String!) {
   getSignedUrl(path: $path, filename: $filename)

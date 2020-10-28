@@ -8,14 +8,11 @@ export const createHiveConnection = async () => {
         "https://anyx.io",
         "https://api.openhive.network",
       ]);
-      // const hiveTest = Client.testnet();
-      // const hive = __prod__ ? hiveLive : hiveTest;
-      hiveLive.database.getVersion().then((res) => {
-        // @ts-ignore
-        if (res.blockchain_version !== "0.23.0") {
-          hiveLive.updateOperations(true);
-        }
-      });
+      const res = await hiveLive.database.getVersion();
+      // @ts-ignore
+      if (res.blockchain_version !== "0.23.0") {
+        hiveLive.updateOperations(true);
+      }
       return hiveLive;
     } catch (error) {
       retries--;

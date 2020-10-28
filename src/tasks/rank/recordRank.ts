@@ -13,13 +13,13 @@ export const recordRank = async () => {
     .addOrderBy("user.numMemeUpvotesRecieved", "DESC")
     .addOrderBy("user.createdAt", "DESC")
     .getRawMany();
-  const ranks = userRanks.map((userRank, idx) => {
-    return Rank.create({
+  const ranks = userRanks.map((userRank, idx) =>
+    Rank.create({
       userId: userRank.id,
       rank: idx + 1,
       totalPoints: userRank.totalPoints,
       createdAt,
-    });
-  });
+    })
+  );
   await Rank.save(ranks);
 };

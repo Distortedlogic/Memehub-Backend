@@ -8,11 +8,7 @@ import {
   memeDownVotedLoader,
   memeUpVotedLoader,
 } from "./helpers/hasVotedLoaders";
-import {
-  redditorByUsernameLoader,
-  userByIdLoader,
-  usersByClanIdLoader,
-} from "./helpers/userLoaders";
+import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
 
 export interface ServerContext {
   req: Request & { session: Express.Session };
@@ -24,7 +20,6 @@ export interface ServerContext {
   memeUpVotedLoader: ReturnType<typeof memeUpVotedLoader>;
   commentDownVotedLoader: ReturnType<typeof commentDownVotedLoader>;
   commentUpVotedLoader: ReturnType<typeof commentUpVotedLoader>;
-  usersByClanIdLoader: ReturnType<typeof usersByClanIdLoader>;
-  redditorByUsernameLoader: ReturnType<typeof redditorByUsernameLoader>;
+  redditorByIdLoader: ReturnType<typeof redditorByIdLoader>;
   isFollowingLoader: ReturnType<typeof isFollowingLoader>;
 }

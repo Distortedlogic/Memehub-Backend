@@ -6,23 +6,23 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Clan } from "../clan/Clan.entity";
 import { Comment } from "../comment/Comment.entity";
-import { Contest } from "../contest/Contest.entity";
-import { Template } from "../template/Template.entity";
 import { User } from "../user/User.entity";
 import { MemeVote } from "./MemeVote.entity";
 
 @ObjectType()
 @Entity("memes")
 export class Meme extends BaseEntity {
-  @Field(() => Int)
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Field()
+  @PrimaryColumn("uuid")
+  id: string;
+
+  @Field(() => Boolean)
+  @Column({ default: false })
+  isHive: boolean;
 
   @Field()
   @Column({ nullable: true })
@@ -32,38 +32,9 @@ export class Meme extends BaseEntity {
   @Column({ unique: true })
   url: string;
 
-  @Field(() => Int)
-  @Column("int", { nullable: true })
-  templateId: number;
-
-  @Field(() => Template)
-  @ManyToOne(() => Template, (template) => template.memes, {
-    onDelete: "CASCADE",
-    cascade: true,
-  })
-  template: Template;
-
-  @Field(() => Int)
-  @Column("int", { nullable: true })
-  baseTemplateId: number;
-
-  @Field(() => Template)
-  @OneToOne(() => Template, (template) => template.baseMeme, {
-    onDelete: "CASCADE",
-  })
-  baseTemplate: Template;
-
-  @Field(() => Int)
-  @Column("int", { nullable: true })
-  contestId: number;
-
-  @Field(() => Contest)
-  @ManyToOne(() => Contest, (contest) => contest.memes)
-  contest: Contest;
-
-  @Field(() => Int)
-  @Column("int")
-  userId: number;
+  @Field()
+  @Column()
+  userId: string;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.memes, {
@@ -75,14 +46,6 @@ export class Meme extends BaseEntity {
   @Field(() => Int)
   @Column("int", { nullable: true })
   season: number;
-
-  @Field(() => Int)
-  @Column("int", { nullable: true })
-  clanId: number;
-
-  @Field(() => Clan)
-  @ManyToOne(() => Clan, (clan) => clan.memes)
-  clan: Clan;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })

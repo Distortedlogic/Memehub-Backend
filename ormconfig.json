@@ -7,7 +7,7 @@
     "username": "postgres",
     "password": "postgres",
     "database": "postgres",
-    "synchronize": true,
+    "synchronize": false,
     "logging": false,
     "entities": ["src/models/**/*.entity.ts"],
     "migrations": ["src/migration/**/*.ts"],

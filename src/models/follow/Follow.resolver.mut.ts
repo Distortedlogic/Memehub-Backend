@@ -1,4 +1,4 @@
-import { Arg, Ctx, Int, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { Auth } from "./../../middleware/auth";
 import { ServerContext } from "./../../ServerContext";
 import { Follow } from "./Follow.entity";
@@ -9,7 +9,7 @@ export class FollowMutationResolver {
   @UseMiddleware(Auth)
   async follow(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("userId", () => Int) userId: number
+    @Arg("userId") userId: string
   ): Promise<boolean> {
     if (
       await Follow.findOne({ followerId: session.userId, followingId: userId })
@@ -26,7 +26,7 @@ export class FollowMutationResolver {
   @UseMiddleware(Auth)
   async unfollow(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("userId", () => Int) userId: number
+    @Arg("userId") userId: string
   ): Promise<boolean> {
     const follow = await Follow.findOne({
       followerId: session.userId,

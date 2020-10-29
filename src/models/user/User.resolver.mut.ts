@@ -6,6 +6,7 @@ import { v4 } from "uuid";
 import { ServerContext } from "../../ServerContext";
 import { COOKIE_NAME, FORGOT_PASSWORD_PREFIX } from "../../utils/constants";
 import { sendEmail } from "../../utils/functions/sendEmail";
+import { VERIFY_EMAIL_PREFIX } from "./../../utils/constants";
 import { User } from "./User.entity";
 import { validateLogin } from "./utils/login.validate";
 import { validateRegister } from "./utils/register.validate";
@@ -29,6 +30,7 @@ export class UserMutationResolver {
         .update<User>(User, {
           password: await bcrypt.hash(newPassword, await bcrypt.genSalt(10)),
         })
+        .where("user.id = :userId", { userId })
         .returning("*")
         .execute()
     ).raw[0];
@@ -52,7 +54,6 @@ export class UserMutationResolver {
       1000 * 60 * 60 * 3
     );
     await sendEmail(
-      "NormieMailer@memehub.lol",
       email,
       "forgot Password",
       `<a href="http://127.0.0.1:3000/reset-password/${token}"> reset password</a>`
@@ -60,13 +61,40 @@ export class UserMutationResolver {
     return true;
   }
 
+  @Mutation(() => Boolean)
+  async verifyEmail(
+    @Ctx() { redis }: ServerContext,
+    @Arg("token") token: string
+  ): Promise<boolean> {
+    const key = VERIFY_EMAIL_PREFIX + token;
+    const userId = await redis.get(key);
+    if (!userId) return false;
+    await getConnection()
+      .createQueryBuilder()
+      .update<User>(User, {
+        verified: true,
+      })
+      .where("user.id = :userId", { userId })
+      .execute();
+    await redis.del(key);
+    return true;
+  }
+
   @Mutation(() => UserResponse)
   async register(
-    @Ctx() { req }: ServerContext,
+    @Ctx() { redis }: ServerContext,
     @Arg("email") email: string,
     @Arg("password") password: string,
     @Arg("username") username: string
   ): Promise<UserResponse> {
+    await sendEmail(
+      "jermeek@gmail.com",
+      "Verify Email for memehub.lol",
+      `<a href="${
+        process.env.CORS_ORIGIN
+      }/verify-email/${v4()}"> Verify Email</a>`
+    );
+    console.log("emailed");
     const errors = await validateRegister(username, email, password);
     if (errors) return { errors };
     const user = await User.create({
@@ -74,7 +102,18 @@ export class UserMutationResolver {
       email,
       password: await bcrypt.hash(password, await bcrypt.genSalt(10)),
     }).save();
-    req.session.userId = user.id;
+    const token = v4();
+    await redis.set(
+      VERIFY_EMAIL_PREFIX + token,
+      user.id,
+      "ex",
+      1000 * 60 * 60 * 3
+    );
+    await sendEmail(
+      email,
+      "Verify Email for memehub.lol",
+      `<a href="${process.env.CORS_ORIGIN}/verify-email/${token}"> Verify Email</a>`
+    );
     return { user };
   }
 
@@ -98,6 +137,7 @@ export class UserMutationResolver {
           username,
           avatar,
           isHive: true,
+          verified: true,
         }).save();
         session.userId = user.id;
         return { user };
@@ -105,7 +145,9 @@ export class UserMutationResolver {
         session.userId = user.id;
         return { user };
       }
-    } else return { errors: [{ field: "", message: "" }] };
+    } else {
+      return { errors: [{ field: "", message: "" }] };
+    }
   }
 
   @Mutation(() => UserResponse, { nullable: true })
@@ -115,6 +157,10 @@ export class UserMutationResolver {
     @Ctx() { req: { session } }: ServerContext
   ): Promise<UserResponse> {
     const user = await User.findOne({ where: { username } });
+    if (!user?.verified)
+      return {
+        errors: [{ field: "verified", message: "please verify yourt email" }],
+      };
     const errors = await validateLogin(user, password);
     if (errors) {
       return { errors };

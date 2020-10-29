@@ -11,8 +11,8 @@ import { User } from "../user/User.entity";
 import { Comment } from "./Comment.entity";
 
 export interface commentVoteKey {
-  userId: number;
-  commentId: number;
+  userId: string;
+  commentId: string;
 }
 
 @ObjectType()
@@ -20,7 +20,7 @@ export interface commentVoteKey {
 export class CommentVote extends BaseEntity {
   @Field(() => Int)
   @PrimaryColumn()
-  userId!: number;
+  userId!: string;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.commentVotes, {
@@ -31,7 +31,7 @@ export class CommentVote extends BaseEntity {
 
   @Field(() => Int)
   @PrimaryColumn()
-  commentId!: number;
+  commentId!: string;
 
   @Field(() => Comment)
   @ManyToOne(() => Comment, (comment) => comment.commentVotes, {

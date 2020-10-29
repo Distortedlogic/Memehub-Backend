@@ -9,9 +9,9 @@ export class Rank extends BaseEntity {
   @PrimaryColumn()
   createdAt: Date;
 
-  @Field(() => Int)
+  @Field()
   @PrimaryColumn()
-  userId: number;
+  userId: string;
 
   @Field(() => User)
   @OneToOne(() => User, (user) => user.rank)

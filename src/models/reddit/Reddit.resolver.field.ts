@@ -8,8 +8,8 @@ export class RedditFieldResolver {
   @FieldResolver(() => Redditor)
   async redditor(
     @Root() redditMeme: RedditMeme,
-    @Ctx() { redditorByUsernameLoader }: ServerContext
+    @Ctx() { redditorByIdLoader }: ServerContext
   ) {
-    return redditorByUsernameLoader.load(redditMeme.username);
+    return redditorByIdLoader.load(redditMeme.redditorId);
   }
 }

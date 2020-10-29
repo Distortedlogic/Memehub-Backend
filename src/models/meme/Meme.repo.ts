@@ -45,8 +45,8 @@ export class MemeRepo extends Repository<Meme> {
     const realTake = Math.min(50, take);
     const daysDate = moment.utc().subtract(days, "days").toDate();
     const where = days
-      ? { createdAt: MoreThanOrEqual(daysDate), clanId: null, community }
-      : { clanId: null, community };
+      ? { createdAt: MoreThanOrEqual(daysDate), community }
+      : { community };
     const memes = await Meme.find({
       where,
       order: {

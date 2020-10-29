@@ -4,8 +4,8 @@ import { User } from "./../user/User.entity";
 import { Meme } from "./Meme.entity";
 
 export interface memeVoteKey {
-  userId: number;
-  memeId: number;
+  userId: string;
+  memeId: string;
 }
 
 @ObjectType()
@@ -13,11 +13,11 @@ export interface memeVoteKey {
 export class MemeVote extends BaseEntity {
   @Field(() => Int)
   @PrimaryColumn()
-  userId: number;
+  userId: string;
 
   @Field(() => Int)
   @PrimaryColumn()
-  memeId: number;
+  memeId: string;
 
   @Field(() => Meme)
   @ManyToOne(() => Meme, (meme) => meme.memeVotes, {

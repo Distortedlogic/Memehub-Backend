@@ -7,7 +7,7 @@ export const createTypeormConnection = async () => {
     try {
       const conn = await createConnection({
         type: "postgres",
-        url: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@sitedata:5432/${process.env.POSTGRES_DB}?sslmode=require`,
+        url: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@sitedata:5432/${process.env.POSTGRES_DB}`,
         synchronize: !__prod__,
         logging: false,
         entities: ["src/models/**/*.entity*.{js,ts}"],
@@ -19,7 +19,6 @@ export const createTypeormConnection = async () => {
           subscribersDir: "src/subscriber",
         },
       });
-      // await createConnection("memedata");
       if (__prod__) await conn.runMigrations();
       return conn;
     } catch (error) {

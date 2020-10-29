@@ -9,8 +9,8 @@ import {
 import { User } from "../user/User.entity";
 
 export interface followKey {
-  followerId: number;
-  followingId: number;
+  followerId: string;
+  followingId: string;
 }
 
 @ObjectType()
@@ -18,7 +18,7 @@ export interface followKey {
 export class Follow extends BaseEntity {
   @Field(() => Int)
   @PrimaryColumn()
-  followerId: number;
+  followerId: string;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.following, { onDelete: "CASCADE" })
@@ -26,7 +26,7 @@ export class Follow extends BaseEntity {
 
   @Field(() => Int)
   @PrimaryColumn()
-  followingId: number;
+  followingId: string;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.followers, { onDelete: "CASCADE" })

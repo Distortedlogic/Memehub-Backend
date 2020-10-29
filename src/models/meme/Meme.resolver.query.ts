@@ -109,7 +109,7 @@ export class MemeQueryResolver {
         t: moment.utc().subtract(1, "days").toDate(),
       })
       .andWhere("vote.upvote = :truth", { truth: true })
-      .andWhere("meme.community != ANY(:...comms)", {
+      .andWhere("meme.community IN (:...comms)", {
         comms: ["dark", "political"],
       })
       .orderBy("count", "DESC")

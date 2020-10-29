@@ -41,6 +41,10 @@ export class User extends BaseEntity {
   @Column({ default: false })
   isHive: boolean;
 
+  @Field(() => Boolean)
+  @Column({ default: false })
+  verified: boolean;
+
   @Field(() => String)
   @Column({ unique: true, nullable: true })
   email: string;

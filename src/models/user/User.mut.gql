@@ -8,6 +8,10 @@ mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
 }
 
+mutation VerifyEmail($token: String!) {
+  verifyEmail(token: $token)
+}
+
 mutation Register($email: String!, $password: String!, $username: String!) {
   register(email: $email, password: $password, username: $username) {
     ...userResponse

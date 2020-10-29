@@ -85,7 +85,7 @@ export class MemeResolver {
   @UseMiddleware(Auth)
   async upVoteMeme(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("memeId", () => Int) memeId: number
+    @Arg("memeId") memeId: string
   ): Promise<Meme | undefined> {
     const { userId } = session;
     if (await MemeVote.findOne({ where: { userId, memeId } })) return;
@@ -96,7 +96,7 @@ export class MemeResolver {
   @UseMiddleware(Auth)
   async downVoteMeme(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("memeId", () => Int) memeId: number
+    @Arg("memeId") memeId: string
   ): Promise<Meme | undefined> {
     const { userId } = session;
     if (await MemeVote.findOne({ where: { userId, memeId } })) return;

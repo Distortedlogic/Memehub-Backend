@@ -3,6 +3,7 @@ import {
   EventSubscriber,
   InsertEvent,
 } from "typeorm";
+import { v4 } from "uuid";
 import { Rank } from "./../rank/Rank.entity";
 import { User } from "./User.entity";
 
@@ -10,6 +11,9 @@ import { User } from "./User.entity";
 export class UserSubscriber implements EntitySubscriberInterface<User> {
   listenTo() {
     return User;
+  }
+  beforeInsert(event: InsertEvent<User>) {
+    event.entity.id = v4();
   }
   async afterInsert(event: InsertEvent<User>) {
     const createdAt = new Date(new Date().setMinutes(0, 0, 0));

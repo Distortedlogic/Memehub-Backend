@@ -1,7 +1,6 @@
 import {
   Arg,
   Ctx,
-  Int,
   Mutation,
   Publisher,
   PubSub,
@@ -20,8 +19,8 @@ export class CommentResolver {
   @UseMiddleware(Auth)
   async postComment(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("text", () => String) text: string,
-    @Arg("memeId", () => Int) memeId: number,
+    @Arg("text") text: string,
+    @Arg("memeId") memeId: string,
     @PubSub(Topic.NewComment) NewComment: Publisher<Comment>
   ) {
     const { userId } = session;
@@ -35,7 +34,7 @@ export class CommentResolver {
   @UseMiddleware(Auth)
   async upVoteComment(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("commentId", () => Int) commentId: number
+    @Arg("commentId") commentId: string
   ): Promise<Comment | undefined> {
     const { userId } = session;
     if (await CommentVote.findOne({ where: { userId, commentId } })) return;
@@ -50,7 +49,7 @@ export class CommentResolver {
   @UseMiddleware(Auth)
   async downVoteComment(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("commentId", () => Int) commentId: number
+    @Arg("commentId") commentId: string
   ): Promise<Comment | undefined> {
     const { userId } = session;
     if (await CommentVote.findOne({ where: { userId, commentId } })) return;

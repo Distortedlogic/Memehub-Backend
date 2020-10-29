@@ -7,7 +7,7 @@ import {
   Entity,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Comment } from "../comment/Comment.entity";
@@ -33,9 +33,9 @@ const actionToPoints: Record<string, number> = {
 @ObjectType()
 @Entity("users")
 export class User extends BaseEntity {
-  @Field(() => Int)
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Field()
+  @PrimaryColumn("uuid")
+  id: string;
 
   @Field(() => Boolean)
   @Column({ default: false })

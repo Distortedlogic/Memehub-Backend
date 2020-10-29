@@ -6,7 +6,7 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Meme } from "../meme/Meme.entity";
@@ -16,17 +16,17 @@ import { CommentVote } from "./CommentVote.entity";
 @ObjectType()
 @Entity("comments")
 export class Comment extends BaseEntity {
-  @Field(() => Int)
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Field()
+  @PrimaryColumn("uuid")
+  id: string;
 
   @Field(() => String)
   @Column()
   text: string;
 
-  @Field(() => Int)
+  @Field()
   @Column()
-  userId: number;
+  userId: string;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.comments, {
@@ -35,9 +35,9 @@ export class Comment extends BaseEntity {
   })
   user: User;
 
-  @Field(() => Int)
+  @Field()
   @Column({ nullable: true })
-  memeId: number;
+  memeId: string;
 
   @Field(() => Meme)
   @ManyToOne(() => Meme, (meme) => meme.comments, {

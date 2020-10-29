@@ -3,8 +3,8 @@ import { User } from "../models/user/User.entity";
 import { Redditor } from "./../models/reddit/Redditor.entity";
 
 export const userByIdLoader = () =>
-  new DataLoader<number, User>(async (userIds) => {
-    const users = await User.findByIds(userIds as number[]);
+  new DataLoader<string, User>(async (userIds) => {
+    const users = await User.findByIds(userIds as string[]);
     return userIds.map((id) => users.filter((user) => user.id === id)[0]);
   });
 

@@ -27,18 +27,19 @@ export class RankQueryResolver {
       };
     }
     const end = new Date(createdAt.setDate(createdAt.getDate() - td));
-    const endRanks = await Rank.find({
-      where: { createdAt: end, rank: Not(Equal(0)) },
-      order: { rank: "ASC" },
-      take: realTake,
-      skip,
-    });
+    const endRanks = await Rank.findByIds(
+      ranks.map((rank) => {
+        return { userId: rank.userId, createdAt: end };
+      })
+    );
     if (!endRanks.length) {
       return {
         items: ranks,
         hasMore: ranks.length === realTake ? true : false,
       };
     }
+    console.log("ranks", ranks);
+    console.log("endRanks", endRanks);
     ranks.forEach((rank) => {
       rank.totalPoints -= endRanks.filter(
         (endRank) => endRank.userId === rank.userId

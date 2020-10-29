@@ -53,7 +53,7 @@ jobs:
           command: docker build
             --build-arg POSTGRES_USER=$POSTGRES_USER
             --build-arg POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-            --build-arg PSOTGRES_DB=$PSOTGRES_DB
+            --build-arg POSTGRES_DB=$POSTGRES_DB
             --build-arg CORS_ORIGIN=$CORS_ORIGIN
             --build-arg HIVE_ACCOUNT=$HIVE_ACCOUNT
             --build-arg ACTIVE_WIF=$ACTIVE_WIF

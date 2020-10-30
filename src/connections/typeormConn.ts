@@ -6,17 +6,15 @@ const POSTGRES_USER = secrets.POSTGRES_USER || process.env.POSTGRES_USER;
 const POSTGRES_DB = secrets.POSTGRES_DB || process.env.POSTGRES_DB;
 const POSTGRES_PASSWORD =
   secrets.POSTGRES_PASSWORD || process.env.POSTGRES_PASSWORD;
-
+const url = `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@sitedata:5432/${POSTGRES_DB}?sslmode=require`;
 export const createTypeormConnection = async () => {
   let retries = 50;
   while (retries) {
     try {
-      console.log(
-        `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@sitedata:5432/${POSTGRES_DB}?sslmode=require`
-      );
+      console.log(url);
       const conn = await createConnection({
         type: "postgres",
-        url: `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@sitedata:5432/${POSTGRES_DB}?sslmode=require`,
+        url,
         synchronize: !__prod__,
         logging: false,
         entities: ["src/models/**/*.entity*.{js,ts}"],

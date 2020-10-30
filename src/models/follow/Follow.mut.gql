@@ -1,7 +1,7 @@
-mutation Follow($userId: Int!) {
+mutation Follow($userId: String!) {
   follow(userId: $userId)
 }
 
-mutation Unfollow($userId: Int!) {
+mutation Unfollow($userId: String!) {
   unfollow(userId: $userId)
 }

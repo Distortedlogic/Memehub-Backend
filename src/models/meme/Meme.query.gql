@@ -1,4 +1,4 @@
-query Meme($memeId: Int!) {
+query Meme($memeId: String!) {
   meme(memeId: $memeId) {
     ...userMeme
   }
@@ -11,7 +11,7 @@ query MyMemes($take: Int!, $skip: Int!, $order: String!) {
     hasMore
   }
 }
-query UserMemes($userId: Int!, $take: Int!, $skip: Int!, $order: String!) {
+query UserMemes($userId: String!, $take: Int!, $skip: Int!, $order: String!) {
   userMemes(userId: $userId, take: $take, skip: $skip, order: $order) {
     items {
       ...meme

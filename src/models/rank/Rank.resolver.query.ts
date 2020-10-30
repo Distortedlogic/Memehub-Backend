@@ -38,8 +38,6 @@ export class RankQueryResolver {
         hasMore: ranks.length === realTake ? true : false,
       };
     }
-    console.log("ranks", ranks);
-    console.log("endRanks", endRanks);
     ranks.forEach((rank) => {
       rank.totalPoints -= endRanks.filter(
         (endRank) => endRank.userId === rank.userId

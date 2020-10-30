@@ -11,7 +11,6 @@ export const createTypeormConnection = async () => {
   let retries = 50;
   while (retries) {
     try {
-      console.log(url);
       const conn = await createConnection({
         type: "postgres",
         url,

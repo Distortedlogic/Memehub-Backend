@@ -1,4 +1,4 @@
-import { Arg, Ctx, Int, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Query, Resolver } from "type-graphql";
 import { ServerContext } from "../../ServerContext";
 import { User } from "./User.entity";
 
@@ -17,9 +17,7 @@ export class UserResolver {
     return await User.findOne(session.userId);
   }
   @Query(() => User, { nullable: true })
-  async user(
-    @Arg("userId", () => Int) userId: number
-  ): Promise<User | undefined> {
+  async user(@Arg("userId") userId: string): Promise<User | undefined> {
     return await User.findOne(userId);
   }
   @Query(() => Boolean)

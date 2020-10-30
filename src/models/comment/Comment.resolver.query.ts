@@ -9,7 +9,7 @@ import { PaginatedComments } from "./_types";
 export class CommentResolver {
   @Query(() => PaginatedComments)
   async comments(
-    @Arg("memeId", () => Int) memeId: number,
+    @Arg("memeId") memeId: string,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
     @Arg("order", () => String) orderType: string
@@ -55,7 +55,7 @@ export class CommentResolver {
   @Query(() => PaginatedComments)
   @UseMiddleware(Auth)
   async userComments(
-    @Arg("userId", () => Int) userId: number,
+    @Arg("userId") userId: string,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
     @Arg("order", () => String) orderType: string

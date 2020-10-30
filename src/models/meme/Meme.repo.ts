@@ -16,7 +16,7 @@ import { PaginatedMemes } from "./_types";
 @EntityRepository(Meme)
 export class MemeRepo extends Repository<Meme> {
   async userMemes(
-    userId: number,
+    userId: string,
     take: number,
     skip: number,
     orderType: string

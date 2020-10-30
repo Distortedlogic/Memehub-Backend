@@ -1,13 +1,13 @@
-mutation PostComment($text: String!, $memeId: Int!) {
+mutation PostComment($text: String!, $memeId: String!) {
   postComment(text: $text, memeId: $memeId)
 }
 
-mutation UpVoteComment($commentId: Int!) {
+mutation UpVoteComment($commentId: String!) {
   upVoteComment(commentId: $commentId) {
     ...userComment
   }
 }
-mutation DownVoteComment($commentId: Int!) {
+mutation DownVoteComment($commentId: String!) {
   downVoteComment(commentId: $commentId) {
     ...userComment
   }

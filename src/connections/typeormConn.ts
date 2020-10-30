@@ -5,6 +5,9 @@ export const createTypeormConnection = async () => {
   let retries = 50;
   while (retries) {
     try {
+      console.log(
+        `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@sitedata:5432/${process.env.POSTGRES_DB}?sslmode=require`
+      );
       const conn = await createConnection({
         type: "postgres",
         url: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@sitedata:5432/${process.env.POSTGRES_DB}?sslmode=require`,

@@ -1,16 +1,22 @@
+import { secrets } from "docker-secret";
 import { createConnection } from "typeorm";
 import { __prod__ } from "./../utils/constants";
+
+const POSTGRES_USER = secrets.POSTGRES_USER || process.env.POSTGRES_USER;
+const POSTGRES_DB = secrets.POSTGRES_DB || process.env.POSTGRES_DB;
+const POSTGRES_PASSWORD =
+  secrets.POSTGRES_PASSWORD || process.env.POSTGRES_PASSWORD;
 
 export const createTypeormConnection = async () => {
   let retries = 50;
   while (retries) {
     try {
       console.log(
-        `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@sitedata:5432/${process.env.POSTGRES_DB}?sslmode=require`
+        `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@sitedata:5432/${POSTGRES_DB}?sslmode=require`
       );
       const conn = await createConnection({
         type: "postgres",
-        url: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@sitedata:5432/${process.env.POSTGRES_DB}?sslmode=require`,
+        url: `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@sitedata:5432/${POSTGRES_DB}?sslmode=require`,
         synchronize: !__prod__,
         logging: false,
         entities: ["src/models/**/*.entity*.{js,ts}"],

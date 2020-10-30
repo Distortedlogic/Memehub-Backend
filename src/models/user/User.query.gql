@@ -9,7 +9,7 @@ query Me {
   }
 }
 
-query UserProfile($userId: Int!) {
+query UserProfile($userId: String!) {
   user(userId: $userId) {
     ...userProfile
   }

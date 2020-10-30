@@ -3,19 +3,19 @@ mutation PostMeme($title: String!, $community: String!) {
     ...myMeme
   }
 }
-mutation SetIsHive($memeId: Int!) {
+mutation SetIsHive($memeId: String!) {
   setIsHive(memeId: $memeId)
 }
 mutation GetSignedUrl($path: String!, $filename: String!) {
   getSignedUrl(path: $path, filename: $filename)
 }
 
-mutation UpVoteMeme($memeId: Int!) {
+mutation UpVoteMeme($memeId: String!) {
   upVoteMeme(memeId: $memeId) {
     ...userMeme
   }
 }
-mutation DownVoteMeme($memeId: Int!) {
+mutation DownVoteMeme($memeId: String!) {
   downVoteMeme(memeId: $memeId) {
     ...userMeme
   }

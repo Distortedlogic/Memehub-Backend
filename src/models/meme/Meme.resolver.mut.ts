@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { Arg, Ctx, Int, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Auth } from "../../middleware/auth";
 import { ServerContext } from "../../ServerContext";
@@ -66,7 +66,7 @@ export class MemeResolver {
 
   @Mutation(() => Boolean)
   @UseMiddleware(Auth)
-  async setIsHive(@Arg("memeId", () => Int) memeId: number): Promise<boolean> {
+  async setIsHive(@Arg("memeId") memeId: string): Promise<boolean> {
     try {
       await getConnection()
         .createQueryBuilder()

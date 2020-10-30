@@ -1,4 +1,4 @@
-query Comments($memeId: Int!, $skip: Int!, $take: Int!, $order: String!) {
+query Comments($memeId: String!, $skip: Int!, $take: Int!, $order: String!) {
   comments(memeId: $memeId, skip: $skip, take: $take, order: $order) {
     items {
       ...userComment
@@ -7,7 +7,12 @@ query Comments($memeId: Int!, $skip: Int!, $take: Int!, $order: String!) {
   }
 }
 
-query UserComments($userId: Int!, $skip: Int!, $take: Int!, $order: String!) {
+query UserComments(
+  $userId: String!
+  $skip: Int!
+  $take: Int!
+  $order: String!
+) {
   userComments(userId: $userId, skip: $skip, take: $take, order: $order) {
     items {
       ...comment

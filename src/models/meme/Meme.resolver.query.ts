@@ -28,9 +28,8 @@ export class MemeQueryResolver {
   }
 
   @Query(() => PaginatedMemes, { nullable: true })
-  @UseMiddleware(Auth)
   async userMemes(
-    @Arg("userId", () => Int) userId: number,
+    @Arg("userId") userId: string,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
     @Arg("order", () => String) order: string
@@ -39,9 +38,7 @@ export class MemeQueryResolver {
   }
 
   @Query(() => Meme, { nullable: true })
-  async meme(
-    @Arg("memeId", () => Int) memeId: number
-  ): Promise<Meme | undefined> {
+  async meme(@Arg("memeId") memeId: string): Promise<Meme | undefined> {
     return await Meme.findOne(memeId);
   }
 

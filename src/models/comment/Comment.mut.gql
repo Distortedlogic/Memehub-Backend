@@ -1,5 +1,11 @@
 mutation PostComment($text: String!, $memeId: String!) {
-  postComment(text: $text, memeId: $memeId)
+  postComment(text: $text, memeId: $memeId) {
+    ...myComment
+  }
+}
+
+mutation SetCommentIsHive($commentId: String!, $permlink: String!) {
+  setCommentIsHive(commentId: $commentId, permlink: $permlink)
 }
 
 mutation UpVoteComment($commentId: String!) {

@@ -1,7 +1,14 @@
+query UserRanks($userId: String) {
+  userRanks(userId: $userId) {
+    ...rank
+    createdAt
+  }
+}
+
 query Ranking($td: Int!, $take: Int!, $skip: Int!) {
   ranking(td: $td, take: $take, skip: $skip) {
     items {
-      ...rank
+      ...userRank
     }
     hasMore
   }

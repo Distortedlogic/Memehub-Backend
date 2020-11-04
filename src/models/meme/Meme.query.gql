@@ -51,7 +51,7 @@ query CommunityMemes($community: String!, $take: Int!, $skip: Int, $days: Int) {
     hasMore
   }
 }
-query TopRatedMemes($take: Int!, $skip: Int, $days: Int) {
+query TopRatedMemes($take: Int!, $skip: Int!, $days: Int!) {
   topRatedMemes(take: $take, skip: $skip, days: $days) {
     items {
       ...userMeme

@@ -1,4 +1,9 @@
 fragment rank on Rank {
+  totalPoints
+  rank
+}
+
+fragment userRank on Rank {
   user {
     ...user
   }

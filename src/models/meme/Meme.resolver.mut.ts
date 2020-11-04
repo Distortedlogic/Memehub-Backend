@@ -66,7 +66,7 @@ export class MemeResolver {
 
   @Mutation(() => Boolean)
   @UseMiddleware(Auth)
-  async setIsHive(@Arg("memeId") memeId: string): Promise<boolean> {
+  async setMemeIsHive(@Arg("memeId") memeId: string): Promise<boolean> {
     try {
       await getConnection()
         .createQueryBuilder()

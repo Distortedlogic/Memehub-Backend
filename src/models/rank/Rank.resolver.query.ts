@@ -1,10 +1,24 @@
-import { Arg, Int, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Int, Query, Resolver } from "type-graphql";
 import { Equal, Not } from "typeorm";
+import { ServerContext } from "./../../ServerContext";
 import { Rank } from "./Rank.entity";
 import { PaginatedRanks } from "./_types";
 
 @Resolver(Rank)
 export class RankQueryResolver {
+  @Query(() => [Rank])
+  async userRanks(
+    @Ctx() { req: { session } }: ServerContext,
+    @Arg("userId", () => String, { nullable: true }) userId?: string
+  ): Promise<Rank[]> {
+    if (!userId) userId = session.userId;
+    return await Rank.find({
+      where: { userId },
+      order: { createdAt: "DESC" },
+      take: 30,
+    });
+  }
+
   @Query(() => PaginatedRanks)
   async ranking(
     @Arg("take", () => Int) take: number,

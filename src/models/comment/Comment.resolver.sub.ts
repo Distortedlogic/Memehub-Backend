@@ -1,4 +1,4 @@
-import { Arg, Int, Resolver, Root, Subscription } from "type-graphql";
+import { Arg, Resolver, Root, Subscription } from "type-graphql";
 import { Comment } from "./Comment.entity";
 import { Topic } from "./_types";
 
@@ -12,12 +12,10 @@ export class CommentSubscriptionResolver {
   })
   newComments(
     @Root() newComment: Comment,
-    // @ts-ignore
-    @Arg("userId", () => Int) userId: number
+    @Arg("userId") userId: string
   ): Comment {
     newComment.createdAt = new Date(newComment.createdAt);
     console.log("fired", "comment", newComment, "userId", userId);
-
     return newComment;
   }
 }

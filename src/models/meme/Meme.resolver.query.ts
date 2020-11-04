@@ -83,10 +83,10 @@ export class MemeQueryResolver {
   @Query(() => PaginatedMemes)
   async topRatedMemes(
     @Arg("take", () => Int) take: number,
-    @Arg("days", () => Int, { nullable: true }) days?: number,
-    @Arg("skip", () => Int, { nullable: true }) skip?: number
+    @Arg("days", () => Int) days: number,
+    @Arg("skip", () => Int) skip: number
   ): Promise<PaginatedMemes> {
-    if (days && ![1, 7, 30].includes(days))
+    if (days && ![-1, 1, 7, 30].includes(days))
       return { hasMore: false, items: [] };
     return await this.memeRepo.topRatedMemes(take, skip, days);
   }

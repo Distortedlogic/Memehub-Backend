@@ -14,7 +14,10 @@ export class Rank extends BaseEntity {
   userId: string;
 
   @Field(() => User)
-  @OneToOne(() => User, (user) => user.rank)
+  @OneToOne(() => User, (user) => user.rank, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   user: User;
 
   @Field(() => Int)

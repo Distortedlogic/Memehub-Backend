@@ -16,11 +16,12 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
     event.entity.id = v4();
   }
   async afterInsert(event: InsertEvent<User>) {
-    const createdAt = new Date(new Date().setMinutes(0, 0, 0));
+    const numUsers = await User.count();
+    const createdAt = new Date(event.entity.createdAt.setMinutes(0, 0, 0));
     await Rank.create({
       createdAt,
       totalPoints: 0,
-      rank: 0,
+      rank: numUsers,
       userId: event.entity.id,
     }).save();
   }

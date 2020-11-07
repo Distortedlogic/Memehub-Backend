@@ -1,10 +1,16 @@
 import { Field, Float, Int, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Redditor } from "./Redditor.entity";
 
 @ObjectType()
 @Entity("reddit_memes")
-export class RedditMeme {
+export class RedditMeme extends BaseEntity {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;

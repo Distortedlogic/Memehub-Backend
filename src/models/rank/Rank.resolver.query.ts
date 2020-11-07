@@ -1,5 +1,6 @@
+import dayjs from "dayjs";
 import { Arg, Ctx, Int, Query, Resolver } from "type-graphql";
-import { Equal, Not } from "typeorm";
+import { Equal, In, Not } from "typeorm";
 import { ServerContext } from "./../../ServerContext";
 import { Rank } from "./Rank.entity";
 import { PaginatedRanks } from "./_types";
@@ -12,10 +13,13 @@ export class RankQueryResolver {
     @Arg("userId", () => String, { nullable: true }) userId?: string
   ): Promise<Rank[]> {
     if (!userId) userId = session.userId;
+    const current = dayjs().set("h", 0).set("m", 0).set("s", 0).set("ms", 0);
+    const times = Array(30)
+      .fill(30)
+      .map((_, idx) => current.subtract(idx, "d").toDate());
     return await Rank.find({
-      where: { userId },
-      order: { createdAt: "DESC" },
-      take: 30,
+      where: { userId, createdAt: In(times) },
+      order: { createdAt: "ASC" },
     });
   }
 

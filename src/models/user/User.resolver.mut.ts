@@ -146,7 +146,14 @@ export class UserMutationResolver {
         return { user };
       }
     } else {
-      return { errors: [{ field: "", message: "" }] };
+      return {
+        errors: [
+          {
+            field: "Hive Key",
+            message: "Authentication of Key Ownership Failed",
+          },
+        ],
+      };
     }
   }
 

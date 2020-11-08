@@ -6,10 +6,6 @@ fragment user on User {
 }
 
 fragment stats on User {
-  rank {
-    rank
-  }
-  totalPoints
   numMemeVotesGiven
   numMemeUpvotesRecieved
   numMemeDownvotesRecieved

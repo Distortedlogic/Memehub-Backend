@@ -16,7 +16,7 @@ export interface commentVoteKey {
 }
 
 @ObjectType()
-@Entity()
+@Entity("comment_votes")
 export class CommentVote extends BaseEntity {
   @Field(() => Int)
   @PrimaryColumn()

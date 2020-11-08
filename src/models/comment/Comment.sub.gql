@@ -1,4 +1,4 @@
-subscription NewComments($userId: Int!) {
+subscription NewComments($userId: String!) {
   newComments(userId: $userId) {
     ...myComment
   }

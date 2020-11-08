@@ -5,6 +5,8 @@ fragment myComment on Comment {
   ratio
   createdAt
   text
+  isHive
+  permlink
 }
 
 fragment comment on Comment {

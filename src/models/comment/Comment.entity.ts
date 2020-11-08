@@ -24,6 +24,14 @@ export class Comment extends BaseEntity {
   @Column()
   text: string;
 
+  @Field(() => Boolean)
+  @Column({ default: false })
+  isHive: boolean;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  permlink: string;
+
   @Field()
   @Column()
   userId: string;

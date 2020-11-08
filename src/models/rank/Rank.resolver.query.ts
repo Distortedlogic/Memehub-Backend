@@ -1,52 +1,70 @@
-import { Arg, Int, Query, Resolver } from "type-graphql";
-import { Equal, Not } from "typeorm";
+import dayjs from "dayjs";
+import { Arg, Ctx, Int, Query, Resolver } from "type-graphql";
+import { In } from "typeorm";
+import { ServerContext } from "./../../ServerContext";
 import { Rank } from "./Rank.entity";
 import { PaginatedRanks } from "./_types";
 
 @Resolver(Rank)
 export class RankQueryResolver {
+  @Query(() => [Rank])
+  async userRanks(
+    @Ctx() { req: { session } }: ServerContext,
+    @Arg("userId", () => String, { nullable: true }) userId?: string,
+    @Arg("timeFrame", { nullable: true }) timeFrame?: string
+  ): Promise<Rank[]> {
+    if (!userId) userId = session.userId;
+    const current = dayjs().set("h", 0).set("m", 0).set("s", 0).set("ms", 0);
+    const times = Array(30)
+      .fill(30)
+      .map((_, idx) => current.subtract(idx, "d").toDate());
+    return await Rank.find({
+      where: { userId, createdAt: In(times), timeFrame },
+      order: { createdAt: "ASC" },
+    });
+  }
+
+  @Query(() => [Rank])
+  async currentRanks(
+    @Ctx() { req: { session } }: ServerContext,
+    @Arg("userId", () => String, { nullable: true }) userId?: string
+  ): Promise<Rank[]> {
+    if (!userId) userId = session.userId;
+    const createdAt = dayjs().set("m", 0).set("s", 0).set("ms", 0).toDate();
+    const ranks = ["ever", "day", "week", "month"].map(async (timeFrame) => {
+      const rank = await Rank.findOne({
+        where: { userId, createdAt, timeFrame },
+      });
+      return rank!;
+    });
+    const result = await Promise.all(ranks);
+    console.log(result);
+    return result;
+  }
+
   @Query(() => PaginatedRanks)
   async ranking(
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
-    @Arg("td", () => Int) td: number
+    @Arg("timeFrame") timeFrame: string
   ): Promise<PaginatedRanks> {
     const realTake = Math.min(50, take);
-    if (![-1, 1, 7, 30].includes(td)) return { items: [], hasMore: false };
-    const createdAt = new Date(new Date().setMinutes(0, 0, 0));
+    if (!["ever", "day", "week", "month"].includes(timeFrame))
+      return { items: [], hasMore: false };
+    const createdAt = dayjs()
+      .set("h", 0)
+      .set("m", 0)
+      .set("s", 0)
+      .set("ms", 0)
+      .toDate();
     const ranks = await Rank.find({
-      where: { createdAt, rank: Not(Equal(0)) },
+      where: { createdAt, timeFrame },
       order: { rank: "ASC" },
       take: realTake,
       skip,
     });
-    if (td === -1) {
-      return {
-        items: ranks,
-        hasMore: ranks.length === realTake ? true : false,
-      };
-    }
-    const end = new Date(createdAt.setDate(createdAt.getDate() - td));
-    const endRanks = await Rank.findByIds(
-      ranks.map((rank) => {
-        return { userId: rank.userId, createdAt: end };
-      })
-    );
-    if (!endRanks.length) {
-      return {
-        items: ranks,
-        hasMore: ranks.length === realTake ? true : false,
-      };
-    }
-    ranks.forEach((rank) => {
-      rank.totalPoints -= endRanks.filter(
-        (endRank) => endRank.userId === rank.userId
-      )[0].totalPoints;
-    });
-    const sortedRanks = ranks.sort((x, y) => y.totalPoints - x.totalPoints);
-    sortedRanks.forEach((item, idx) => (item.rank = idx));
     return {
-      items: sortedRanks,
+      items: ranks,
       hasMore: ranks.length === realTake ? true : false,
     };
   }

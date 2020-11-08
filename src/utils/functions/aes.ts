@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import CryptoJS from "crypto-js";
 
-export const pinHasher = async (toBeHashed: string) =>
+export const getHash = async (toBeHashed: string) =>
   await bcrypt.hash(toBeHashed, await bcrypt.genSalt(10));
 
 export const encryptKey = (k: string, password: string) =>

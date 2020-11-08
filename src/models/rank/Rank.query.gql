@@ -1,7 +1,19 @@
-query Ranking($td: Int!, $take: Int!, $skip: Int!) {
-  ranking(td: $td, take: $take, skip: $skip) {
+query UserRanks($userId: String, $timeFrame: String) {
+  userRanks(userId: $userId, timeFrame: $timeFrame) {
+    ...rank
+  }
+}
+
+query CurrentRanks($userId: String) {
+  currentRanks(userId: $userId) {
+    ...rank
+  }
+}
+
+query Ranking($timeFrame: String!, $take: Int!, $skip: Int!) {
+  ranking(timeFrame: $timeFrame, take: $take, skip: $skip) {
     items {
-      ...rank
+      ...userRank
     }
     hasMore
   }

@@ -3,6 +3,7 @@ export const createHiveConnection = async () => {
   let retries = 5;
   while (retries) {
     try {
+      // if (__prod__) {
       const hiveLive = new Client([
         "https://api.hivekings.com",
         "https://anyx.io",
@@ -14,6 +15,10 @@ export const createHiveConnection = async () => {
         hiveLive.updateOperations(true);
       }
       return hiveLive;
+      // } else {
+      //   const hiveTest = new Client(["http://127.0.0.1:32775"]);
+      //   return hiveTest;
+      // }
     } catch (error) {
       retries--;
       console.log("error", error);

@@ -7,6 +7,7 @@ import {
   Resolver,
   UseMiddleware,
 } from "type-graphql";
+import { getConnection } from "typeorm";
 import { Auth } from "../../middleware/auth";
 import { ServerContext } from "../../ServerContext";
 import { Comment } from "./Comment.entity";
@@ -15,7 +16,7 @@ import { Topic } from "./_types";
 
 @Resolver(Comment)
 export class CommentResolver {
-  @Mutation(() => Boolean)
+  @Mutation(() => Comment)
   @UseMiddleware(Auth)
   async postComment(
     @Ctx() { req: { session } }: ServerContext,
@@ -24,10 +25,33 @@ export class CommentResolver {
     @PubSub(Topic.NewComment) NewComment: Publisher<Comment>
   ) {
     const { userId } = session;
-    if (!text) return false;
-    const comment = await Comment.create({ text, userId, memeId }).save();
+    const comment = await Comment.create({
+      text,
+      userId,
+      memeId,
+    }).save();
     await NewComment(comment);
-    return true;
+    return comment;
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(Auth)
+  async setCommentIsHive(
+    @Arg("commentId") commentId: string,
+    @Arg("permlink") permlink: string
+  ): Promise<boolean> {
+    try {
+      await getConnection()
+        .createQueryBuilder()
+        .update(Comment)
+        .set({ isHive: true, permlink })
+        .where("id = :id", { id: commentId })
+        .execute();
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
   @Mutation(() => Comment)

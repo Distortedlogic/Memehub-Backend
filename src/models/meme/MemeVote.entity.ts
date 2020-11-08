@@ -9,7 +9,7 @@ export interface memeVoteKey {
 }
 
 @ObjectType()
-@Entity()
+@Entity("meme_votes")
 export class MemeVote extends BaseEntity {
   @Field(() => Int)
   @PrimaryColumn()

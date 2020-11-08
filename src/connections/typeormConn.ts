@@ -1,6 +1,5 @@
 import { secrets } from "docker-secret";
 import { createConnection } from "typeorm";
-import { __prod__ } from "./../utils/constants";
 
 const POSTGRES_USER = secrets.POSTGRES_USER || process.env.POSTGRES_USER;
 const POSTGRES_DB = secrets.POSTGRES_DB || process.env.POSTGRES_DB;
@@ -14,7 +13,7 @@ export const createTypeormConnection = async () => {
       const conn = await createConnection({
         type: "postgres",
         url,
-        synchronize: !__prod__,
+        synchronize: false,
         logging: false,
         entities: ["src/models/**/*.entity*.{js,ts}"],
         migrations: ["src/migration/**/*.{js,ts}"],
@@ -25,7 +24,7 @@ export const createTypeormConnection = async () => {
           subscribersDir: "src/subscriber",
         },
       });
-      if (__prod__) await conn.runMigrations();
+      await conn.runMigrations();
       return conn;
     } catch (error) {
       retries--;

@@ -3,8 +3,8 @@ mutation PostMeme($title: String!, $community: String!) {
     ...myMeme
   }
 }
-mutation SetIsHive($memeId: String!) {
-  setIsHive(memeId: $memeId)
+mutation SetMemeIsHive($memeId: String!) {
+  setMemeIsHive(memeId: $memeId)
 }
 mutation GetSignedUrl($path: String!, $filename: String!) {
   getSignedUrl(path: $path, filename: $filename)

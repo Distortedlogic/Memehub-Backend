@@ -92,17 +92,18 @@ export class MemeRepo extends Repository<Meme> {
   }
   async topRatedMemes(
     take: number,
-    skip?: number,
-    days?: number
+    skip: number,
+    days: number
   ): Promise<PaginatedMemes> {
     const realTake = Math.min(50, take);
     const daysDate = moment.utc().subtract(days, "days").toDate();
-    const where = days
-      ? {
-          createdAt: MoreThanOrEqual(daysDate),
-          community: Not(Equal(Any(["dark", "political"]))),
-        }
-      : { community: Not(Equal(Any(["dark", "political"]))) };
+    const where =
+      days !== -1
+        ? {
+            createdAt: MoreThanOrEqual(daysDate),
+            community: Not(Equal(Any(["dark", "political"]))),
+          }
+        : { community: Not(Equal(Any(["dark", "political"]))) };
     const memes = await Meme.find({
       where,
       order: {

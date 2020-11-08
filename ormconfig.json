@@ -1,11 +1,10 @@
-[
-  {
+{
     "name": "default",
     "type": "postgres",
     "host": "127.0.0.1",
     "port": 5432,
     "username": "postgres",
-    "password": "postgres",
+    "password": "thrtgbfdg",
     "database": "postgres",
     "synchronize": false,
     "logging": false,
@@ -17,24 +16,4 @@
       "migrationsDir": "src/migration",
       "subscribersDir": "src/subscriber"
     }
-  },
-  {
-    "name": "memedata",
-    "type": "postgres",
-    "host": "memedata",
-    "port": 5432,
-    "username": "postgres",
-    "password": "postgres",
-    "database": "postgres",
-    "synchronize": false,
-    "logging": false,
-    "entities": ["src/generated/memedata/**/*.ts"],
-    "migrations": ["src/migration/**/*.ts"],
-    "subscribers": ["src/subscriber/**/*.ts"],
-    "cli": {
-      "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
-    }
-  }
-]
+}

@@ -29,13 +29,13 @@ const port = 5000;
 
 useContainer(Container);
 const RedisStore = connectRedis(session);
-StartCron();
 
 (async () => {
   await createTypeormConnection();
   const redis = await createRedisConnection();
   const hive = await createHiveConnection();
   hiveSync(hive);
+  StartCron();
 
   const pubSub = new RedisPubSub({
     publisher: await createRedisConnection(),

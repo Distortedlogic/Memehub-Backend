@@ -24,7 +24,11 @@ export const createTypeormConnection = async () => {
           subscribersDir: "src/subscriber",
         },
       });
-      await conn.runMigrations();
+      try {
+        await conn.runMigrations();
+      } catch (error) {
+        throw new Error("migration error");
+      }
       return conn;
     } catch (error) {
       retries--;

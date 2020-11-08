@@ -18,11 +18,15 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
   async afterInsert(event: InsertEvent<User>) {
     const numUsers = await User.count();
     const createdAt = new Date(event.entity.createdAt.setMinutes(0, 0, 0));
-    await Rank.create({
-      createdAt,
-      totalPoints: 0,
-      rank: numUsers,
-      userId: event.entity.id,
-    }).save();
+    const initRanks = ["ever", "day", "week", "month"].map((timeFrame) =>
+      Rank.create({
+        createdAt,
+        totalPoints: 0,
+        timeFrame,
+        rank: numUsers,
+        userId: event.entity.id,
+      })
+    );
+    await Rank.save(initRanks);
   }
 }

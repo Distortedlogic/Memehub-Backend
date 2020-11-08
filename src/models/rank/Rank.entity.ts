@@ -13,6 +13,10 @@ export class Rank extends BaseEntity {
   @PrimaryColumn()
   userId: string;
 
+  @Field(() => String)
+  @PrimaryColumn()
+  timeFrame: string;
+
   @Field(() => User)
   @OneToOne(() => User, (user) => user.rank, {
     cascade: true,

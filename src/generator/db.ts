@@ -15,6 +15,7 @@ import { logStats } from "./utils/logStats";
 import { recordRank } from "./utils/recordRank";
 
 (async () => {
+  const startTime = dayjs();
   const errors = {
     createUsers: 0,
     follow: 0,
@@ -70,4 +71,5 @@ import { recordRank } from "./utils/recordRank";
     errors.recordRank = await recordRank(conn, current);
     await logStats(current, now, errors);
   }
+  console.log(`Total Exec Time: ${dayjs().diff(startTime, "s")}`);
 })();

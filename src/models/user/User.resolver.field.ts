@@ -52,6 +52,10 @@ export class UserFieldResolver {
   @FieldResolver(() => Rank)
   async rank(@Root() user: User) {
     const createdAt = new Date(new Date().setMinutes(0, 0, 0));
-    return await Rank.findOne({ createdAt, userId: user.id });
+    return await Rank.findOne({
+      createdAt,
+      userId: user.id,
+      timeFrame: "ever",
+    });
   }
 }

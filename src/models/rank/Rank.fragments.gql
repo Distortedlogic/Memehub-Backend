@@ -1,12 +1,13 @@
 fragment rank on Rank {
   totalPoints
   rank
+  timeFrame
+  createdAt
 }
 
 fragment userRank on Rank {
   user {
     ...user
   }
-  totalPoints
-  rank
+  ...rank
 }

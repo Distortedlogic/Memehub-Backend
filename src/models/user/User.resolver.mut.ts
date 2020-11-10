@@ -94,7 +94,6 @@ export class UserMutationResolver {
         process.env.CORS_ORIGIN
       }/verify-email/${v4()}"> Verify Email</a>`
     );
-    console.log("emailed");
     const errors = await validateRegister(username, email, password);
     if (errors) return { errors };
     const user = await User.create({

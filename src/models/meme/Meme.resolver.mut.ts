@@ -41,7 +41,6 @@ export class MemeResolver {
     @Arg("title", () => String) title?: string,
     @Arg("community", () => String) community?: string
   ): Promise<Meme | undefined> {
-    console.log("postMeme fired");
     const { userId, Key } = session;
     if (!Key) return undefined;
     try {

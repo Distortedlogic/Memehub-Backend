@@ -3,6 +3,7 @@ import { Like } from "typeorm";
 import { Comment } from "./../models/comment/Comment.entity";
 import { Meme } from "./../models/meme/Meme.entity";
 import { User } from "./../models/user/User.entity";
+import { HIVE_COMMUNITY } from "./../utils/constants";
 
 export const hiveSync = async (hive: Client) => {
   for await (const block of hive.blockchain.getBlocks()) {
@@ -10,7 +11,7 @@ export const hiveSync = async (hive: Client) => {
       for (const op of trans.operations) {
         if (
           op[0] === "comment" &&
-          op[1].json_metadata.includes("hive-189111")
+          op[1].json_metadata.includes(HIVE_COMMUNITY)
         ) {
           const data = op[1] as CommentOperation[1];
           if (data.parent_author.length !== 0) {
@@ -34,11 +35,15 @@ export const hiveSync = async (hive: Client) => {
                   verified: true,
                 }).save();
               }
-              await Comment.create({
-                text: data.body,
-                memeId: meme.id,
-                userId: user.id,
-              }).save();
+              const comment = await Comment.find({
+                where: { text: data.body, memeId: meme.id, userId: user.id },
+              });
+              if (!comment)
+                await Comment.create({
+                  text: data.body,
+                  memeId: meme.id,
+                  userId: user.id,
+                }).save();
             }
           }
         }

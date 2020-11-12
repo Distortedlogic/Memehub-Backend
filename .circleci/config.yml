@@ -41,6 +41,9 @@ jobs:
           name: Build Backend Docker Image
           command: docker build
             --build-arg CORS_ORIGIN=$CORS_ORIGIN
+            --build-arg HIVE_ACCOUNT=$HIVE_ACCOUNT
+            --build-arg ACTIVE_WIF=$ACTIVE_WIF
+            --build-arg SENDGRID_KEY=$SENDGRID_KEY
             --build-arg AWS_ID=$AWS_ID
             --build-arg AWS_KEY=$AWS_KEY
             --build-arg SECRET=$SECRET

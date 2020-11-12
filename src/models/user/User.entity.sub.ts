@@ -3,7 +3,6 @@ import {
   EntitySubscriberInterface,
   EventSubscriber,
   InsertEvent,
-  LessThan,
 } from "typeorm";
 import { v4 } from "uuid";
 import { Rank } from "./../rank/Rank.entity";
@@ -27,32 +26,26 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
           createdAt: createdAt.toDate(),
           totalPoints: 0,
           timeFrame,
-          rank: numUsers,
+          rank: numUsers + 1,
           userId: event.entity.id,
         })
       )
     );
-
     const midnight = createdAt.set("h", 0);
-    await Promise.all(
-      ["ever", "day", "week", "month"].map((timeFrame) =>
-        Array(32)
-          .fill(32)
-          .forEach(async (_, idx) => {
-            const numUsers = await User.count({
-              where: { createdAt: LessThan(midnight.add(idx, "d").toDate()) },
-            });
-            initRanks.push(
-              Rank.create({
-                createdAt: midnight.add(idx, "d").toDate(),
-                totalPoints: 0,
-                timeFrame,
-                rank: numUsers,
-                userId: event.entity.id,
-              })
-            );
-          })
-      )
+    ["ever", "day", "week", "month"].map((timeFrame) =>
+      Array(32)
+        .fill(32)
+        .map((_, idx) => {
+          initRanks.push(
+            Rank.create({
+              createdAt: midnight.subtract(idx, "d").toDate(),
+              totalPoints: 0,
+              timeFrame,
+              rank: numUsers + 1,
+              userId: event.entity.id,
+            })
+          );
+        })
     );
     await Rank.save(initRanks);
   }

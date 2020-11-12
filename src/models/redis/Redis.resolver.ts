@@ -1,5 +1,5 @@
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
-import { ServerContext } from "../ServerContext";
+import { ServerContext } from "../../ServerContext";
 
 @Resolver()
 export class RedisResolver {

@@ -1,16 +1,10 @@
-import AWS from "aws-sdk";
 import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Auth } from "../../middleware/auth";
 import { ServerContext } from "../../ServerContext";
+import { s3 } from "./../../connections/awsConnection";
 import { Meme } from "./Meme.entity";
 import { MemeVote } from "./MemeVote.entity";
-
-AWS.config.update({
-  accessKeyId: process.env.AWS_ID,
-  secretAccessKey: process.env.AWS_KEY,
-});
-const s3 = new AWS.S3();
 
 type s3ImgPaths = "memes" | "templates";
 
@@ -41,7 +35,6 @@ export class MemeResolver {
     @Arg("title", () => String) title?: string,
     @Arg("community", () => String) community?: string
   ): Promise<Meme | undefined> {
-    console.log("postMeme fired");
     const { userId, Key } = session;
     if (!Key) return undefined;
     try {

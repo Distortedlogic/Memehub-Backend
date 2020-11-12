@@ -38,7 +38,6 @@ export class RankQueryResolver {
       return rank!;
     });
     const result = await Promise.all(ranks);
-    console.log(result);
     return result;
   }
 

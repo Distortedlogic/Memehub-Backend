@@ -182,7 +182,7 @@ export class UserMutationResolver {
       .update<User>(User, {
         verified: true,
       })
-      .where("user.id = :userId", { userId })
+      .where("users.id = :userId", { userId })
       .execute();
     await redis.del(key);
     return true;

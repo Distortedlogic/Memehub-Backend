@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import moment from "moment";
 import { Service } from "typedi";
 import {
@@ -43,9 +44,11 @@ export class MemeRepo extends Repository<Meme> {
     days?: number
   ): Promise<PaginatedMemes> {
     const realTake = Math.min(50, take);
-    const daysDate = moment.utc().subtract(days, "days").toDate();
     const where = days
-      ? { createdAt: MoreThanOrEqual(daysDate), community }
+      ? {
+          createdAt: MoreThanOrEqual(dayjs().subtract(days, "d").toDate()),
+          community,
+        }
       : { community };
     const memes = await Meme.find({
       where,

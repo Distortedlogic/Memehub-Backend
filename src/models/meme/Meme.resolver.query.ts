@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import { Arg, Ctx, Int, Query, Resolver, UseMiddleware } from "type-graphql";
 import { Service } from "typedi";
 import { Any, Equal, getConnection, LessThan, Not } from "typeorm";
@@ -103,7 +103,7 @@ export class MemeQueryResolver {
       .leftJoinAndSelect("meme.memeVotes", "vote", "vote.memeId=meme.id")
       .addSelect("COUNT(vote)", "count")
       .where("vote.createdAt > :t", {
-        t: moment.utc().subtract(1, "days").toDate(),
+        t: dayjs().subtract(1, "d").toDate(),
       })
       .andWhere("vote.upvote = :truth", { truth: true })
       .andWhere("meme.community IN (:...comms)", {

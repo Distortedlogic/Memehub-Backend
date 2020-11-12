@@ -9,9 +9,6 @@ declare namespace NodeJS {
     ACTIVE_WIF: string;
     AWS_ID: string;
     AWS_KEY: string;
-    EMAIL: string;
-    EMAIL_PASSWORD: string;
-    SENDGRID_USER: string;
     SENDGRID_KEY: string;
   }
 }

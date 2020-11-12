@@ -16,15 +16,6 @@ import { recordRank } from "./utils/recordRank";
 
 (async () => {
   const startTime = dayjs();
-  const errors = {
-    createUsers: 0,
-    follow: 0,
-    memePosting: 0,
-    commentPosting: 0,
-    memeVoting: 0,
-    commentVoting: 0,
-    recordRank: 0,
-  };
   const conn = await createTypeormConnection();
   const redditMemes = await getRedditMemes(conn);
   let current = getCurrent();
@@ -34,42 +25,18 @@ import { recordRank } from "./utils/recordRank";
   while (current < dayjs()) {
     const now = dayjs();
     const currentUsers = await getCurrentUsers(conn);
-    try {
-      await createNewUsers(conn, current);
-    } catch (error) {
-      errors.createUsers++;
-    }
+    await createNewUsers(conn, current);
     for (const userId of currentUsers) {
       const memes = [redditMemes.pop()!];
-      try {
-        await doPosting(conn, memes, userId, current);
-      } catch (error) {
-        errors.memePosting++;
-      }
-      try {
-        await doFollowing(conn, userId, current);
-      } catch (error) {
-        errors.follow++;
-      }
-      try {
-        await doCommenting(conn, userId, current);
-      } catch (error) {
-        errors.commentPosting++;
-      }
-      try {
-        await doMemeVoting(conn, userId, current);
-      } catch (error) {
-        errors.memeVoting++;
-      }
-      try {
-        await doCommentVoting(conn, userId, current);
-      } catch (error) {
-        errors.commentVoting++;
-      }
+      await doPosting(conn, memes, userId, current);
+      await doFollowing(conn, userId, current);
+      await doCommenting(conn, userId, current);
+      await doMemeVoting(conn, userId, current);
+      await doCommentVoting(conn, userId, current);
     }
     current = current.add(1, "h");
-    errors.recordRank = await recordRank(conn, current);
-    await logStats(current, now, errors);
+    await recordRank(conn, current);
+    await logStats(current, now);
   }
   console.log(`Total Exec Time: ${dayjs().diff(startTime, "s")}`);
 })();

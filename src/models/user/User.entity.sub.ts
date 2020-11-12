@@ -32,13 +32,15 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
       )
     );
     const midnight = createdAt.set("h", 0);
-    ["ever", "day", "week", "month"].map((timeFrame) =>
-      Array(32)
-        .fill(32)
-        .map((_, idx) => {
+    const shift = createdAt.set("h", 0).diff(createdAt) === 0 ? 1 : 0;
+    const numDays = 32 - shift;
+    ["ever", "day", "week", "month"].forEach((timeFrame) =>
+      Array(numDays)
+        .fill(numDays)
+        .forEach((_, idx) => {
           initRanks.push(
             Rank.create({
-              createdAt: midnight.subtract(idx, "d").toDate(),
+              createdAt: midnight.subtract(idx + shift, "d").toDate(),
               totalPoints: 0,
               timeFrame,
               rank: numUsers + 1,

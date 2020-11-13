@@ -50,12 +50,7 @@ export class RankQueryResolver {
     const realTake = Math.min(50, take);
     if (!["ever", "day", "week", "month"].includes(timeFrame))
       return { items: [], hasMore: false };
-    const createdAt = dayjs()
-      .set("h", 0)
-      .set("m", 0)
-      .set("s", 0)
-      .set("ms", 0)
-      .toDate();
+    const createdAt = dayjs().set("m", 0).set("s", 0).set("ms", 0).toDate();
     const ranks = await Rank.find({
       where: { createdAt, timeFrame },
       order: { rank: "ASC" },

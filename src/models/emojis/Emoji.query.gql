@@ -1,0 +1,5 @@
+query Emojis {
+  emojis {
+    ...emoji
+  }
+}

@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from "type-graphql";
+import { Field, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   CreateDateColumn,
@@ -16,16 +16,16 @@ export interface followKey {
 @ObjectType()
 @Entity("follows")
 export class Follow extends BaseEntity {
-  @Field(() => Int)
-  @PrimaryColumn()
+  @Field(() => String)
+  @PrimaryColumn("uuid")
   followerId: string;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.following, { onDelete: "CASCADE" })
   follower: User;
 
-  @Field(() => Int)
-  @PrimaryColumn()
+  @Field(() => String)
+  @PrimaryColumn("uuid")
   followingId: string;
 
   @Field(() => User)

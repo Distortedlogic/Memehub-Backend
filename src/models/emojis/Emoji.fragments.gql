@@ -1,0 +1,4 @@
+fragment emoji on Emoji {
+  name
+  url
+}

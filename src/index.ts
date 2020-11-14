@@ -22,6 +22,7 @@ import {
 } from "./helpers/hasVotedLoaders";
 import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
 import { StartCron } from "./tasks/cron";
+import { emojiSync } from "./tasks/emojiSync";
 import { hiveSync } from "./tasks/hiveSync";
 import { COOKIE_NAME, __prod__ } from "./utils/constants";
 
@@ -34,6 +35,7 @@ const RedisStore = connectRedis(session);
   await createTypeormConnection();
   const redis = await createRedisConnection();
   const hive = await createHiveConnection();
+  await emojiSync();
   hiveSync(hive);
   StartCron();
 

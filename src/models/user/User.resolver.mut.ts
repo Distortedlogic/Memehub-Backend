@@ -35,7 +35,7 @@ export class UserMutationResolver {
     @Arg("signedMessage") signedMessage: string
   ): Promise<UserResponse> {
     const [account] = await hive.database.getAccounts([username]);
-    const user = await User.findOne({ where: { username } });
+    let user = await User.findOne({ where: { username } });
     const pubPostingKey = account.posting.key_auths[0][0];
     const recoveredPubKey = Signature.fromString(signedMessage)
       .recover(cryptoUtils.sha256(message))
@@ -43,18 +43,15 @@ export class UserMutationResolver {
     if (pubPostingKey === recoveredPubKey) {
       if (!user) {
         const avatar = JSON.parse(account.json_metadata).profile.profile_image;
-        const user = await User.create({
+        user = await User.create({
           username,
           avatar,
           isHive: true,
           verified: true,
         }).save();
-        session.userId = user.id;
-        return { user };
-      } else {
-        session.userId = user.id;
-        return { user };
       }
+      session.userId = user.id;
+      return { user };
     } else {
       return {
         errors: [

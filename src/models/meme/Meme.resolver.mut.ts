@@ -3,6 +3,7 @@ import { getConnection } from "typeorm";
 import { Auth } from "../../middleware/auth";
 import { ServerContext } from "../../ServerContext";
 import { s3 } from "./../../connections/awsConnection";
+import { __prod__ } from "./../../utils/constants";
 import { Meme } from "./Meme.entity";
 import { MemeVote } from "./MemeVote.entity";
 
@@ -17,7 +18,7 @@ export class MemeResolver {
     @Arg("path") path: s3ImgPaths,
     @Arg("filename") filename: string
   ): Promise<string> {
-    session.Key = `memehub/${path}/${filename}`;
+    session.Key = `${__prod__ ? "memehub" : "local"}/${path}/${filename}`;
     return await s3.getSignedUrlPromise("putObject", {
       Bucket: "memehub",
       Key: session.Key,

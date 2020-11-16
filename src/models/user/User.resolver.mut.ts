@@ -42,7 +42,11 @@ export class UserMutationResolver {
       .toString();
     if (pubPostingKey === recoveredPubKey) {
       if (!user) {
-        const avatar = JSON.parse(account.json_metadata).profile.profile_image;
+        // @ts-ignore
+        let avatar = JSON.parse(account.posting_json_metadata).profile
+          .profile_image;
+        if (!avatar)
+          avatar = JSON.parse(account.json_metadata).profile.profile_image;
         user = await User.create({
           username,
           avatar,

@@ -27,7 +27,7 @@ export class RankQueryResolver {
   @Query(() => [Rank])
   async currentRanks(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("userId", () => String, { nullable: true }) userId?: string
+    @Arg("userId", { nullable: true }) userId?: string
   ): Promise<Rank[]> {
     if (!userId) userId = session.userId;
     const createdAt = dayjs().set("m", 0).set("s", 0).set("ms", 0).toDate();
@@ -37,8 +37,7 @@ export class RankQueryResolver {
       });
       return rank!;
     });
-    const result = await Promise.all(ranks);
-    return result;
+    return Promise.all(ranks);
   }
 
   @Query(() => PaginatedRanks)

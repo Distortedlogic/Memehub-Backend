@@ -7,10 +7,21 @@ export const runUpdate = async () => {
   for (const user of users) {
     const [account] = await hive.database.getAccounts([user.username]);
     if (account) {
-      //@ts-ignore
-      const pjd = JSON.parse(account.posting_json_metadata);
-      const jd = JSON.parse(account.json_metadata);
-      user.avatar = pjd ? pjd.profile.profile_image : jd.profile.profile_image;
+      try {
+        user.avatar = JSON.parse(
+          //@ts-ignore
+          account.posting_json_metadata
+        ).profile.profile_image;
+      } catch (error) {
+        console.log(error);
+        try {
+          user.avatar = JSON.parse(account.json_metadata).profile.profile_image;
+        } catch (error) {
+          user.avatar = `${BUCKET_BASE_URL}/misc/defaultAvatar.png`;
+          console.log(error);
+          console.log("didnt work at all");
+        }
+      }
     } else {
       user.avatar = `${BUCKET_BASE_URL}/misc/defaultAvatar.png`;
     }

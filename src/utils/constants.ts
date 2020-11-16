@@ -4,3 +4,4 @@ export const FORGOT_PASSWORD_PREFIX = "forgot-password:";
 export const VERIFY_EMAIL_PREFIX = "verify-email:";
 export const HIVE_COMMUNITY = __prod__ ? "hive-189111" : "hive-119015";
 export const EMAIL = "memehub@memehub.lol";
+export const BUCKET_BASE_URL = "https://memehub.s3.amazonaws.com/memehub";

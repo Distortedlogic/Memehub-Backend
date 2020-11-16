@@ -16,8 +16,9 @@ import { Follow } from "../follow/Follow.entity";
 import { Meme } from "../meme/Meme.entity";
 import { MemeVote } from "../meme/MemeVote.entity";
 import { Rank } from "../rank/Rank.entity";
+import { BUCKET_BASE_URL } from "./../../utils/constants";
 
-const starterPic = "/defaultAvatar.png";
+const starterPic = `${BUCKET_BASE_URL}/misc/defaultAvatar.png`;
 
 const actionToPoints: Record<string, number> = {
   memeVoteGiven: 1,

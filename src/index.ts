@@ -24,6 +24,7 @@ import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
 import { StartCron } from "./tasks/cron";
 import { emojiSync } from "./tasks/emojiSync";
 import { hiveSync } from "./tasks/hiveSync";
+import { runUpdate } from "./tasks/runUpdate";
 import { COOKIE_NAME, __prod__ } from "./utils/constants";
 
 const port = 5000;
@@ -35,6 +36,7 @@ const RedisStore = connectRedis(session);
   await createTypeormConnection();
   const redis = await createRedisConnection();
   const hive = await createHiveConnection();
+  await runUpdate();
   await emojiSync();
   // await optS3Imgs();
   hiveSync(hive);

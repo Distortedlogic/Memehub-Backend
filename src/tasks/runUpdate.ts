@@ -8,14 +8,19 @@ export const runUpdate = async () => {
     const [account] = await hive.database.getAccounts([user.username]);
     if (account) {
       try {
-        user.avatar = JSON.parse(
+        console.log(
+          "account.posting_json_metadata",
           //@ts-ignore
           account.posting_json_metadata
-        ).profile.profile_image;
+        );
+        //@ts-ignore
+        const theJson = JSON.parse(account.posting_json_metadata);
+        user.avatar = theJson.profile.profile_image;
       } catch (error) {
-        console.log(error);
         try {
-          user.avatar = JSON.parse(account.json_metadata).profile.profile_image;
+          console.log("account.json_metadata", account.json_metadata);
+          const theJson = JSON.parse(account.json_metadata);
+          user.avatar = theJson.profile.profile_image;
         } catch (error) {
           user.avatar = `${BUCKET_BASE_URL}/misc/defaultAvatar.png`;
         }

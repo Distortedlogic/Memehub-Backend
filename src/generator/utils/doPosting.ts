@@ -14,14 +14,9 @@ export const doPosting = async (
     userId,
     isHive: false,
     title: faker.lorem.text(random.int(0, 5)),
-    community: [
-      "original",
-      "hive",
-      "wholesome",
-      "dark",
-      "political",
-      undefined,
-    ][random.int(0, 5)],
+    community: ["original", "hive", "wholesome", "dark", "political", "none"][
+      random.int(0, 5)
+    ],
     createdAt: current.set("m", random.int(0, 59)).toDate(),
   }));
   await conn.createQueryBuilder().insert().into(Meme).values(memes).execute();

@@ -12,7 +12,7 @@ export class CommentResolver {
     @Arg("memeId") memeId: string,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
-    @Arg("order", () => String) orderType: string
+    @Arg("order") orderType: string
   ): Promise<PaginatedComments> {
     const realTake = Math.min(50, take);
     const order = ordermap(orderType);
@@ -35,7 +35,7 @@ export class CommentResolver {
     @Ctx() { req: { session } }: ServerContext,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
-    @Arg("order", () => String) orderType: string
+    @Arg("order") orderType: string
   ): Promise<PaginatedComments> {
     const realTake = Math.min(50, take);
     const order = ordermap(orderType);
@@ -58,7 +58,7 @@ export class CommentResolver {
     @Arg("userId") userId: string,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
-    @Arg("order", () => String) orderType: string
+    @Arg("order") orderType: string
   ): Promise<PaginatedComments> {
     const realTake = Math.min(50, take);
     const order = ordermap(orderType);

@@ -10,7 +10,7 @@ export class RankQueryResolver {
   @Query(() => [Rank])
   async userRanks(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("userId", () => String, { nullable: true }) userId?: string,
+    @Arg("userId", { nullable: true }) userId?: string,
     @Arg("timeFrame", { nullable: true }) timeFrame?: string
   ): Promise<Rank[]> {
     if (!userId) userId = session.userId;

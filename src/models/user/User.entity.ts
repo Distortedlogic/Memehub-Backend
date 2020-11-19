@@ -46,15 +46,15 @@ export class User extends BaseEntity {
   @Column({ default: false })
   verified: boolean;
 
-  @Field(() => String)
+  @Field()
   @Column({ unique: true, nullable: true })
   email: string;
 
-  @Field(() => String)
+  @Field()
   @Column({ unique: true })
   username: string;
 
-  @Field(() => String)
+  @Field()
   @Column({ default: starterPic })
   avatar: string;
 
@@ -79,10 +79,6 @@ export class User extends BaseEntity {
   @Field(() => [CommentVote])
   @OneToMany(() => CommentVote, (commentVote) => commentVote.user)
   commentVotes: CommentVote[];
-
-  @Field(() => Int)
-  @Column("int", { nullable: true })
-  rankId: number;
 
   @Field(() => Rank)
   @OneToOne(() => Rank, (rank) => rank.user)

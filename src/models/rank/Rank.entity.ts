@@ -13,7 +13,7 @@ export class Rank extends BaseEntity {
   @PrimaryColumn()
   userId: string;
 
-  @Field(() => String)
+  @Field()
   @PrimaryColumn()
   timeFrame: string;
 

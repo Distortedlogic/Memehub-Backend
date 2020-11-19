@@ -16,7 +16,7 @@ export interface followKey {
 @ObjectType()
 @Entity("follows")
 export class Follow extends BaseEntity {
-  @Field(() => String)
+  @Field()
   @PrimaryColumn("uuid")
   followerId: string;
 
@@ -24,7 +24,7 @@ export class Follow extends BaseEntity {
   @ManyToOne(() => User, (user) => user.following, { onDelete: "CASCADE" })
   follower: User;
 
-  @Field(() => String)
+  @Field()
   @PrimaryColumn("uuid")
   followingId: string;
 

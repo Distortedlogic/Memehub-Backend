@@ -4,15 +4,15 @@ export type timeframe = "daily" | "weekly" | "monthly" | "ever";
 
 @ObjectType()
 export class Leader {
-  @Field(() => String)
+  @Field()
   userId: string;
-  @Field(() => String)
+  @Field()
   username: string;
-  @Field(() => String)
+  @Field()
   avatar: string;
-  @Field(() => String)
+  @Field()
   ups: string;
-  @Field(() => String)
+  @Field()
   downs: string;
 }
 

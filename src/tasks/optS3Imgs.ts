@@ -1,4 +1,3 @@
-import jimp from "jimp";
 import { s3 } from "./../connections/awsConnection";
 export const optS3Imgs = async () => {
   const resp = await s3
@@ -10,13 +9,13 @@ export const optS3Imgs = async () => {
   if (!resp.Contents) return;
   for (const item of resp.Contents) {
     if (item.Key?.split(".")[1]) {
-      const img = await s3
-        .getObject({ Bucket: "memehub", Key: item.Key! })
-        .promise();
-      const file = await jimp.read(
-        Buffer.from(img.Body as Buffer).toString("base64")
-      );
-      file;
+      // const img = await s3
+      //   .getObject({ Bucket: "memehub", Key: item.Key! })
+      //   .promise();
+      // const file = await jimp.read(
+      //   Buffer.from(img.Body as Buffer).toString("base64")
+      // );
+      // file;
       // console.log(await file.quality(80).getBufferAsync("jpg"));
       // s3.putObject({Bucket:"memehub",Key:item.Key, Body: await file.quality(80).getBufferAsync('jpg')})
       throw new Error();

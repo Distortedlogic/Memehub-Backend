@@ -19,7 +19,7 @@ export class MemeResolver {
     @Arg("filename") filename: string
   ): Promise<string> {
     session.Key = `${__prod__ ? "memehub" : "local"}/${path}/${filename}`;
-    return await s3.getSignedUrlPromise("putObject", {
+    return s3.getSignedUrlPromise("putObject", {
       Bucket: "memehub",
       Key: session.Key,
       ContentType: `image/${filename.split(".").pop()}`,
@@ -31,10 +31,9 @@ export class MemeResolver {
   @Mutation(() => Meme, { nullable: true })
   @UseMiddleware(Auth)
   async postMeme(
-    @Ctx()
-    { req: { session } }: ServerContext,
-    @Arg("title", () => String) title?: string,
-    @Arg("community", () => String) community?: string
+    @Ctx() { req: { session } }: ServerContext,
+    @Arg("community") community: string,
+    @Arg("title") title?: string
   ): Promise<Meme | undefined> {
     const { userId, Key } = session;
     if (!Key) return undefined;

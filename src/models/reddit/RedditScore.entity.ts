@@ -9,11 +9,11 @@ export class RedditScore {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => String)
+  @Field()
   @Column("character varying", { name: "username", length: 20 })
   username: string;
 
-  @Field(() => String)
+  @Field()
   @Column("character varying", { name: "subreddit", length: 50 })
   subreddit: string;
 

@@ -16,7 +16,7 @@ export class Redditor extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => String)
+  @Field()
   @Column("character varying", { name: "username", unique: true, length: 20 })
   username: string;
 

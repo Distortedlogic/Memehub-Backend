@@ -15,22 +15,22 @@ export class RedditMeme extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => String)
+  @Field()
   @Column("character varying", { name: "username", length: 20 })
   username: string;
 
   @Column("character varying", { name: "reddit_id", length: 20 })
   redditId: string;
 
-  @Field(() => String)
+  @Field()
   @Column("character varying", { name: "subreddit", length: 50 })
   subreddit: string;
 
-  @Field(() => String)
+  @Field()
   @Column("character varying", { name: "title", length: 500 })
   title: string;
 
-  @Field(() => String)
+  @Field()
   @Column("character varying", { name: "url", length: 1000 })
   url: string;
 

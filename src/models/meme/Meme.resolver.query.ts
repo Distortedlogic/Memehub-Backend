@@ -22,7 +22,7 @@ export class MemeQueryResolver {
     @Ctx() { req: { session } }: ServerContext,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
-    @Arg("order", () => String) order: string
+    @Arg("order") order: string
   ): Promise<PaginatedMemes> {
     return await this.memeRepo.userMemes(session.userId, take, skip, order);
   }
@@ -32,7 +32,7 @@ export class MemeQueryResolver {
     @Arg("userId") userId: string,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
-    @Arg("order", () => String) order: string
+    @Arg("order") order: string
   ): Promise<PaginatedMemes> {
     return await this.memeRepo.userMemes(userId, take, skip, order);
   }
@@ -67,7 +67,7 @@ export class MemeQueryResolver {
 
   @Query(() => PaginatedMemes)
   async communityMemes(
-    @Arg("community", () => String) community: string,
+    @Arg("community") community: string,
     @Arg("take", () => Int) take: number,
     @Arg("days", () => Int, { nullable: true }) days?: number,
     @Arg("skip", () => Int, { nullable: true }) skip?: number
@@ -107,7 +107,7 @@ export class MemeQueryResolver {
       })
       .andWhere("vote.upvote = :truth", { truth: true })
       .andWhere("meme.community IN (:...comms)", {
-        comms: ["dark", "political"],
+        comms: ["original", "hive", "wholesome", "none"],
       })
       .orderBy("count", "DESC")
       .groupBy("meme.id")
@@ -127,7 +127,7 @@ export class MemeQueryResolver {
     @Ctx() { req: { session } }: ServerContext,
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
-    @Arg("order", () => String) order: string
+    @Arg("order") order: string
   ): Promise<PaginatedMemes> {
     const realTake = Math.min(50, take);
     const orderMap: Record<string, string> = {

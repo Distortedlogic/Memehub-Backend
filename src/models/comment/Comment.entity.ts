@@ -20,7 +20,7 @@ export class Comment extends BaseEntity {
   @PrimaryColumn("uuid")
   id: string;
 
-  @Field(() => String)
+  @Field()
   @Column()
   text: string;
 
@@ -28,7 +28,7 @@ export class Comment extends BaseEntity {
   @Column({ default: false })
   isHive: boolean;
 
-  @Field(() => String, { nullable: true })
+  @Field({ nullable: true })
   @Column({ nullable: true })
   permlink: string;
 

@@ -18,8 +18,6 @@ export const runUpdate = async () => {
           user.avatar = JSON.parse(account.json_metadata).profile.profile_image;
         } catch (error) {
           user.avatar = `${BUCKET_BASE_URL}/misc/defaultAvatar.png`;
-          console.log(error);
-          console.log("didnt work at all");
         }
       }
     } else {

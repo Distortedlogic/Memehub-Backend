@@ -3,6 +3,9 @@ mutation PostMeme($title: String!, $community: String!) {
     ...myMeme
   }
 }
+mutation DeleteMeme($memeId: String!) {
+  deleteMeme(memeId: $memeId)
+}
 mutation SetMemeIsHive($memeId: String!) {
   setMemeIsHive(memeId: $memeId)
 }

@@ -28,6 +28,19 @@ export class MemeResolver {
     });
   }
 
+  @Mutation(() => Boolean)
+  @UseMiddleware(Auth)
+  async deleteMeme(
+    @Ctx() { req: { session } }: ServerContext,
+    @Arg("memeId") memeId: string
+  ): Promise<boolean> {
+    const meme = await Meme.findOne(memeId);
+    if (!meme) return false;
+    await s3.deleteObject({ Bucket: "memehub", Key: session.Key }).promise();
+    await Meme.remove(meme);
+    return true;
+  }
+
   @Mutation(() => Meme, { nullable: true })
   @UseMiddleware(Auth)
   async postMeme(
@@ -53,7 +66,6 @@ export class MemeResolver {
       userId,
       community,
     }).save();
-    session.Key = null;
     return meme;
   }
 

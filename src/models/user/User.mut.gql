@@ -12,10 +12,6 @@ mutation VerifyEmail($token: String!) {
   verifyEmail(token: $token)
 }
 
-mutation VerifyCreationCode($code: String!) {
-  verifyCreationCode(code: $code)
-}
-
 mutation CreateHiveAcct($new_account_name: String!, $password: String!) {
   createHiveAcct(new_account_name: $new_account_name, password: $password)
 }

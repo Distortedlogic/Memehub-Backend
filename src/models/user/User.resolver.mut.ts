@@ -23,8 +23,6 @@ import { validateLogin } from "./utils/login.validate";
 import { validateRegister } from "./utils/register.validate";
 import { UserResponse } from "./_types";
 
-const currentCodes = ["LambdaDS8", "HiveMemes"];
-
 @Resolver(User)
 export class UserMutationResolver {
   @Mutation(() => UserResponse)
@@ -100,11 +98,6 @@ export class UserMutationResolver {
         }
       });
     });
-  }
-  @Mutation(() => Boolean)
-  async verifyCreationCode(@Arg("code") code: string): Promise<boolean> {
-    if (currentCodes.includes(code)) return true;
-    else return false;
   }
 
   @Mutation(() => Boolean)

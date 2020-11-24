@@ -38,7 +38,6 @@ const RedisStore = connectRedis(session);
   const hive = await createHiveConnection();
   await runUpdate();
   await emojiSync();
-  // await optS3Imgs();
   hiveSync(hive);
   StartCron();
 

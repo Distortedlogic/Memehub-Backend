@@ -1,7 +1,7 @@
+import { BUCKET_BASE_URL } from "../utils/constants";
 import { s3 } from "./../connections/awsConnection";
 import { Emoji } from "./../models/emojis/Emoji.entity";
 
-const BASE_AWS_S3_URL = "https://memehub.s3.amazonaws.com/";
 export const emojiSync = async () => {
   const resp = await s3
     .listObjectsV2({
@@ -16,7 +16,7 @@ export const emojiSync = async () => {
       const filename = split[split.length - 1];
       const [name] = filename.split(".");
       if (!name) return undefined;
-      const url = BASE_AWS_S3_URL + item.Key;
+      const url = BUCKET_BASE_URL + item.Key;
       if (!(await Emoji.findOne(name))) {
         return Emoji.create({ name, url });
       } else {

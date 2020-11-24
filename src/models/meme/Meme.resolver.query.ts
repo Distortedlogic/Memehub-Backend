@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Arg, Ctx, Int, Query, Resolver, UseMiddleware } from "type-graphql";
 import { Service } from "typedi";
-import { Any, Equal, getConnection, LessThan, Not } from "typeorm";
+import { getConnection } from "typeorm";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import { Auth } from "../../middleware/auth";
 import { ServerContext } from "../../ServerContext";
@@ -48,17 +48,25 @@ export class MemeQueryResolver {
     @Arg("cursor", { nullable: true }) cursor?: string
   ): Promise<PaginatedMemes> {
     const realTake = Math.min(50, take);
-    const where = cursor
-      ? {
-          createdAt: LessThan(new Date(cursor)),
-          community: Not(Equal(Any(["dark", "political"]))),
-        }
-      : { community: Not(Equal(Any(["dark", "political"]))) };
-    const memes = await Meme.find({
-      where,
-      order: { createdAt: "DESC", ups: "DESC", numComments: "DESC" },
-      take: realTake,
-    });
+    const memesQ = getConnection()
+      .createQueryBuilder()
+      .select("meme")
+      .from(Meme, "meme")
+      .where("meme.community IN (:...communities)", {
+        communities: ["none", "wholesome", "hive", "original"],
+      })
+      .addOrderBy("meme.createdAt", "DESC")
+      .orderBy("meme.ratio", "DESC")
+      .addOrderBy("meme.ups", "DESC")
+      .addOrderBy("meme.numComments", "DESC")
+
+      .take(realTake);
+    if (cursor) {
+      memesQ.andWhere("meme.createdAt <= :cursor", {
+        cursor: new Date(cursor),
+      });
+    }
+    const memes = await memesQ.getMany();
     return {
       items: memes,
       hasMore: memes.length === realTake ? true : false,

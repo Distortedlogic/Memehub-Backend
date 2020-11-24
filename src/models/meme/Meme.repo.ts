@@ -2,11 +2,9 @@ import dayjs from "dayjs";
 import moment from "moment";
 import { Service } from "typedi";
 import {
-  Any,
   EntityRepository,
-  Equal,
+  getConnection,
   MoreThanOrEqual,
-  Not,
   Repository,
 } from "typeorm";
 import { ordermap } from "./../../utils/functions/orderMap";
@@ -74,9 +72,7 @@ export class MemeRepo extends Repository<Meme> {
   ): Promise<PaginatedMemes> {
     const realTake = Math.min(50, take);
     const daysDate = moment.utc().subtract(days, "days").toDate();
-    const where = days
-      ? { createdAt: MoreThanOrEqual(daysDate), clanId: null }
-      : { clanId: null };
+    const where = days ? { createdAt: MoreThanOrEqual(daysDate) } : {};
     const memes = await Meme.find({
       where,
       order: {
@@ -100,24 +96,23 @@ export class MemeRepo extends Repository<Meme> {
   ): Promise<PaginatedMemes> {
     const realTake = Math.min(50, take);
     const daysDate = moment.utc().subtract(days, "days").toDate();
-    const where =
-      days !== -1
-        ? {
-            createdAt: MoreThanOrEqual(daysDate),
-            community: Not(Equal(Any(["dark", "political"]))),
-          }
-        : { community: Not(Equal(Any(["dark", "political"]))) };
-    const memes = await Meme.find({
-      where,
-      order: {
-        ratio: "DESC",
-        ups: "DESC",
-        numComments: "DESC",
-        createdAt: "DESC",
-      },
-      take: realTake,
-      skip,
-    });
+    const memesQ = getConnection()
+      .createQueryBuilder()
+      .select("meme")
+      .from(Meme, "meme")
+      .where("meme.community IN (:...communities)", {
+        communities: ["none", "wholesome", "hive", "original"],
+      })
+      .orderBy("meme.ratio", "DESC")
+      .addOrderBy("meme.ups", "DESC")
+      .addOrderBy("meme.numComments", "DESC")
+      .addOrderBy("meme.createdAt", "DESC")
+      .take(realTake)
+      .skip(skip);
+    if (days !== -1) {
+      memesQ.andWhere("meme.createdAt >= :daysDate", { daysDate });
+    }
+    const memes = await memesQ.getMany();
     return {
       items: memes,
       hasMore: memes.length === realTake ? true : false,

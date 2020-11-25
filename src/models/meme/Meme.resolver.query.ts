@@ -55,8 +55,8 @@ export class MemeQueryResolver {
       .where("meme.community IN (:...communities)", {
         communities: ["none", "wholesome", "hive", "original"],
       })
-      .addOrderBy("meme.createdAt", "DESC")
-      .orderBy("meme.ratio", "DESC")
+      .orderBy("meme.createdAt", "DESC")
+      .addOrderBy("meme.ratio", "DESC")
       .addOrderBy("meme.ups", "DESC")
       .addOrderBy("meme.numComments", "DESC")
 

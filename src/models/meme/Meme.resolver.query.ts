@@ -59,7 +59,6 @@ export class MemeQueryResolver {
       .addOrderBy("meme.ratio", "DESC")
       .addOrderBy("meme.ups", "DESC")
       .addOrderBy("meme.numComments", "DESC")
-
       .take(realTake);
     if (cursor) {
       memesQ.andWhere("meme.createdAt <= :cursor", {

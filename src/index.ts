@@ -34,6 +34,8 @@ const RedisStore = connectRedis(session);
 (async () => {
   await createTypeormConnection();
   const redis = await createRedisConnection();
+  // const RedisClient = Redis.createClient({ url: "redis://redis:6379" });
+  // const rai = new redisai.Client(RedisClient);
   const hive = await createHiveConnection();
   // await runUpdate();
   await emojiSync();

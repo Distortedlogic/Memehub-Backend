@@ -7,7 +7,7 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from "typeorm";
-import { User } from "../user/User.entity";
+import { User } from "../../user/User.entity";
 import { Comment } from "./Comment.entity";
 
 export interface commentVoteKey {

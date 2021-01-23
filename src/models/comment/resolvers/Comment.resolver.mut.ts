@@ -8,11 +8,11 @@ import {
   UseMiddleware,
 } from "type-graphql";
 import { getConnection } from "typeorm";
-import { Auth } from "../../middleware/auth";
-import { ServerContext } from "../../ServerContext";
-import { Comment } from "./Comment.entity";
-import { CommentVote } from "./CommentVote.entity";
-import { Topic } from "./_types";
+import { Auth } from "../../../middleware/auth";
+import { ServerContext } from "../../../ServerContext";
+import { Comment } from "../Entity/Comment.entity";
+import { CommentVote } from "../Entity/CommentVote.entity";
+import { Topic } from "../_types";
 
 @Resolver(Comment)
 export class CommentResolver {

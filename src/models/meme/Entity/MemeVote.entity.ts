@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
-import { User } from "./../user/User.entity";
+import { User } from "../../user/User.entity";
 import { Meme } from "./Meme.entity";
 
 export interface memeVoteKey {

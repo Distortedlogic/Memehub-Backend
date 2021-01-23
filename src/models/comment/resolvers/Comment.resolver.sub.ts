@@ -1,6 +1,6 @@
 import { Arg, Resolver, Root, Subscription } from "type-graphql";
-import { Comment } from "./Comment.entity";
-import { Topic } from "./_types";
+import { Comment } from "../Entity/Comment.entity";
+import { Topic } from "../_types";
 
 @Resolver(Comment)
 export class CommentSubscriptionResolver {

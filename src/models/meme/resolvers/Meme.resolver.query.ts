@@ -3,12 +3,12 @@ import { Arg, Ctx, Int, Query, Resolver, UseMiddleware } from "type-graphql";
 import { Service } from "typedi";
 import { getConnection } from "typeorm";
 import { InjectRepository } from "typeorm-typedi-extensions";
-import { Auth } from "../../middleware/auth";
-import { ServerContext } from "../../ServerContext";
-import { Follow } from "./../follow/Follow.entity";
-import { Meme } from "./Meme.entity";
-import { MemeRepo } from "./Meme.repo";
-import { communityList, PaginatedMemes } from "./_types";
+import { Auth } from "../../../middleware/auth";
+import { ServerContext } from "../../../ServerContext";
+import { Follow } from "../../follow/Follow.entity";
+import { Meme } from "../Entity/Meme.entity";
+import { MemeRepo } from "../repos/Meme.repo";
+import { communityList, PaginatedMemes } from "../_types";
 
 @Service()
 @Resolver(Meme)

@@ -10,11 +10,11 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Comment } from "../comment/Comment.entity";
-import { CommentVote } from "../comment/CommentVote.entity";
+import { Comment } from "../comment/Entity/Comment.entity";
+import { CommentVote } from "../comment/Entity/CommentVote.entity";
 import { Follow } from "../follow/Follow.entity";
-import { Meme } from "../meme/Meme.entity";
-import { MemeVote } from "../meme/MemeVote.entity";
+import { Meme } from "../meme/Entity/Meme.entity";
+import { MemeVote } from "../meme/Entity/MemeVote.entity";
 import { Rank } from "../rank/Rank.entity";
 import { BUCKET_BASE_URL } from "./../../utils/constants";
 

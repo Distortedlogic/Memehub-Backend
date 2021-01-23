@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import faker from "faker";
 import random from "random";
 import { Connection } from "typeorm";
-import { Meme } from "./../../models/meme/Meme.entity";
+import { Meme } from "./../../models/meme/Entity/Meme.entity";
 export const doPosting = async (
   conn: Connection,
   urls: string[],

@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import random from "random";
 import { Connection } from "typeorm";
-import { Meme } from "./../../models/meme/Meme.entity";
-import { MemeVote } from "./../../models/meme/MemeVote.entity";
+import { MemeVote } from "../../models/meme/Entity/MemeVote.entity";
+import { Meme } from "./../../models/meme/Entity/Meme.entity";
 import { settings } from "./../settings";
 export const doMemeVoting = async (
   conn: Connection,

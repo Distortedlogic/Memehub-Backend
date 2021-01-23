@@ -1,11 +1,11 @@
 import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { getConnection } from "typeorm";
-import { Auth } from "../../middleware/auth";
-import { ServerContext } from "../../ServerContext";
-import { s3 } from "./../../connections/awsConnection";
-import { __prod__ } from "./../../utils/constants";
-import { Meme } from "./Meme.entity";
-import { MemeVote } from "./MemeVote.entity";
+import { s3 } from "../../../connections/awsConnection";
+import { Auth } from "../../../middleware/auth";
+import { ServerContext } from "../../../ServerContext";
+import { __prod__ } from "../../../utils/constants";
+import { Meme } from "../Entity/Meme.entity";
+import { MemeVote } from "../Entity/MemeVote.entity";
 
 type s3ImgPaths = "memes" | "templates";
 

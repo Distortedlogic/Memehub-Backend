@@ -1,9 +1,9 @@
 import { Arg, Ctx, Int, Query, Resolver, UseMiddleware } from "type-graphql";
-import { Auth } from "../../middleware/auth";
-import { ServerContext } from "../../ServerContext";
-import { ordermap } from "./../../utils/functions/orderMap";
-import { Comment } from "./Comment.entity";
-import { PaginatedComments } from "./_types";
+import { Auth } from "../../../middleware/auth";
+import { ServerContext } from "../../../ServerContext";
+import { ordermap } from "../../../utils/functions/orderMap";
+import { Comment } from "../Entity/Comment.entity";
+import { PaginatedComments } from "../_types";
 
 @Resolver(Comment)
 export class CommentResolver {

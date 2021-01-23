@@ -1,7 +1,7 @@
 import { Client, CommentOperation } from "@hiveio/dhive";
 import { Like } from "typeorm";
-import { Comment } from "./../models/comment/Comment.entity";
-import { Meme } from "./../models/meme/Meme.entity";
+import { Comment } from "../models/comment/Entity/Comment.entity";
+import { Meme } from "./../models/meme/Entity/Meme.entity";
 import { User } from "./../models/user/User.entity";
 import { HIVE_COMMUNITY } from "./../utils/constants";
 

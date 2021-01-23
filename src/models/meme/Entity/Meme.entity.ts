@@ -9,8 +9,8 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Comment } from "../comment/Comment.entity";
-import { User } from "../user/User.entity";
+import { Comment } from "./../../comment/Entity/Comment.entity";
+import { User } from "./../../user/User.entity";
 import { MemeVote } from "./MemeVote.entity";
 
 @ObjectType()

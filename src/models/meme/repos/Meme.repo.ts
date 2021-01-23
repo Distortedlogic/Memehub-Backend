@@ -7,9 +7,9 @@ import {
   MoreThanOrEqual,
   Repository,
 } from "typeorm";
-import { ordermap } from "./../../utils/functions/orderMap";
-import { Meme } from "./Meme.entity";
-import { PaginatedMemes } from "./_types";
+import { ordermap } from "../../../utils/functions/orderMap";
+import { Meme } from "../Entity/Meme.entity";
+import { PaginatedMemes } from "../_types";
 
 @Service()
 @EntityRepository(Meme)

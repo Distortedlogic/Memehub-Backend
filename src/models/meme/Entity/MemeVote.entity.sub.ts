@@ -3,8 +3,8 @@ import {
   EventSubscriber,
   InsertEvent,
 } from "typeorm";
-import { User } from "../user/User.entity";
-import { percent } from "./../../utils/functions/percent";
+import { percent } from "../../../utils/functions/percent";
+import { User } from "../../user/User.entity";
 import { Meme } from "./Meme.entity";
 import { MemeVote } from "./MemeVote.entity";
 

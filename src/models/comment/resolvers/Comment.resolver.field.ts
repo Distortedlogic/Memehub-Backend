@@ -1,7 +1,7 @@
 import { Ctx, FieldResolver, Resolver, Root } from "type-graphql";
-import { ServerContext } from "../../ServerContext";
-import { User } from "../user/User.entity";
-import { Comment } from "./Comment.entity";
+import { ServerContext } from "../../../ServerContext";
+import { User } from "../../user/User.entity";
+import { Comment } from "../Entity/Comment.entity";
 
 @Resolver(Comment)
 export class CommentFieldResolver {

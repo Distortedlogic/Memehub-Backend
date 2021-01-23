@@ -73,8 +73,15 @@ const RedisStore = connectRedis(session);
   });
 
   app.set("trust proxy", 1);
-  // app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
-  app.use(cors({ origin: "https://memehub.lol", credentials: true }));
+  app.use(
+    cors({
+      origin:
+        process.env.ENV === "production"
+          ? process.env.CORS_ORIGIN
+          : process.env.DEV_ORIGIN,
+      credentials: true,
+    })
+  );
   app.use(
     session({
       cookie: {

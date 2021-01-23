@@ -2,8 +2,8 @@ import dayjs from "dayjs";
 import faker from "faker";
 import random from "random";
 import { Connection } from "typeorm";
-import { Comment } from "./../../models/comment/Comment.entity";
-import { Meme } from "./../../models/meme/Meme.entity";
+import { Comment } from "../../models/comment/Entity/Comment.entity";
+import { Meme } from "./../../models/meme/Entity/Meme.entity";
 import { settings } from "./../settings";
 export const doCommenting = async (
   conn: Connection,

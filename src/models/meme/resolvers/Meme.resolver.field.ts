@@ -1,7 +1,7 @@
 import { Ctx, FieldResolver, Resolver, Root } from "type-graphql";
-import { ServerContext } from "../../ServerContext";
-import { User } from "../user/User.entity";
-import { Meme } from "./Meme.entity";
+import { ServerContext } from "../../../ServerContext";
+import { User } from "../../user/User.entity";
+import { Meme } from "../Entity/Meme.entity";
 
 @Resolver(Meme)
 export class MemeFieldResolver {

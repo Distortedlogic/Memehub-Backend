@@ -1,5 +1,5 @@
 import { EntityRepository, getConnection, Repository } from "typeorm";
-import { MemeVote } from "./MemeVote.entity";
+import { MemeVote } from "../Entity/MemeVote.entity";
 
 @EntityRepository(MemeVote)
 export class MemeRepo extends Repository<MemeVote> {

@@ -4,7 +4,7 @@ import {
   InsertEvent,
 } from "typeorm";
 import { v4 } from "uuid";
-import { Meme } from "./../meme/Meme.entity";
+import { Meme } from "./../../meme/Entity/Meme.entity";
 import { Comment } from "./Comment.entity";
 
 @EventSubscriber()

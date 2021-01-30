@@ -29,6 +29,10 @@ export class Meme extends BaseEntity {
   title: string;
 
   @Field()
+  @Column({ nullable: true })
+  ocrText: string;
+
+  @Field()
   @Column({ unique: true })
   url: string;
 

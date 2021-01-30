@@ -4,14 +4,12 @@ import { ServerContext } from "../ServerContext";
 export const Auth: MiddlewareFn<ServerContext> = (
   {
     context: {
-      req: {
-        session: { userId },
-      },
+      req: { session },
     },
   },
   next
 ): Promise<CallableFunction> => {
-  if (!userId) {
+  if (!session.userId) {
     throw new Error("not authenticated");
   }
   return next();

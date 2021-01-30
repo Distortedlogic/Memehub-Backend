@@ -59,6 +59,8 @@
     "redis-rejson": "^1.0.0",
     "redisai-js": "^1.0.0",
     "reflect-metadata": "^0.1.13",
+    "secp256k1": "^4.0.2",
+    "tesseract.js": "^2.1.4",
     "ts-node": "^8.9.1",
     "type-graphql": "^0.17.6",
     "typedi": "^0.8.0",

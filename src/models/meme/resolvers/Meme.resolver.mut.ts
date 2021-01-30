@@ -60,12 +60,14 @@ export class MemeResolver {
     } catch (error) {
       return undefined;
     }
+    const url = `https://memehub.s3.amazonaws.com/${Key}`;
     const meme = await Meme.create({
-      url: `https://memehub.s3.amazonaws.com/${Key}`,
+      url,
       title,
       userId,
       community,
     }).save();
+    session.Key = undefined;
     return meme;
   }
 

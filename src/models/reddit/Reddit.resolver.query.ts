@@ -27,4 +27,15 @@ export class MemeQueryResolver {
       hasMore: memes.length === realTake ? true : false,
     };
   }
+
+  @Query(() => String)
+  async redditMaxTimestamp(): Promise<String> {
+    const data = await getConnection()
+      .getRepository(RedditMeme)
+      .createQueryBuilder("redditMeme")
+      .select("MAX(redditMeme.createdAt)")
+      .getRawOne();
+    console.log(data.max);
+    return data.max;
+  }
 }

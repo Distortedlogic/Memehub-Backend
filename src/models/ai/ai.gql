@@ -1,0 +1,3 @@
+mutation MemeClf($url: String!) {
+  memeClf(url: $url)
+}

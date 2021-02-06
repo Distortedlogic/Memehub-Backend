@@ -40,6 +40,14 @@ export class Meme extends BaseEntity {
   @Column()
   userId: string;
 
+  @Field()
+  @Column({ nullable: true })
+  stonk: string;
+
+  @Field()
+  @Column({ nullable: true })
+  version: string;
+
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.memes, {
     cascade: true,

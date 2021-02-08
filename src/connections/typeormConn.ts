@@ -15,9 +15,10 @@ export const createTypeormConnection = async () => {
         url,
         synchronize: false,
         logging: false,
-        entities: ["src/models/**/*.entity*.{js,ts}"],
+        entities: ["src/models/**/entities/*.{js,ts}"],
+
         migrations: ["src/migration/**/*.{js,ts}"],
-        subscribers: ["src/models/**/*.entity.sub*.{js,ts}"],
+        subscribers: ["src/models/**/entities/*.sub*.{js,ts}"],
         cli: {
           entitiesDir: "src/entity",
           migrationsDir: "src/migration",

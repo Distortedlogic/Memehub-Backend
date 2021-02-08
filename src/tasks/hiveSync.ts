@@ -1,8 +1,8 @@
 import { Client, CommentOperation } from "@hiveio/dhive";
 import { Like } from "typeorm";
-import { Comment } from "../models/comment/Entity/Comment.entity";
-import { Meme } from "./../models/meme/Entity/Meme.entity";
-import { User } from "./../models/user/User.entity";
+import { Comment } from "../models/comment/entities/Comment";
+import { Meme } from "../models/meme/entities/Meme";
+import { User } from "../models/user/entities/User";
 import { HIVE_COMMUNITY } from "./../utils/constants";
 
 export const hiveSync = async (hive: Client) => {

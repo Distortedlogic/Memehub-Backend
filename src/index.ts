@@ -50,7 +50,7 @@ const RedisStore = connectRedis(session);
   const app = express();
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [__dirname + "/**/*.resolver*.{js,ts}"],
+      resolvers: [__dirname + "/**/resolvers/*.{js,ts}"],
       validate: false,
       pubSub,
       container: Container,

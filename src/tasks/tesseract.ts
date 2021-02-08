@@ -1,5 +1,5 @@
 import { createWorker, ImageLike } from "tesseract.js";
-import { Meme } from "./../models/meme/Entity/Meme.entity";
+import { Meme } from "../models/meme/entities/Meme";
 
 const worker = createWorker({
   errorHandler: (m) => console.log(m),

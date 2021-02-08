@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { Connection } from "typeorm";
-import { Rank } from "./../../models/rank/Rank.entity";
+import { Rank } from "../../models/rank/entities/Rank";
 import { User } from "./../../models/user/User.entity";
 
 type userRank = {

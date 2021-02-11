@@ -6,7 +6,3 @@ query BestOfReddit($take: Int!, $skip: Int!) {
     hasMore
   }
 }
-
-query RedditMaxTimestamp {
-  redditMaxTimestamp
-}

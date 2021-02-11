@@ -3,9 +3,7 @@ query Users {
     ...user
   }
 }
-query NumUsers {
-  numUsers
-}
+
 query Me {
   me {
     ...user

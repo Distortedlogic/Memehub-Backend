@@ -3,6 +3,7 @@ query Meme($memeId: String!) {
     ...userMeme
   }
 }
+
 query MyMemes($take: Int!, $skip: Int!, $order: String!) {
   myMemes(take: $take, skip: $skip, order: $order) {
     items {

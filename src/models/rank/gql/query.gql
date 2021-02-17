@@ -1,5 +1,5 @@
-query UserRanks($userId: String, $timeFrame: String) {
-  userRanks(userId: $userId, timeFrame: $timeFrame) {
+query UserRanks($num: Int!, $userId: String, $timeFrame: String) {
+  userRanks(num: $num, userId: $userId, timeFrame: $timeFrame) {
     ...rank
   }
 }

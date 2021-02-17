@@ -10,14 +10,15 @@ export class RankQueryResolver {
   @Query(() => [Rank])
   async userRanks(
     @Ctx() { req: { session } }: ServerContext,
+    @Arg("num", () => Int, { nullable: true }) num: number,
     @Arg("userId", { nullable: true }) userId?: string,
     @Arg("timeFrame", { nullable: true }) timeFrame?: string
   ): Promise<Rank[]> {
     if (!userId) userId = session.userId;
     const current = dayjs().set("h", 0).set("m", 0).set("s", 0).set("ms", 0);
-    const times = Array(30)
-      .fill(30)
-      .map((_, idx) => current.subtract(idx, "d").toDate());
+    const times = Array.from(Array(num).keys()).map((_, idx) =>
+      current.subtract(idx, "d").toDate()
+    );
     return await Rank.find({
       where: { userId, createdAt: In(times), timeFrame },
       order: { createdAt: "ASC" },

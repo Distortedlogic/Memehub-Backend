@@ -77,6 +77,7 @@ export class DashboardResolver {
       .createQueryBuilder("redditMeme")
       .select("MAX(redditMeme.createdAt)")
       .getRawOne();
+    console.log(data.max);
     return data.max;
   }
 }

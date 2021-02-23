@@ -1,5 +1,5 @@
 import { Connection } from "typeorm";
-import { User } from "../../models/user/User.entity";
+import { User } from "./../../models/user/entities/User";
 
 export const getCurrentUsers = async (conn: Connection) => {
   const numUsers = await conn

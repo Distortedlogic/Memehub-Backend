@@ -34,6 +34,7 @@ export class RedditMeme extends BaseEntity {
   @Column("character varying", { name: "url", length: 1000 })
   url: string;
 
+  @Field(() => String)
   @Column("character varying", {
     name: "meme_text",
     nullable: true,
@@ -41,12 +42,42 @@ export class RedditMeme extends BaseEntity {
   })
   memeText: string | null;
 
+  @Field(() => String)
   @Column("character varying", {
-    name: "template",
+    name: "meme_clf",
     nullable: true,
     length: 100,
   })
-  template: string | null;
+  memeClf: string | null;
+
+  @Field(() => Boolean)
+  @Column("boolean", {
+    name: "meme_clf_correct",
+    nullable: true,
+  })
+  memeClfCorrect: boolean | null;
+
+  @Field(() => Boolean)
+  @Column("boolean", {
+    name: "stonk",
+    nullable: true,
+  })
+  stonk: boolean | null;
+
+  @Field(() => String)
+  @Column("boolean", {
+    name: "stonk_correct",
+    nullable: true,
+  })
+  stonkCorrect: boolean | null;
+
+  @Field(() => String)
+  @Column("character varying", {
+    name: "version",
+    nullable: true,
+    length: 20,
+  })
+  version: string | null;
 
   @Field(() => Int)
   @Column("integer", { name: "timestamp" })
@@ -71,9 +102,6 @@ export class RedditMeme extends BaseEntity {
   @Field(() => Int)
   @Column("integer", { name: "num_comments" })
   numComments: number;
-
-  @Column("float8", { name: "features", nullable: true, array: true })
-  features: number[] | null;
 
   @Field(() => Int)
   @Column("int", { name: "redditor_id", nullable: true })

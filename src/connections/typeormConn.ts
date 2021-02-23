@@ -16,7 +16,6 @@ export const createTypeormConnection = async () => {
         synchronize: false,
         logging: false,
         entities: ["src/models/**/entities/*.{js,ts}"],
-
         migrations: ["src/migration/**/*.{js,ts}"],
         subscribers: ["src/models/**/entities/*.sub*.{js,ts}"],
         cli: {

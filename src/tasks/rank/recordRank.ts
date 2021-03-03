@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { getConnection } from "typeorm";
-import { Rank } from "./../../models/rank/Rank.entity";
-import { User } from "./../../models/user/User.entity";
+import { Rank } from "../../models/rank/entities/Rank";
+import { User } from "../../models/user/entities/User";
 
 type userRank = {
   id: string;

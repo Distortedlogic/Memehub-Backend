@@ -1,4 +1,4 @@
-import { User } from "../User.entity";
+import { User } from "../entities/User";
 
 export const validateRegister = async (
   username: string,

@@ -1,0 +1,17 @@
+query RedditMaxTimestamp {
+  redditMaxTimestamp
+}
+
+query CountGraph(
+  $ticks: Int!
+  $timeframe: String!
+  $aggro: String!
+  $entityType: String!
+) {
+  countGraph(
+    ticks: $ticks
+    timeframe: $timeframe
+    aggro: $aggro
+    entityType: $entityType
+  )
+}

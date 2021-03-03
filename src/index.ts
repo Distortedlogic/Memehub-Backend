@@ -34,6 +34,8 @@ const RedisStore = connectRedis(session);
 (async () => {
   await createTypeormConnection();
   const redis = await createRedisConnection();
+  // const RedisClient = Redis.createClient({ url: "redis://redis:6379" });
+  // const rai = new redisai.Client(RedisClient);
   const hive = await createHiveConnection();
   // await runUpdate();
   await emojiSync();
@@ -48,7 +50,7 @@ const RedisStore = connectRedis(session);
   const app = express();
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [__dirname + "/**/*.resolver*.{js,ts}"],
+      resolvers: [__dirname + "/**/resolvers/*.{js,ts}"],
       validate: false,
       pubSub,
       container: Container,
@@ -71,8 +73,15 @@ const RedisStore = connectRedis(session);
   });
 
   app.set("trust proxy", 1);
-  // app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
-  app.use(cors({ origin: "https://memehub.lol", credentials: true }));
+  app.use(
+    cors({
+      origin:
+        process.env.ENV === "production"
+          ? process.env.CORS_ORIGIN
+          : process.env.DEV_ORIGIN,
+      credentials: true,
+    })
+  );
   app.use(
     session({
       cookie: {

@@ -1,5 +1,5 @@
 import { Connection } from "typeorm";
-import { RedditMeme } from "../../models/reddit/RedditMeme.entity";
+import { RedditMeme } from "../../models/reddit/entities/RedditMeme";
 
 export const getRedditMemes = async (conn: Connection): Promise<string[]> => {
   return (

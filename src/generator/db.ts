@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
+import { Rank } from "../models/rank/entities/Rank";
 import { createTypeormConnection } from "./../connections/typeormConn";
-import { Rank } from "./../models/rank/Rank.entity";
-import { User } from "./../models/user/User.entity";
+import { User } from "./../models/user/entities/User";
 import { createNewUsers } from "./utils/createNewUsers";
 import { doCommenting } from "./utils/doCommenting";
 import { doCommentVoting } from "./utils/doCommentVoting";
@@ -14,9 +14,14 @@ import { getRedditMemes } from "./utils/getRedditMemes";
 import { logStats } from "./utils/logStats";
 import { recordRank } from "./utils/recordRank";
 
+// simulates website activity via populating the database with fake data
+// fast, efficient, decently realistic for visualizations in development
+
 (async () => {
   const startTime = dayjs();
   const conn = await createTypeormConnection();
+  // Used when python docker image is up and scrapping memes
+  // from reddit into the database, else use faker
   const redditMemes = await getRedditMemes(conn);
   let current = getCurrent();
   await User.remove(await User.find());
@@ -27,7 +32,10 @@ import { recordRank } from "./utils/recordRank";
     const currentUsers = await getCurrentUsers(conn);
     await createNewUsers(conn, current);
     for (const userId of currentUsers) {
+      // gets meme image urls from scrapped reddit memes query in comments above
       const memes = [redditMemes.pop()!];
+      // else use faker
+      // const memes = [faker.image.imageUrl()];
       await doPosting(conn, memes, userId, current);
       await doFollowing(conn, userId, current);
       await doCommenting(conn, userId, current);

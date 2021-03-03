@@ -1,7 +1,7 @@
 import { In, Not } from "typeorm";
+import { Rank } from "../models/rank/entities/Rank";
+import { User } from "../models/user/entities/User";
 import { createHiveConnection } from "./../connections/hiveConnection";
-import { Rank } from "./../models/rank/Rank.entity";
-import { User } from "./../models/user/User.entity";
 import { BUCKET_BASE_URL } from "./../utils/constants";
 export const runUpdate = async () => {
   const users = await User.find({ where: { avatar: "/defaultAvatar.png" } });

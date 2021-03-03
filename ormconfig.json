@@ -8,9 +8,9 @@
     "database": "postgres",
     "synchronize": false,
     "logging": false,
-    "entities": ["src/models/**/*.entity.ts"],
+    "entities": ["src/models/**/entities/*.ts"],
     "migrations": ["src/migration/**/*.ts"],
-    "subscribers": ["src/models/**/*.entity.sub.ts"],
+    "subscribers": ["src/models/**/entities/*.sub.ts"],
     "cli": {
       "entitiesDir": "src/entity",
       "migrationsDir": "src/migration",

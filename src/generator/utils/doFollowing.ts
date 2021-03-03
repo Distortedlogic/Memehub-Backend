@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import random from "random";
 import { Connection } from "typeorm";
-import { Follow } from "../../models/follow/Follow.entity";
-import { User } from "../../models/user/User.entity";
 import { settings } from "../settings";
+import { Follow } from "./../../models/follow/entities/Follow";
+import { User } from "./../../models/user/entities/User";
 
 export const doFollowing = async (
   conn: Connection,

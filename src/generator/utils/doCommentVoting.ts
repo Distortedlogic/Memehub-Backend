@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import random from "random";
 import { Connection } from "typeorm";
-import { Comment } from "./../../models/comment/Comment.entity";
-import { CommentVote } from "./../../models/comment/CommentVote.entity";
+import { Comment } from "../../models/comment/entities/Comment";
+import { CommentVote } from "../../models/comment/entities/CommentVote";
 import { settings } from "./../settings";
 
 export const doCommentVoting = async (

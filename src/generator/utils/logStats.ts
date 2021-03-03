@@ -1,10 +1,10 @@
 import dayjs from "dayjs";
-import { Comment } from "../../models/comment/Comment.entity";
-import { CommentVote } from "../../models/comment/CommentVote.entity";
-import { Follow } from "../../models/follow/Follow.entity";
-import { Meme } from "../../models/meme/Meme.entity";
-import { MemeVote } from "../../models/meme/MemeVote.entity";
-import { User } from "../../models/user/User.entity";
+import { Comment } from "../../models/comment/entities/Comment";
+import { CommentVote } from "../../models/comment/entities/CommentVote";
+import { Meme } from "../../models/meme/entities/Meme";
+import { MemeVote } from "../../models/meme/entities/MemeVote";
+import { Follow } from "./../../models/follow/entities/Follow";
+import { User } from "./../../models/user/entities/User";
 
 export const logStats = async (current: dayjs.Dayjs, now: dayjs.Dayjs) => {
   console.log(`\n\n\n\n\n\n\n\n\n\n`);

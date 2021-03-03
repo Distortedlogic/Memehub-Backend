@@ -1,0 +1,20 @@
+query UserRanks($num: Int!, $userId: String, $timeFrame: String) {
+  userRanks(num: $num, userId: $userId, timeFrame: $timeFrame) {
+    ...rank
+  }
+}
+
+query CurrentRanks($userId: String) {
+  currentRanks(userId: $userId) {
+    ...rank
+  }
+}
+
+query Ranking($timeFrame: String!, $take: Int!, $skip: Int!) {
+  ranking(timeFrame: $timeFrame, take: $take, skip: $skip) {
+    items {
+      ...userRank
+    }
+    hasMore
+  }
+}

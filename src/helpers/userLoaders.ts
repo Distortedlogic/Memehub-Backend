@@ -1,6 +1,6 @@
 import DataLoader from "dataloader";
-import { User } from "../models/user/User.entity";
-import { Redditor } from "./../models/reddit/Redditor.entity";
+import { Redditor } from "../models/reddit/entities/Redditor";
+import { User } from "../models/user/entities/User";
 
 export const userByIdLoader = () =>
   new DataLoader<string, User>(async (userIds) => {

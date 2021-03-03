@@ -1,6 +1,6 @@
 import { compare } from "bcryptjs";
 import { FieldError } from "../../../utils/types";
-import { User } from "../User.entity";
+import { User } from "../entities/User";
 
 export const validateLogin = async (
   user: User | undefined,

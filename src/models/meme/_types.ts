@@ -1,6 +1,6 @@
 import { ObjectType } from "type-graphql";
 import { PaginatedResponse } from "../../utils/types";
-import { Meme } from "./Meme.entity";
+import { Meme } from "./entities/Meme";
 
 @ObjectType()
 export class PaginatedMemes extends PaginatedResponse(Meme) {}

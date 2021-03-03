@@ -1,5 +1,5 @@
 import DataLoader from "dataloader";
-import { Follow, followKey } from "./../models/follow/Follow.entity";
+import { Follow, followKey } from "../models/follow/entities/Follow";
 export const isFollowingLoader = () =>
   new DataLoader<followKey, boolean>(async (keys) => {
     const follows = await Follow.findByIds(keys as followKey[]);

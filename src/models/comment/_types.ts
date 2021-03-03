@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { Comment } from "./Comment.entity";
+import { Comment } from "./entities/Comment";
 
 @ObjectType()
 export class PaginatedComments {

@@ -2,8 +2,8 @@ import DataLoader from "dataloader";
 import {
   CommentVote,
   commentVoteKey,
-} from "../models/comment/CommentVote.entity";
-import { MemeVote, memeVoteKey } from "../models/meme/MemeVote.entity";
+} from "../models/comment/entities/CommentVote";
+import { MemeVote, memeVoteKey } from "../models/meme/entities/MemeVote";
 
 export const commentDownVotedLoader = () =>
   new DataLoader<commentVoteKey, Boolean>(async (keys) => {

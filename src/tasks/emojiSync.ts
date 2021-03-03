@@ -1,6 +1,6 @@
+import { Emoji } from "../models/emojis/entities/Emoji";
 import { BUCKET_BASE_URL } from "../utils/constants";
 import { s3 } from "./../connections/awsConnection";
-import { Emoji } from "./../models/emojis/Emoji.entity";
 
 export const emojiSync = async () => {
   const resp = await s3

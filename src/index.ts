@@ -28,16 +28,15 @@ import { COOKIE_NAME, __prod__ } from "./utils/constants";
 
 const port = 5000;
 
+// Used to enable custom repo injection into resolver
 useContainer(Container);
+
 const RedisStore = connectRedis(session);
 
 (async () => {
   await createTypeormConnection();
   const redis = await createRedisConnection();
-  // const RedisClient = Redis.createClient({ url: "redis://redis:6379" });
-  // const rai = new redisai.Client(RedisClient);
   const hive = await createHiveConnection();
-  // await runUpdate();
   await emojiSync();
   hiveSync(hive);
   StartCron();
@@ -103,6 +102,7 @@ const RedisStore = connectRedis(session);
     })
   );
 
+  // uncomment to track the execution time of resolvers
   // app.use("/graphql", (req, res, next) => {
   //   console.log("request", req);
   //   const startHrTime = process.hrtime();

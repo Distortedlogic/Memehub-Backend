@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { getConnection } from "typeorm";
-import { Rank } from "../../models/rank/entities/Rank";
-import { User } from "../../models/user/entities/User";
+import { Rank } from "../models/rank/entities/Rank";
+import { User } from "../models/user/entities/User";
 
 type userRank = {
   id: string;
@@ -17,10 +17,18 @@ const tfSwitch = (timeFrame: string) => {
     case "month":
       return 30;
     default:
-      return -1;
+      throw new Error("bad timeframe");
   }
 };
 
+/**
+ * Construct and Save ranks over a specific timeframe
+ * from raw db data
+ *
+ * @param {userRank} userRanks
+ * @param {string} timeFrame
+ * @param {dayjs.Dayjs} createdAt
+ */
 const constructDiff = async (
   userRanks: userRank,
   timeFrame: string,
@@ -47,6 +55,7 @@ const constructDiff = async (
   await Rank.save(newRanks);
 };
 
+// Construct rankings and save to db
 export const recordRank = async () => {
   const createdAt = dayjs().set("m", 0).set("ms", 0);
   const userRanks: userRank = await getConnection()

@@ -5,6 +5,14 @@ import { Meme } from "../models/meme/entities/Meme";
 import { User } from "../models/user/entities/User";
 import { HIVE_COMMUNITY } from "./../utils/constants";
 
+/**
+ * Suppose to sync depth 1 comments from blockchain to Memehub db
+ * Does not seem to work atm
+ *  potential delay for blockchain transaction to confirm
+ * needs more testing
+ *
+ * @param {Client} hive
+ */
 export const hiveSync = async (hive: Client) => {
   for await (const block of hive.blockchain.getBlocks()) {
     for (const trans of block.transactions) {

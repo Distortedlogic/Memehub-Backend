@@ -9,6 +9,14 @@ interface keys {
   postingPubkey: string;
   memoPubkey: string;
 }
+
+/**
+ * Get Hive private keys from username and password
+ *
+ * @param {string} username
+ * @param {string} password
+ * @return {keys}  keys
+ */
 export const getKeys = (username: string, password: string): keys => {
   const privKeys = {
     owner: PrivateKey.fromLogin(username, password, "owner").toString(),

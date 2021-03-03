@@ -1,5 +1,6 @@
 import { ClassType, Field, ObjectType } from "type-graphql";
 
+// form input errors gql return object type
 @ObjectType()
 export class FieldError {
   @Field()
@@ -8,8 +9,7 @@ export class FieldError {
   message: string;
 }
 
-export type keyNameType = "owner" | "active" | "posting" | "memo";
-
+// Abstract class to create paginated object type some other object type
 export function PaginatedResponse<TItem>(TItemClass: ClassType<TItem>) {
   @ObjectType({ isAbstract: true })
   abstract class PaginatedResponseClass {

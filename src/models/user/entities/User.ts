@@ -18,7 +18,7 @@ import { Meme } from "../../meme/entities/Meme";
 import { MemeVote } from "../../meme/entities/MemeVote";
 import { Rank } from "../../rank/entities/Rank";
 
-const starterPic = `${BUCKET_BASE_URL}/misc/defaultAvatar.png`;
+const starterPic = BUCKET_BASE_URL + "memehub/misc/defaultAvatar.png";
 
 const actionToPoints: Record<string, number> = {
   memeVoteGiven: 1,

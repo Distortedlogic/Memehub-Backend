@@ -4,6 +4,12 @@ interface mappedOrder {
   createdAt: "DESC";
 }
 
+/**
+ * Maps category to corresponding ordering for db query
+ *
+ * @param {string} order
+ * @return {*}  {(mappedOrder | undefined)}
+ */
 export const ordermap = (order: string): mappedOrder | undefined => {
   switch (order) {
     case "new":

@@ -33,7 +33,7 @@ export class Meme extends BaseEntity {
   ocrText: string;
 
   @Field()
-  @Column({ unique: true })
+  @Column() // { unique: true } unique constraint clashes with fake db data generation
   url: string;
 
   @Field()

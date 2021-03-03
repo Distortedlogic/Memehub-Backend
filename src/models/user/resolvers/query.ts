@@ -20,6 +20,14 @@ export class UserQueryResolver {
   async user(@Arg("userId") userId: string): Promise<User | undefined> {
     return await User.findOne(userId);
   }
+
+  /**
+   * Returns if account is a hive acct or not
+   *
+   * @param {ServerContext} { req: { session } }
+   * @return {*}  {Promise<boolean>}
+   * @memberof UserQueryResolver
+   */
   @Query(() => Boolean)
   async isHive(@Ctx() { req: { session } }: ServerContext): Promise<boolean> {
     if (!session.userId) return false;

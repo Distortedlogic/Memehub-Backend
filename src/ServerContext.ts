@@ -10,6 +10,8 @@ import {
 } from "./helpers/hasVotedLoaders";
 import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
 
+// Interface that describes the Server context
+// These are made available to each resolver on the gql endpoint
 export interface ServerContext {
   req: Request & { session: Express.Session };
   res: Response;

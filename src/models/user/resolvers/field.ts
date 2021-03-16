@@ -40,8 +40,8 @@ export class UserFieldResolver {
   }
 
   @FieldResolver(() => [User])
-  async following(@Root() user: User) {
-    return await getConnection()
+  async following(@Root() user: User): Promise<User[]> {
+    return getConnection()
       .getRepository(User)
       .createQueryBuilder("user")
       .innerJoin(Follow, "follow", "follow.followingId = user.id")
@@ -50,9 +50,9 @@ export class UserFieldResolver {
   }
 
   @FieldResolver(() => Rank)
-  async rank(@Root() user: User) {
+  async rank(@Root() user: User): Promise<Rank | undefined> {
     const createdAt = new Date(new Date().setMinutes(0, 0, 0));
-    return await Rank.findOne({
+    return Rank.findOne({
       createdAt,
       userId: user.id,
       timeFrame: "ever",

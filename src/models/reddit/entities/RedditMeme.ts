@@ -44,10 +44,10 @@ export class RedditMeme extends BaseEntity {
 
   @Field(() => Boolean)
   @Column("boolean", {
-    name: "is_template",
+    name: "is_a_template",
     nullable: true,
   })
-  is_template: boolean | null;
+  isATemplate: boolean | null;
 
   @Field(() => String)
   @Column("character varying", {
@@ -63,20 +63,6 @@ export class RedditMeme extends BaseEntity {
     nullable: true,
   })
   memeClfCorrect: boolean | null;
-
-  @Field(() => Boolean)
-  @Column("boolean", {
-    name: "stonk",
-    nullable: true,
-  })
-  stonk: boolean | null;
-
-  @Field(() => String)
-  @Column("boolean", {
-    name: "stonk_correct",
-    nullable: true,
-  })
-  stonkCorrect: boolean | null;
 
   @Field(() => String)
   @Column("character varying", {

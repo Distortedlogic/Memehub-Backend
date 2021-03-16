@@ -24,7 +24,7 @@ export class MemeQueryResolver {
     @Arg("skip", () => Int) skip: number,
     @Arg("order") order: string
   ): Promise<PaginatedMemes> {
-    return await this.memeRepo.userMemes(session.userId, take, skip, order);
+    return this.memeRepo.userMemes(session.userId, take, skip, order);
   }
 
   @Query(() => PaginatedMemes, { nullable: true })
@@ -39,13 +39,13 @@ export class MemeQueryResolver {
 
   @Query(() => Meme, { nullable: true })
   async meme(@Arg("memeId") memeId: string): Promise<Meme | undefined> {
-    return await Meme.findOne(memeId);
+    return Meme.findOne(memeId);
   }
 
   @Query(() => PaginatedMemes)
   async newMemes(
     @Arg("take", () => Int) take: number,
-    @Arg("cursor", { nullable: true }) cursor?: string
+    @Arg("cursor", () => String, { nullable: true }) cursor?: string
   ): Promise<PaginatedMemes> {
     const realTake = Math.min(50, take);
     const memesQ = getConnection()
@@ -84,7 +84,7 @@ export class MemeQueryResolver {
       !communityList.includes(community)
     )
       return { hasMore: false, items: [] };
-    return await this.memeRepo.communityMemes(community, take, skip, days);
+    return this.memeRepo.communityMemes(community, take, skip, days);
   }
 
   @Query(() => PaginatedMemes)

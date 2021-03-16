@@ -14,7 +14,7 @@ export class UserQueryResolver {
     @Ctx() { req: { session } }: ServerContext
   ): Promise<User | undefined> {
     if (!session.userId) return;
-    return await User.findOne(session.userId);
+    return User.findOne(session.userId);
   }
   @Query(() => User, { nullable: true })
   async user(@Arg("userId") userId: string): Promise<User | undefined> {

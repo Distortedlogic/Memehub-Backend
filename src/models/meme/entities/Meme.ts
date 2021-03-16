@@ -40,13 +40,20 @@ export class Meme extends BaseEntity {
   @Column()
   userId: string;
 
-  @Field()
-  @Column({ nullable: true })
-  stonk: string;
+  @Field(() => String)
+  @Column("character varying", { name: "meme_clf", nullable: true })
+  memeClf: string | null;
 
-  @Field()
-  @Column({ nullable: true })
-  version: string;
+  @Field(() => Boolean)
+  @Column("boolean", {
+    name: "meme_clf_correct",
+    nullable: true,
+  })
+  memeClfCorrect: boolean | null;
+
+  @Field(() => String)
+  @Column("character varying", { nullable: true })
+  version: string | null;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.memes, {

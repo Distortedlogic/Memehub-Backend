@@ -64,6 +64,14 @@ export class RedditMeme extends BaseEntity {
   })
   memeClfCorrect: boolean | null;
 
+  @Field(() => Boolean)
+  @Column("boolean", { name: "stonk", nullable: true })
+  stonk: boolean | null;
+
+  @Field(() => Boolean)
+  @Column("boolean", { name: "stonk_correct", nullable: true })
+  stonkCorrect: boolean | null;
+
   @Field(() => String)
   @Column("character varying", {
     name: "version",

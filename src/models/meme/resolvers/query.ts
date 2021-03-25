@@ -8,7 +8,7 @@ import { ServerContext } from "../../../ServerContext";
 import { Follow } from "../../follow/entities/Follow";
 import { Meme } from "../entities/Meme";
 import { MemeRepo } from "../repos/Meme";
-import { communityList, PaginatedMemes } from "../_types";
+import { PaginatedMemes } from "../_types";
 
 @Service()
 @Resolver(Meme)
@@ -52,9 +52,6 @@ export class MemeQueryResolver {
       .createQueryBuilder()
       .select("meme")
       .from(Meme, "meme")
-      .where("meme.community IN (:...communities)", {
-        communities: ["none", "wholesome", "hive", "original"],
-      })
       .orderBy("meme.createdAt", "DESC")
       .addOrderBy("meme.ratio", "DESC")
       .addOrderBy("meme.ups", "DESC")
@@ -70,21 +67,6 @@ export class MemeQueryResolver {
       items: memes,
       hasMore: memes.length === realTake ? true : false,
     };
-  }
-
-  @Query(() => PaginatedMemes)
-  async communityMemes(
-    @Arg("community") community: string,
-    @Arg("take", () => Int) take: number,
-    @Arg("days", () => Int, { nullable: true }) days?: number,
-    @Arg("skip", () => Int, { nullable: true }) skip?: number
-  ): Promise<PaginatedMemes> {
-    if (
-      (days && ![1, 7, 30].includes(days)) ||
-      !communityList.includes(community)
-    )
-      return { hasMore: false, items: [] };
-    return this.memeRepo.communityMemes(community, take, skip, days);
   }
 
   @Query(() => PaginatedMemes)
@@ -113,9 +95,6 @@ export class MemeQueryResolver {
         t: dayjs().subtract(1, "d").toDate(),
       })
       .andWhere("vote.upvote = :truth", { truth: true })
-      .andWhere("meme.community IN (:...comms)", {
-        comms: ["original", "hive", "wholesome", "none"],
-      })
       .orderBy("count", "DESC")
       .groupBy("meme.id")
       .addGroupBy("vote.userId")

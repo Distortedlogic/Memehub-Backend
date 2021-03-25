@@ -7,7 +7,6 @@ fragment myMeme on Meme {
   title
   url
   numComments
-  community
   isHive
 }
 

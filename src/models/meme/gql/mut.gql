@@ -1,5 +1,5 @@
-mutation PostMeme($title: String!, $community: String!) {
-  postMeme(title: $title, community: $community) {
+mutation PostMeme($title: String!, $postToHive: Boolean!) {
+  postMeme(title: $title, postToHive: $postToHive) {
     ...myMeme
   }
 }

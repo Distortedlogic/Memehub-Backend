@@ -45,7 +45,7 @@ export class MemeResolver {
   @UseMiddleware(Auth)
   async postMeme(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("community") community: string,
+    @Arg("postToHive") postToHive: boolean,
     @Arg("title") title?: string
   ): Promise<Meme | undefined> {
     const { userId, Key } = session;
@@ -65,7 +65,7 @@ export class MemeResolver {
       url,
       title,
       userId,
-      community,
+      isHive: postToHive,
     }).save();
     session.Key = undefined;
     return meme;

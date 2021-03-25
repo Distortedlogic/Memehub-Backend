@@ -3,6 +3,7 @@ fragment user on User {
   avatar
   username
   isHive
+  totalPoints
 }
 
 fragment stats on User {

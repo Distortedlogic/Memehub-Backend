@@ -66,10 +66,6 @@ export class Meme extends BaseEntity {
   @Column("int", { nullable: true })
   season: number;
 
-  @Field()
-  @Column()
-  community: string;
-
   @Field(() => [Comment])
   @OneToMany(() => Comment, (comment) => comment.meme, {
     cascade: true,

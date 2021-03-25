@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import moment from "moment";
 import { Service } from "typedi";
 import {
@@ -28,36 +27,6 @@ export class MemeRepo extends Repository<Meme> {
       order,
       skip,
       take,
-    });
-    return {
-      items: memes,
-      hasMore: memes.length === realTake ? true : false,
-    };
-  }
-
-  async communityMemes(
-    community: string,
-    take: number,
-    skip?: number,
-    days?: number
-  ): Promise<PaginatedMemes> {
-    const realTake = Math.min(50, take);
-    const where = days
-      ? {
-          createdAt: MoreThanOrEqual(dayjs().subtract(days, "d").toDate()),
-          community,
-        }
-      : { community };
-    const memes = await Meme.find({
-      where,
-      order: {
-        ratio: "DESC",
-        ups: "DESC",
-        numComments: "DESC",
-        createdAt: "DESC",
-      },
-      take: realTake,
-      skip,
     });
     return {
       items: memes,
@@ -100,9 +69,6 @@ export class MemeRepo extends Repository<Meme> {
       .createQueryBuilder()
       .select("meme")
       .from(Meme, "meme")
-      .where("meme.community IN (:...communities)", {
-        communities: ["none", "wholesome", "hive", "original"],
-      })
       .orderBy("meme.ratio", "DESC")
       .addOrderBy("meme.ups", "DESC")
       .addOrderBy("meme.numComments", "DESC")

@@ -44,14 +44,6 @@ query HotMemes($take: Int!, $skip: Int) {
     hasMore
   }
 }
-query CommunityMemes($community: String!, $take: Int!, $skip: Int, $days: Int) {
-  communityMemes(community: $community, take: $take, skip: $skip, days: $days) {
-    items {
-      ...userMeme
-    }
-    hasMore
-  }
-}
 query TopRatedMemes($take: Int!, $skip: Int!, $days: Int!) {
   topRatedMemes(take: $take, skip: $skip, days: $days) {
     items {

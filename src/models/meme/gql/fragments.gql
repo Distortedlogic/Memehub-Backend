@@ -20,6 +20,5 @@ fragment userMeme on Meme {
   ...meme
   user {
     ...user
-    isFollowing
   }
 }

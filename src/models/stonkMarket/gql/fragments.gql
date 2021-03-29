@@ -1,0 +1,11 @@
+fragment template on Template {
+  name
+  url
+}
+
+fragment stonk on Stonk {
+  name
+  url
+  price
+  marketcap
+}

@@ -2,6 +2,7 @@ import { Ctx, FieldResolver, Resolver, Root } from "type-graphql";
 import { ServerContext } from "../../../ServerContext";
 import { User } from "../../user/entities/User";
 import { Comment } from "../entities/Comment";
+import { Meme } from "./../../meme/entities/Meme";
 
 @Resolver(Comment)
 export class CommentFieldResolver {
@@ -31,5 +32,12 @@ export class CommentFieldResolver {
     @Ctx() { userByIdLoader }: ServerContext
   ) {
     return userByIdLoader.load(comment.userId);
+  }
+  @FieldResolver(() => Meme)
+  async meme(
+    @Root() comment: Comment,
+    @Ctx() { memeByIdLoader }: ServerContext
+  ) {
+    return memeByIdLoader.load(comment.memeId);
   }
 }

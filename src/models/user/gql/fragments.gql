@@ -3,7 +3,8 @@ fragment user on User {
   avatar
   username
   isHive
-  totalPoints
+  mhp
+  gbp
 }
 
 fragment stats on User {
@@ -14,19 +15,11 @@ fragment stats on User {
   numCommentVotesGiven
   numCommentUpvotesRecieved
   numCommentDownvotesRecieved
-  numFollowing
-  numFollowers
 }
 
 fragment userProfile on User {
   ...user
   ...stats
-  following {
-    ...user
-  }
-  followers {
-    ...user
-  }
 }
 
 fragment userResponse on UserResponse {

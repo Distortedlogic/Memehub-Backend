@@ -1,5 +1,5 @@
 fragment rank on Rank {
-  totalPoints
+  mhp
   rank
   timeFrame
   createdAt

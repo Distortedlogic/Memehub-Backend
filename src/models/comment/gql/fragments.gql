@@ -7,6 +7,10 @@ fragment myComment on Comment {
   text
   isHive
   permlink
+  meme {
+    url
+    id
+  }
 }
 
 fragment comment on Comment {

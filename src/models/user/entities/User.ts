@@ -13,10 +13,10 @@ import {
 import { BUCKET_BASE_URL } from "../../../utils/constants";
 import { Comment } from "../../comment/entities/Comment";
 import { CommentVote } from "../../comment/entities/CommentVote";
-import { Follow } from "../../follow/entities/Follow";
 import { Meme } from "../../meme/entities/Meme";
 import { MemeVote } from "../../meme/entities/MemeVote";
 import { Rank } from "../../rank/entities/Rank";
+import { Trade } from "./../../trade/entities/Trade";
 
 const starterPic = BUCKET_BASE_URL + "memehub/misc/defaultAvatar.png";
 
@@ -58,11 +58,9 @@ export class User extends BaseEntity {
   @Column({ default: starterPic })
   avatar: string;
 
-  @OneToMany(() => Follow, (follow) => follow.follower)
-  following: Follow[];
-
-  @OneToMany(() => Follow, (follow) => follow.following)
-  followers: Follow[];
+  @Field(() => [Trade])
+  @OneToMany(() => Trade, (trade) => trade.user)
+  trades: Trade[];
 
   @Field(() => [Meme])
   @OneToMany(() => Meme, (meme) => meme.user)
@@ -97,14 +95,6 @@ export class User extends BaseEntity {
 
   @Field(() => Int)
   @Column({ default: 0 })
-  numFollowing: number;
-
-  @Field(() => Int)
-  @Column({ default: 0 })
-  numFollowers: number;
-
-  @Field(() => Int)
-  @Column({ default: 0 })
   numMemeVotesGiven: number;
 
   @Field(() => Int)
@@ -133,11 +123,15 @@ export class User extends BaseEntity {
 
   @Field(() => Int)
   @Column({ default: 0 })
-  totalPoints: number;
+  mhp: number;
+
+  @Field(() => Int)
+  @Column({ default: 1200 })
+  gbp: number;
 
   @AfterUpdate()
-  updateTotalPoints() {
-    this.totalPoints =
+  updateMhp() {
+    this.mhp =
       this.numMemeVotesGiven * actionToPoints["memeVoteGiven"] +
       this.numMemeUpvotesRecieved * actionToPoints["memeUpvoteRecieved"] +
       this.numMemeDownvotesRecieved * actionToPoints["memeDownvoteRecieved"] +

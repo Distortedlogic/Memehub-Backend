@@ -5,7 +5,7 @@ import { User } from "./../../models/user/entities/User";
 
 type userRank = {
   id: string;
-  totalPoints: number;
+  mhp: number;
 }[];
 
 const tfSwitch = (timeFrame: string) => {
@@ -36,12 +36,11 @@ const constructDiff = async (
       userId: userRank.id,
       rank: 0,
       timeFrame,
-      totalPoints:
-        userRank.totalPoints - (userWeekDay ? userWeekDay.totalPoints : 0),
+      mhp: userRank.mhp - (userWeekDay ? userWeekDay.mhp : 0),
       createdAt: createdAt.toDate(),
     });
   });
-  newRanks.sort((a, b) => b.totalPoints - a.totalPoints);
+  newRanks.sort((a, b) => b.mhp - a.mhp);
   newRanks.forEach((userRank, idx) => {
     userRank.rank = idx + 1;
   });
@@ -53,8 +52,8 @@ export const recordRank = async (conn: Connection, current: dayjs.Dayjs) => {
     .getRepository(User)
     .createQueryBuilder("user")
     .select("user.id", "id")
-    .addSelect("user.totalPoints", "totalPoints")
-    .orderBy("user.totalPoints", "DESC")
+    .addSelect("user.mhp", "mhp")
+    .orderBy("user.mhp", "DESC")
     .addOrderBy("user.numMemeUpvotesRecieved", "DESC")
     .addOrderBy("user.createdAt", "DESC")
     .getRawMany();
@@ -63,7 +62,7 @@ export const recordRank = async (conn: Connection, current: dayjs.Dayjs) => {
       userId: userRank.id,
       rank: idx + 1,
       timeFrame: "ever",
-      totalPoints: userRank.totalPoints,
+      mhp: userRank.mhp,
       createdAt: current.toDate(),
     });
   });

@@ -13,17 +13,18 @@ import { useContainer } from "typeorm";
 import { createHiveConnection } from "./connections/hiveConnection";
 import { createRedisConnection } from "./connections/redisConn";
 import { createTypeormConnection } from "./connections/typeormConn";
-import { isFollowingLoader } from "./helpers/followLoader";
 import {
   commentDownVotedLoader,
   commentUpVotedLoader,
   memeDownVotedLoader,
   memeUpVotedLoader,
 } from "./helpers/hasVotedLoaders";
+import { memeByIdLoader } from "./helpers/memeLoaders";
 import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
 import { StartCron } from "./tasks/cron";
 import { emojiSync } from "./tasks/emojiSync";
 import { hiveSync } from "./tasks/hiveSync";
+import { templateSync } from "./tasks/templateSync";
 import { COOKIE_NAME, __prod__ } from "./utils/constants";
 
 const port = 5000;
@@ -38,6 +39,7 @@ const RedisStore = connectRedis(session);
   const redis = await createRedisConnection();
   const hive = await createHiveConnection();
   await emojiSync();
+  await templateSync();
   hiveSync(hive);
   StartCron();
 
@@ -65,7 +67,7 @@ const RedisStore = connectRedis(session);
       commentUpVotedLoader: commentUpVotedLoader(),
       commentDownVotedLoader: commentDownVotedLoader(),
       redditorByIdLoader: redditorByIdLoader(),
-      isFollowingLoader: isFollowingLoader(),
+      memeByIdLoader: memeByIdLoader(),
     }),
     uploads: false,
     subscriptions: { onConnect: () => console.log("connected websocket") },

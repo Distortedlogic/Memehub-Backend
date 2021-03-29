@@ -1,13 +1,13 @@
 import dhive from "@hiveio/dhive";
 import { Request, Response } from "express";
 import { Redis } from "ioredis";
-import { isFollowingLoader } from "./helpers/followLoader";
 import {
   commentDownVotedLoader,
   commentUpVotedLoader,
   memeDownVotedLoader,
   memeUpVotedLoader,
 } from "./helpers/hasVotedLoaders";
+import { memeByIdLoader } from "./helpers/memeLoaders";
 import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
 
 // Interface that describes the Server context
@@ -23,5 +23,5 @@ export interface ServerContext {
   commentDownVotedLoader: ReturnType<typeof commentDownVotedLoader>;
   commentUpVotedLoader: ReturnType<typeof commentUpVotedLoader>;
   redditorByIdLoader: ReturnType<typeof redditorByIdLoader>;
-  isFollowingLoader: ReturnType<typeof isFollowingLoader>;
+  memeByIdLoader: ReturnType<typeof memeByIdLoader>;
 }

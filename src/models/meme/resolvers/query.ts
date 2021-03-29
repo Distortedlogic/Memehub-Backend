@@ -5,7 +5,6 @@ import { getConnection } from "typeorm";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import { Auth } from "../../../middleware/auth";
 import { ServerContext } from "../../../ServerContext";
-import { Follow } from "../../follow/entities/Follow";
 import { Meme } from "../entities/Meme";
 import { MemeRepo } from "../repos/Meme";
 import { PaginatedMemes } from "../_types";
@@ -101,37 +100,6 @@ export class MemeQueryResolver {
       .addGroupBy("vote.memeId")
       .take(realTake)
       .skip(skip)
-      .getMany();
-    return {
-      items: memes,
-      hasMore: memes.length === realTake ? true : false,
-    };
-  }
-
-  @Query(() => PaginatedMemes, { nullable: true })
-  async followingMemes(
-    @Ctx() { req: { session } }: ServerContext,
-    @Arg("take", () => Int) take: number,
-    @Arg("skip", () => Int) skip: number,
-    @Arg("order") order: string
-  ): Promise<PaginatedMemes> {
-    const realTake = Math.min(50, take);
-    const orderMap: Record<string, string> = {
-      new: "meme.createdAt",
-      upvotes: "meme.ups",
-      ratio: "meme.ratio",
-    };
-    if (!["new", "ratio", "upvotes"].includes(order))
-      return { hasMore: false, items: [] };
-    const memes = await getConnection()
-      .getRepository(Meme)
-      .createQueryBuilder("meme")
-      .select("meme")
-      .innerJoin(Follow, "follow", "follow.followingId = meme.userId")
-      .where("follow.followerId = :userId", { userId: session.userId })
-      .orderBy(orderMap[order], "DESC")
-      .skip(skip)
-      .take(realTake)
       .getMany();
     return {
       items: memes,

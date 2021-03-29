@@ -24,7 +24,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
       initRanks.push(
         Rank.create({
           createdAt: createdAt.toDate(),
-          totalPoints: 0,
+          mhp: 0,
           timeFrame,
           rank: numUsers + 1,
           userId: event.entity.id,
@@ -41,7 +41,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
           initRanks.push(
             Rank.create({
               createdAt: midnight.subtract(idx + shift, "d").toDate(),
-              totalPoints: 0,
+              mhp: 0,
               timeFrame,
               rank: numUsers + 1,
               userId: event.entity.id,

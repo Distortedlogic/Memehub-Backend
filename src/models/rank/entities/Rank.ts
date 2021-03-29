@@ -30,5 +30,5 @@ export class Rank extends BaseEntity {
 
   @Field(() => Int)
   @Column()
-  totalPoints: number;
+  mhp: number;
 }

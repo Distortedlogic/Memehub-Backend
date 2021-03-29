@@ -20,14 +20,6 @@ query UserMemes($userId: String!, $take: Int!, $skip: Int!, $order: String!) {
     hasMore
   }
 }
-query FollowingMemes($take: Int!, $skip: Int!, $order: String!) {
-  followingMemes(take: $take, skip: $skip, order: $order) {
-    items {
-      ...userMeme
-    }
-    hasMore
-  }
-}
 query NewMemes($take: Int!, $cursor: String) {
   newMemes(take: $take, cursor: $cursor) {
     items {

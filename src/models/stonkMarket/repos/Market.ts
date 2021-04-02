@@ -18,9 +18,7 @@ export class MarketRepo extends Repository<Market> {
         "CASE WHEN SUM(market.numPosts) != 0 THEN SUM(market.numUpvotes)/SUM(market.numPosts) ELSE 0 END",
         "price"
       )
-      .orderBy("price", "DESC")
-      .groupBy("market.name")
-      .where("market.name = :name", { name: name })
+      .where("market.name = :name", { name })
       .andWhere("market.createdAt >= :start", {
         start: createdAt.subtract(7, "d").toDate(),
       })

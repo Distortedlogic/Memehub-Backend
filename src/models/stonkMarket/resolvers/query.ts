@@ -18,7 +18,7 @@ export class MarketQueryResolver {
     @Arg("order") order: string
   ): Promise<PaginatedStonks> {
     console.log(order);
-    const createdAt = dayjs().set("h", 0).set("m", 0).set("ms", 0);
+    const createdAt = dayjs().set("h", 0).set("m", 0).set("s", 0).set("ms", 0);
     const templates = await Template.find({ take, skip });
     const stonks = await Promise.all(
       templates.map(async (template) => {
@@ -29,6 +29,7 @@ export class MarketQueryResolver {
         return { ...template, ...marketData } as Stonk;
       })
     );
+    console.log(stonks);
     return { hasMore: true, items: stonks };
   }
 }

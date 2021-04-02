@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { In, Not } from "typeorm";
 import { s3 } from "../connections/awsConnection";
 import { BUCKET_BASE_URL } from "../utils/constants";
 import { Market } from "./../models/stonkMarket/entities/Market";
@@ -12,27 +13,34 @@ export const templateSync = async () => {
     })
     .promise();
   if (!resp.Contents) return;
+  let names: string[] = [];
   const templates = resp.Contents.map(async (item) => {
     if (item.Key) {
       const split = item.Key.split("/");
       const filename = split[split.length - 1];
       const [name] = filename.split(".");
       if (!name) return undefined;
+      names.push(name);
       const url = BUCKET_BASE_URL + item.Key;
-      const createdAt = dayjs().set("h", 0).set("m", 0).set("ms", 0);
-      if (!(await Template.findOne(name))) {
+      const createdAt = dayjs()
+        .set("h", 0)
+        .set("m", 0)
+        .set("s", 0)
+        .set("ms", 0);
+      const dbTemplate = await Template.findOne(name);
+      const newTemplate = Template.create({ name, url });
+      const template = dbTemplate ? dbTemplate : newTemplate;
+      try {
         await Market.create({
           createdAt,
           name,
           numPosts: 0,
           numUpvotes: 0,
-          source: "start",
-          subsource: "start",
+          template,
         }).save();
-        return Template.create({ name, url });
-      } else {
-        return undefined;
-      }
+      } catch (error) {}
+      if (dbTemplate) return undefined;
+      else return newTemplate;
     } else {
       return undefined;
     }
@@ -40,5 +48,6 @@ export const templateSync = async () => {
   const newTemplates = (await Promise.all(templates)).filter(
     (template) => template !== undefined
   ) as Template[];
+  Template.delete({ name: Not(In(names)) });
   Template.save(newTemplates);
 };

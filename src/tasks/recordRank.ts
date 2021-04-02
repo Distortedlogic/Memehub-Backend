@@ -57,7 +57,7 @@ const constructDiff = async (
 
 // Construct rankings and save to db
 export const recordRank = async () => {
-  const createdAt = dayjs().set("m", 0).set("ms", 0);
+  const createdAt = dayjs().set("h", 0).set("m", 0).set("s", 0).set("ms", 0);
   const userRanks: userRank = await getConnection()
     .getRepository(User)
     .createQueryBuilder("user")

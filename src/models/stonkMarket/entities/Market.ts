@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Template } from "./Template";
 
 @ObjectType()
 @Entity("market")
@@ -8,17 +9,12 @@ export class Market extends BaseEntity {
   @PrimaryColumn()
   name: string;
 
+  @ManyToOne(() => Template, (template) => template.marketData)
+  template: Template;
+
   @Field(() => Date)
   @PrimaryColumn()
   createdAt: Date;
-
-  @Field(() => String)
-  @PrimaryColumn()
-  source: string;
-
-  @Field(() => String)
-  @PrimaryColumn()
-  subsource: string;
 
   @Field(() => Int)
   @Column("int")

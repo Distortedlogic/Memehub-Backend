@@ -75,6 +75,7 @@
   },
   "scripts": {
     "gen-db": "ts-node src/generator/db.ts",
+    "init-market":"ts-node src/tasks/initMarket.ts",
     "build": "tsc",
     "server-dev": "nodemon --exec ts-node src/index.ts",
     "gen-env": "npx gen-env-types .env -o src/@types/env.d.ts -e .",

@@ -31,7 +31,7 @@ export class RedditMeme extends BaseEntity {
   title: string;
 
   @Field()
-  @Column("character varying", { name: "url", length: 1000 })
+  @Column("character varying", { name: "url", length: 1000, unique: true })
   url: string;
 
   @Field(() => String)
@@ -71,6 +71,14 @@ export class RedditMeme extends BaseEntity {
   @Field(() => Boolean)
   @Column("boolean", { name: "stonk_correct", nullable: true })
   stonkCorrect: boolean | null;
+
+  @Field(() => String)
+  @Column("character varying", { name: "stonk_official", nullable: true })
+  stonkOfficial: string | null;
+
+  @Field(() => Boolean)
+  @Column("boolean", { name: "is_a_template_official", nullable: true })
+  isATemplateOfficial: boolean | null;
 
   @Field(() => String)
   @Column("character varying", {

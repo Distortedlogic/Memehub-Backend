@@ -126,7 +126,7 @@ export class User extends BaseEntity {
   mhp: number;
 
   @Field(() => Int)
-  @Column({ default: 1200 })
+  @Column({ default: 100000 })
   gbp: number;
 
   @AfterUpdate()

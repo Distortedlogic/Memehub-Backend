@@ -1,0 +1,5 @@
+mutation MakeTrade($name: String!, $type: String!, $position: Int!) {
+  makeTrade(name: $name, type: $type, position: $position) {
+    ...trade
+  }
+}

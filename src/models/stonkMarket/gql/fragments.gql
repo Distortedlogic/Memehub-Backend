@@ -8,4 +8,6 @@ fragment stonk on Stonk {
   url
   price
   marketcap
+  numPosts
+  position
 }

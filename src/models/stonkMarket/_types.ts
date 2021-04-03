@@ -8,6 +8,8 @@ export class Stonk extends Template {
   price: number;
   @Field(() => Int)
   marketcap: number;
+  @Field(() => Int)
+  numPosts: number;
 }
 
 @ObjectType()

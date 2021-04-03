@@ -35,6 +35,7 @@ export const initMarket = async () => {
         numUpvotes: marketData?.numUpvotes ? marketData.numUpvotes : 0,
         createdAt,
         name,
+        templateId: template.id,
         template,
       }).save();
     }

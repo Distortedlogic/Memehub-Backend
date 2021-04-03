@@ -27,7 +27,7 @@ export const templateSync = async () => {
         .set("m", 0)
         .set("s", 0)
         .set("ms", 0);
-      const dbTemplate = await Template.findOne(name);
+      const dbTemplate = await Template.findOne({ where: { name } });
       const newTemplate = Template.create({ name, url });
       const template = dbTemplate ? dbTemplate : newTemplate;
       try {

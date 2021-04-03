@@ -1,8 +1,0 @@
-query Stonks($take: Int!, $skip: Int!, $order: String!) {
-  stonks(take: $take, skip: $skip, order: $order) {
-    items {
-      ...stonk
-    }
-    hasMore
-  }
-}

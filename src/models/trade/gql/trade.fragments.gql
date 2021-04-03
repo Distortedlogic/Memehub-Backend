@@ -1,0 +1,16 @@
+fragment trade on Trade {
+  id
+  name
+  type
+  price
+  position
+  createdAt
+  currentPrice
+}
+
+fragment pagedTrades on PaginatedTrades {
+  items {
+    ...trade
+  }
+  hasMore
+}

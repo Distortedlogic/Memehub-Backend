@@ -1,0 +1,5 @@
+query TradeHistory($take: Int!, $skip: Int!, $userId: String!) {
+  history(take: $take, skip: $skip, userId: $userId) {
+    ...pagedTrades
+  }
+}

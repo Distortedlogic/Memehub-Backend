@@ -1,0 +1,13 @@
+fragment position on Position {
+  name
+  price
+  position
+  currentPrice
+}
+
+fragment pagedPositions on PaginatedPositions {
+  items {
+    ...position
+  }
+  hasMore
+}

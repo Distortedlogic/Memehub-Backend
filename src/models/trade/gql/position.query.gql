@@ -1,0 +1,5 @@
+query Positions($take: Int!, $skip: Int!, $userId: String!) {
+  positions(take: $take, skip: $skip, userId: $userId) {
+    ...pagedPositions
+  }
+}

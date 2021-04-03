@@ -1,5 +1,15 @@
-query Stonks($take: Int!, $skip: Int!, $order: String!) {
-  stonks(take: $take, skip: $skip, order: $order) {
+query Stonks(
+  $take: Int!
+  $skip: Int!
+  $onlyPositions: Boolean!
+  $order: String!
+) {
+  stonks(
+    take: $take
+    skip: $skip
+    order: $order
+    onlyPositions: $onlyPositions
+  ) {
     items {
       ...stonk
     }

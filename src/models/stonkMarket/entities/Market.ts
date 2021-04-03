@@ -6,14 +6,22 @@ import { Template } from "./Template";
 @Entity("market")
 export class Market extends BaseEntity {
   @Field()
-  @PrimaryColumn()
+  @PrimaryColumn("uuid")
+  id: string;
+
+  @Field()
+  @Column()
   name: string;
+
+  @Field()
+  @Column()
+  templateId: string;
 
   @ManyToOne(() => Template, (template) => template.marketData)
   template: Template;
 
   @Field(() => Date)
-  @PrimaryColumn()
+  @Column()
   createdAt: Date;
 
   @Field(() => Int)

@@ -38,8 +38,12 @@ const RedisStore = connectRedis(session);
   await createTypeormConnection();
   const redis = await createRedisConnection();
   const hive = await createHiveConnection();
-  await emojiSync();
+  if (__prod__) {
+    await emojiSync();
+    await templateSync();
+  }
   await templateSync();
+
   hiveSync(hive);
   StartCron();
 

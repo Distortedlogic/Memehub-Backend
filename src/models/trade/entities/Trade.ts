@@ -1,4 +1,4 @@
-import { Field, Float, ObjectType } from "type-graphql";
+import { Field, Int, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -6,9 +6,9 @@ import {
   Entity,
   ManyToOne,
   PrimaryColumn,
-  UpdateDateColumn,
 } from "typeorm";
 import { User } from "../../user/entities/User";
+import { Template } from "./../../stonkMarket/entities/Template";
 
 @ObjectType()
 @Entity("trades")
@@ -21,13 +21,25 @@ export class Trade extends BaseEntity {
   @Column()
   name: string;
 
-  @Field(() => Float)
-  @Column("float")
-  entry: number;
+  @Field()
+  @Column()
+  type: string;
 
-  @Field(() => Float)
-  @Column("float")
-  exit: number;
+  @Field(() => Int)
+  @Column("int")
+  price: number;
+
+  @Field(() => Int)
+  @Column("int")
+  position: number;
+
+  @Field(() => Template)
+  @ManyToOne(() => Template, (template) => template.marketData)
+  template: Template;
+
+  @Field()
+  @Column()
+  userId: string;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.trades, {
@@ -39,8 +51,4 @@ export class Trade extends BaseEntity {
   @Field(() => Date)
   @CreateDateColumn()
   createdAt: Date;
-
-  @Field(() => Date)
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

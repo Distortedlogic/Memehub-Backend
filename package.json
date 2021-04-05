@@ -78,7 +78,7 @@
     "init-market":"ts-node src/tasks/initMarket.ts",
     "build": "tsc",
     "server-dev": "nodemon --exec ts-node src/index.ts",
-    "start-backend":"node src/index.ts",
+    "start-backend":"node src/index.js",
     "gen-env": "npx gen-env-types .env -o src/@types/env.d.ts -e .",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "memedata-gen": "npx typeorm-model-generator -h 127.0.0.1 -d postgres -p 5432 -u postgres -x postgres -e postgres -o src/generated/memedata/"

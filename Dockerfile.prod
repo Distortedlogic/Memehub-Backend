@@ -12,28 +12,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --silent --production
 
-FROM gcr.io/distroless/nodejs:latest
+FROM node:slim
 WORKDIR /app
 COPY --from=build /app/dist .
 COPY --from=deps /app .
-COPY .env.example .
-
-ARG CORS_ORIGIN
-ARG AWS_ID
-ARG AWS_KEY
-ARG ACTIVE_WIF
-ARG SECRET
-ARG HIVE_ACCOUNT
-ARG ACTIVE_WIF
-ARG SENDGRID_KEY
-
-ENV NODE_ENV=production \
-  HIVE_ACCOUNT=$HIVE_ACCOUNT \
-  ACTIVE_WIF=$ACTIVE_WIF \
-  SENDGRID_KEY=$SENDGRID_KEY \
-  CORS_ORIGIN=$CORS_ORIGIN \
-  AWS_ID=$AWS_ID \
-  AWS_KEY=$AWS_KEY \
-  SECRET=$SECRET
-
-CMD ["src/index.js"]
+ENV NODE_ENV=production

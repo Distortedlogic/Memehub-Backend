@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { Service } from "typedi";
 import { EntityRepository, getConnection, Repository } from "typeorm";
+import { MARKET_AGG_PERIOD } from "./../../../utils/constants";
 import { Market } from "./../../stonkMarket/entities/Market";
 import { Trade } from "./../entities/Trade";
 
@@ -18,7 +19,7 @@ export class TradeRepo extends Repository<Trade> {
       )
       .where("market.name = :name", { name })
       .andWhere("market.createdAt >= :start", {
-        start: createdAt.subtract(30, "d").toDate(),
+        start: createdAt.subtract(MARKET_AGG_PERIOD, "d").toDate(),
       })
       .getRawOne();
     if (marketData) {

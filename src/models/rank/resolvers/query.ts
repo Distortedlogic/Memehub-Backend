@@ -31,7 +31,12 @@ export class RankQueryResolver {
     @Arg("userId", { nullable: true }) userId?: string
   ): Promise<Rank[]> {
     if (!userId) userId = session.userId;
-    const createdAt = dayjs().set("m", 0).set("s", 0).set("ms", 0).toDate();
+    const createdAt = dayjs()
+      .set("h", 0)
+      .set("m", 0)
+      .set("s", 0)
+      .set("ms", 0)
+      .toDate();
     const ranks = ["ever", "day", "week", "month"].map(async (timeFrame) => {
       const rank = await Rank.findOne({
         where: { userId, createdAt, timeFrame },
@@ -45,11 +50,15 @@ export class RankQueryResolver {
   async ranking(
     @Arg("take", () => Int) take: number,
     @Arg("skip", () => Int) skip: number,
-    @Arg("timeFrame") timeFrame: string
+    @Arg("timeFrame") timeFrame: string,
+    @Arg("isMhp", () => Boolean) isMhp: boolean
   ): Promise<PaginatedRanks> {
     const realTake = Math.min(50, take);
     if (!["ever", "day", "week", "month"].includes(timeFrame))
       return { items: [], hasMore: false };
+    const order = isMhp
+      ? { mhpRank: "ASC" as const }
+      : { gbpRank: "ASC" as const };
     const createdAt = dayjs()
       .set("h", 0)
       .set("m", 0)
@@ -58,7 +67,7 @@ export class RankQueryResolver {
       .toDate();
     const ranks = await Rank.find({
       where: { createdAt, timeFrame },
-      order: { rank: "ASC" },
+      order,
       take: realTake,
       skip,
     });

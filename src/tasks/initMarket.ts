@@ -8,9 +8,18 @@ export const initMarket = async () => {
   await Market.delete({});
   const templates = await Template.find();
   let createdAt = dayjs().set("h", 0).set("m", 0).set("s", 0).set("ms", 0);
-  let endAt = dayjs().set("h", 0).set("m", 0).set("s", 0).set("ms", 0);
   let currentRedditTS = createdAt.subtract(1, "d");
-  while (endAt.subtract(8, "d") <= createdAt) {
+  const min_ts = dayjs(
+    (
+      await conn
+        .createQueryBuilder()
+        .select("MIN(redditmeme.createdAt)", "data")
+        .from(RedditMeme, "redditmeme")
+        .where("redditmeme.meme_clf is not null")
+        .getRawOne()
+    ).data
+  );
+  while (min_ts <= createdAt.subtract(30, "d")) {
     console.log(createdAt.toDate());
     const redditMarket = await conn
       .createQueryBuilder()

@@ -1,6 +1,8 @@
 fragment rank on Rank {
   mhp
-  rank
+  mhpRank
+  gbp
+  gbpRank
   timeFrame
   createdAt
 }

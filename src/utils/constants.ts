@@ -9,3 +9,5 @@ export const HIVE_COMMUNITY = __prod__ ? "hive-189111" : "hive-119015";
 // redis key prefixes
 export const FORGOT_PASSWORD_PREFIX = "forgot-password:";
 export const VERIFY_EMAIL_PREFIX = "verify-email:";
+
+export const MARKET_AGG_PERIOD = 30;

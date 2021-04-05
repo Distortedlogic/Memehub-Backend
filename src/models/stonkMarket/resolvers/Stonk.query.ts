@@ -1,14 +1,14 @@
 import dayjs from "dayjs";
 import { Arg, Ctx, Int, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
-import { Market } from "../entities/Market";
-import { ServerContext } from "./../../../ServerContext";
-import { Trade } from "./../../trade/entities/Trade";
-import { Template } from "./../entities/Template";
-import { PaginatedStonks, Stonk } from "./../_types";
+import { ServerContext } from "../../../ServerContext";
+import { MARKET_AGG_PERIOD } from "../../../utils/constants";
+import { Trade } from "../../trade/entities/Trade";
+import { Template } from "../entities/Template";
+import { PaginatedStonks, Stonk } from "../_types";
 
-@Resolver(Market)
-export class MarketQueryResolver {
+@Resolver(Stonk)
+export class StonkQueryResolver {
   // @InjectRepository(MarketRepo)
   // private readonly marketRepo: MarketRepo;
 
@@ -36,7 +36,7 @@ export class MarketQueryResolver {
         "price"
       )
       .andWhere("market.createdAt >= :start", {
-        start: createdAt.subtract(30, "d").toDate(),
+        start: createdAt.subtract(MARKET_AGG_PERIOD, "d").toDate(),
       })
       .offset(skip)
       .limit(take);

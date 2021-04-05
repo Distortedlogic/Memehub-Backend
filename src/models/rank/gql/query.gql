@@ -10,8 +10,8 @@ query CurrentRanks($userId: String) {
   }
 }
 
-query Ranking($timeFrame: String!, $take: Int!, $skip: Int!) {
-  ranking(timeFrame: $timeFrame, take: $take, skip: $skip) {
+query Ranking($timeFrame: String!, $take: Int!, $skip: Int!, $isMhp: Boolean!) {
+  ranking(timeFrame: $timeFrame, take: $take, skip: $skip, isMhp: $isMhp) {
     items {
       ...userRank
     }

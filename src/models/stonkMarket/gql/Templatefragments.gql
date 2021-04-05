@@ -1,0 +1,4 @@
+fragment template on Template {
+  name
+  url
+}

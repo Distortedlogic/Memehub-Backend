@@ -1,0 +1,13 @@
+fragment marketData on MarketData {
+  numPosts
+  price
+  marketcap
+  createdAt
+}
+
+fragment marketData on MarketData {
+  numPosts
+  price
+  marketcap
+  createdAt
+}

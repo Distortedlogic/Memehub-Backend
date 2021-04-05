@@ -25,8 +25,10 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
         Rank.create({
           createdAt: createdAt.toDate(),
           mhp: 0,
+          gbp: event.entity.gbp,
           timeFrame,
-          rank: numUsers + 1,
+          mhpRank: numUsers + 1,
+          gbpRank: numUsers + 1,
           userId: event.entity.id,
         })
       )
@@ -42,8 +44,10 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
             Rank.create({
               createdAt: midnight.subtract(idx + shift, "d").toDate(),
               mhp: 0,
+              gbp: event.entity.gbp,
               timeFrame,
-              rank: numUsers + 1,
+              mhpRank: numUsers + 1,
+              gbpRank: numUsers + 1,
               userId: event.entity.id,
             })
           );

@@ -26,9 +26,17 @@ export class Rank extends BaseEntity {
 
   @Field(() => Int)
   @Column()
-  rank: number;
+  mhpRank: number;
 
   @Field(() => Int)
   @Column()
   mhp: number;
+
+  @Field(() => Int)
+  @Column()
+  gbpRank: number;
+
+  @Field(() => Int)
+  @Column()
+  gbp: number;
 }

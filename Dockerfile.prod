@@ -16,4 +16,5 @@ FROM node:slim
 WORKDIR /app
 COPY --from=build /app/dist .
 COPY --from=deps /app .
+ENV PATH /app/node_modules/.bin:$PATH
 ENV NODE_ENV=production

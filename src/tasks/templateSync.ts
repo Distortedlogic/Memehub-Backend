@@ -36,6 +36,7 @@ export const templateSync = async () => {
           name,
           numPosts: 0,
           numUpvotes: 0,
+          templateId: template.id,
           template,
         }).save();
       } catch (error) {}

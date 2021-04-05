@@ -42,7 +42,6 @@ const RedisStore = connectRedis(session);
     await emojiSync();
     await templateSync();
   }
-  await templateSync();
 
   hiveSync(hive);
   StartCron();

@@ -73,7 +73,9 @@ const RedisStore = connectRedis(session);
       memeByIdLoader: memeByIdLoader(),
     }),
     uploads: false,
-    subscriptions: { onConnect: () => console.log("connected websocket") },
+    subscriptions: {
+      onConnect: () => (__prod__ ? {} : console.log("connected websocket")),
+    },
   });
 
   app.set("trust proxy", 1);

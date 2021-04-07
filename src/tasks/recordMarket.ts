@@ -9,23 +9,24 @@ export const recordMarket = async () => {
     const { name } = template;
     const redditMarket = await getConnection()
       .getRepository(RedditMeme)
-      .createQueryBuilder("RedditMeme")
-      .select("SUM(RedditMeme)", "numPosts")
-      .addSelect("SUM(RedditMeme.upvotes)", "numUpvotes")
-      .where("RedditMeme.meme_clf = :name", { name })
-      .andWhere("RedditMeme.createdAt > :start", {
+      .createQueryBuilder("meme")
+      .select("SUM(meme)", "numPosts")
+      .addSelect("SUM(meme.upvotes)", "numUpvotes")
+      .where("meme.meme_clf = :name", { name })
+      .andWhere("meme.createdAt > :start", {
         start: createdAt.subtract(2, "d"),
       })
-      .andWhere("RedditMeme.createdAt <= :end", {
+      .andWhere("meme.createdAt <= :end", {
         end: createdAt.subtract(1, "d"),
       })
-      .groupBy("RedditMeme.subreddit")
       .getRawOne();
     await Market.create({
       numPosts: redditMarket.numPosts,
       numUpvotes: redditMarket.numUpvotes,
       createdAt,
       name,
+      templateId: template.id,
+      template,
     }).save();
   }
 };

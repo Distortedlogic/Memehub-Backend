@@ -31,12 +31,26 @@ export class MemeResolver {
   @Mutation(() => Boolean)
   @UseMiddleware(Auth)
   async deleteMeme(
-    @Ctx() { req: { session } }: ServerContext,
+    @Ctx() { req: { session }, memehubId }: ServerContext,
     @Arg("memeId") memeId: string
   ): Promise<boolean> {
     const meme = await Meme.findOne(memeId);
-    if (!meme) return false;
-    await s3.deleteObject({ Bucket: "memehub", Key: session.Key }).promise();
+    if (
+      !meme ||
+      (meme.userId !== session.userId && session.userId !== memehubId)
+    )
+      return false;
+    const Key = meme.url.split("com")[1];
+    try {
+      await s3
+        .deleteObject({
+          Bucket: "memehub",
+          Key: session.Key ? session.Key : Key,
+        })
+        .promise();
+    } catch (error) {
+      console.log(error);
+    }
     await Meme.remove(meme);
     return true;
   }

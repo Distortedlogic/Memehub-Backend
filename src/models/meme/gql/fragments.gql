@@ -12,6 +12,7 @@ fragment myMeme on Meme {
 
 fragment meme on Meme {
   ...myMeme
+  userId
   hasUpvoted
   hasDownvoted
 }

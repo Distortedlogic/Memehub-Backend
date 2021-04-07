@@ -17,6 +17,7 @@ export interface ServerContext {
   res: Response;
   redis: Redis;
   hive: dhive.Client;
+  memehubId: string;
   userByIdLoader: ReturnType<typeof userByIdLoader>;
   memeDownVotedLoader: ReturnType<typeof memeDownVotedLoader>;
   memeUpVotedLoader: ReturnType<typeof memeUpVotedLoader>;

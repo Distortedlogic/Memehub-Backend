@@ -21,11 +21,14 @@ import {
 } from "./helpers/hasVotedLoaders";
 import { memeByIdLoader } from "./helpers/memeLoaders";
 import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
+import { Emoji } from "./models/emojis/entities/Emoji";
+import { Template } from "./models/stonkMarket/entities/Template";
+import { User } from "./models/user/entities/User";
 import { StartCron } from "./tasks/cron";
 import { emojiSync } from "./tasks/emojiSync";
 import { hiveSync } from "./tasks/hiveSync";
 import { templateSync } from "./tasks/templateSync";
-import { COOKIE_NAME, __prod__ } from "./utils/constants";
+import { ADMIN_NAME, COOKIE_NAME, __prod__ } from "./utils/constants";
 
 const port = 5000;
 
@@ -38,11 +41,8 @@ const RedisStore = connectRedis(session);
   await createTypeormConnection();
   const redis = await createRedisConnection();
   const hive = await createHiveConnection();
-  if (__prod__) {
-    await emojiSync();
-    await templateSync();
-  }
-
+  if (__prod__ || (await Emoji.count()) === 0) await emojiSync();
+  if (__prod__ || (await Template.count()) === 0) await templateSync();
   hiveSync(hive);
   StartCron();
 
@@ -50,6 +50,8 @@ const RedisStore = connectRedis(session);
     publisher: await createRedisConnection(),
     subscriber: await createRedisConnection(),
   });
+
+  const memehub = await User.findOne({ where: { username: ADMIN_NAME } });
 
   const app = express();
   const apolloServer = new ApolloServer({
@@ -64,6 +66,7 @@ const RedisStore = connectRedis(session);
       res,
       redis,
       hive,
+      memehubId: memehub ? memehub.id : "",
       userByIdLoader: userByIdLoader(),
       memeUpVotedLoader: memeUpVotedLoader(),
       memeDownVotedLoader: memeDownVotedLoader(),

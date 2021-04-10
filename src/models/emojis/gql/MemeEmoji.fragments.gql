@@ -1,0 +1,7 @@
+fragment memeEmoji on MemeEmoji {
+  id
+  name
+  url
+  count
+  hasAdded
+}

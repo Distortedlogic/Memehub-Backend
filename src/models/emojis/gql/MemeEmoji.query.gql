@@ -1,0 +1,5 @@
+query MemeEmojis($memeId: String!) {
+  memeEmojis(memeId: $memeId) {
+    ...memeEmoji
+  }
+}

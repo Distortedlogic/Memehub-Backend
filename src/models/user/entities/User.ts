@@ -16,6 +16,7 @@ import { CommentVote } from "../../comment/entities/CommentVote";
 import { Meme } from "../../meme/entities/Meme";
 import { MemeVote } from "../../meme/entities/MemeVote";
 import { Rank } from "../../rank/entities/Rank";
+import { UserMemeEmoji } from "./../../emojis/entities/UserMemeEmoji";
 import { Trade } from "./../../trade/entities/Trade";
 
 const starterPic = BUCKET_BASE_URL + "memehub/misc/defaultAvatar.png";
@@ -70,6 +71,13 @@ export class User extends BaseEntity {
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
 
+  @Field(() => [UserMemeEmoji])
+  @OneToMany(() => UserMemeEmoji, (userMemeEmojis) => userMemeEmojis.user, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
+  userMemeEmojis: UserMemeEmoji[];
+
   @Field(() => [MemeVote])
   @OneToMany(() => MemeVote, (memeVote) => memeVote.user)
   memeVotes: MemeVote[];
@@ -81,6 +89,14 @@ export class User extends BaseEntity {
   @Field(() => Rank)
   @OneToOne(() => Rank, (rank) => rank.user)
   rank: Rank;
+
+  @Field(() => Date, { nullable: true })
+  @Column({ nullable: true })
+  lastHivePost: Date;
+
+  @Field(() => Date, { nullable: true })
+  @Column({ nullable: true })
+  lastMemehubPost: Date;
 
   @Field(() => Date)
   @CreateDateColumn()

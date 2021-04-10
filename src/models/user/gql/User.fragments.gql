@@ -7,6 +7,14 @@ fragment user on User {
   gbp
 }
 
+fragment userUpload on User {
+  id
+  username
+  isHive
+  lastHivePost
+  lastMemehubPost
+}
+
 fragment stats on User {
   numMemeVotesGiven
   numMemeUpvotesRecieved

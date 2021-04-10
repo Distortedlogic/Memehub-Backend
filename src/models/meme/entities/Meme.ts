@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { Comment } from "../../comment/entities/Comment";
 import { User } from "../../user/entities/User";
+import { UserMemeEmoji } from "./../../emojis/entities/UserMemeEmoji";
 import { MemeVote } from "./MemeVote";
 
 @ObjectType()
@@ -65,6 +66,13 @@ export class Meme extends BaseEntity {
   @Field(() => Int)
   @Column("int", { nullable: true })
   season: number;
+
+  @Field(() => [UserMemeEmoji])
+  @OneToMany(() => UserMemeEmoji, (userMemeEmojis) => userMemeEmojis.meme, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
+  userMemeEmojis: UserMemeEmoji[];
 
   @Field(() => [Comment])
   @OneToMany(() => Comment, (comment) => comment.meme, {

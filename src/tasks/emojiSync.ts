@@ -21,7 +21,7 @@ export const emojiSync = async () => {
       if (!name) return undefined;
       names.push(name);
       const url = BUCKET_BASE_URL + item.Key;
-      if (!(await Emoji.findOne(name))) {
+      if (!(await Emoji.findOne({ where: { name } }))) {
         return Emoji.create({ name, url });
       } else {
         return undefined;
@@ -34,6 +34,6 @@ export const emojiSync = async () => {
   const newEmojis = (await Promise.all(emojis)).filter(
     (emoji) => emoji !== undefined
   ) as Emoji[];
-  Emoji.delete({ name: Not(In(names)) });
-  Emoji.save(newEmojis);
+  await Emoji.delete({ name: Not(In(names)) });
+  await Emoji.save(newEmojis);
 };

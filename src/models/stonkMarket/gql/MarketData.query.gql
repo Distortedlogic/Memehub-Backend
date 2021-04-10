@@ -1,8 +1,5 @@
 query MarketHistory($take: Int!, $name: String!) {
   marketHistory(take: $take, name: $name) {
-    items {
-      ...marketData
-    }
-    hasMore
+    ...marketData
   }
 }

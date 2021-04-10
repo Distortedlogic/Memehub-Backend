@@ -1,0 +1,3 @@
+mutation AddEmoji($memeId: String!, $emojiId: String!) {
+  addEmoji(memeId: $memeId, emojiId: $emojiId)
+}

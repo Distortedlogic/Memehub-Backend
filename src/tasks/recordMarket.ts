@@ -10,7 +10,7 @@ export const recordMarket = async () => {
     const redditMarket = await getConnection()
       .getRepository(RedditMeme)
       .createQueryBuilder("meme")
-      .select("SUM(meme)", "numPosts")
+      .select("COUNT(meme)", "numPosts")
       .addSelect("SUM(meme.upvotes)", "numUpvotes")
       .where("meme.meme_clf = :name", { name })
       .andWhere("meme.createdAt > :start", {

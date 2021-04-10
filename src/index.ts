@@ -21,6 +21,8 @@ import {
 } from "./helpers/hasVotedLoaders";
 import { memeByIdLoader } from "./helpers/memeLoaders";
 import { redditorByIdLoader, userByIdLoader } from "./helpers/userLoaders";
+import { Emoji } from "./models/emojis/entities/Emoji";
+import { Template } from "./models/stonkMarket/entities/Template";
 import { User } from "./models/user/entities/User";
 import { StartCron } from "./tasks/cron";
 import { emojiSync } from "./tasks/emojiSync";
@@ -39,11 +41,8 @@ const RedisStore = connectRedis(session);
   await createTypeormConnection();
   const redis = await createRedisConnection();
   const hive = await createHiveConnection();
-  if (__prod__) {
-    await emojiSync();
-    await templateSync();
-  }
-
+  if (__prod__ || (await Emoji.count()) === 0) await emojiSync();
+  if (__prod__ || (await Template.count()) === 0) await templateSync();
   hiveSync(hive);
   StartCron();
 

@@ -4,7 +4,6 @@ import { BUCKET_BASE_URL } from "../utils/constants";
 import { s3 } from "./../connections/awsConnection";
 
 export const emojiSync = async () => {
-  await Emoji.delete({});
   const resp = await s3
     .listObjectsV2({
       Bucket: "memehub",

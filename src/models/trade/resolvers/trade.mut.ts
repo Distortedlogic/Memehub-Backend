@@ -1,4 +1,5 @@
 import { Arg, Ctx, Int, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { getConnection } from "typeorm";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import { Auth } from "../../../middleware/auth";
 import { ServerContext } from "../../../ServerContext";
@@ -22,7 +23,24 @@ export class MarketQueryResolver {
     const userId: string = session.userId;
     const user = await User.findOne(userId);
     const price = await this.tradeRepo.currentPrice(name);
-    if (price && user?.gbp! > position * price) {
+    const notClosed: number = (
+      await getConnection()
+        .getRepository(Trade)
+        .createQueryBuilder("trade")
+        .select(
+          "SUM(CASE WHEN trade.type = 'buy' THEN trade.position ELSE -trade.position END)",
+          "position"
+        )
+        .groupBy("trade.name")
+        .where("trade.userId=:userId", { userId })
+        .andWhere("trade.name=:name", { name })
+        .getRawOne()
+    )[0];
+    if (
+      price &&
+      ((type === "buy" && user?.gbp! > position * price) ||
+        (type === "sell" && notClosed >= position))
+    ) {
       const trade = await Trade.create({
         name,
         position,

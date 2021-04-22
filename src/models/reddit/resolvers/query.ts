@@ -1,10 +1,8 @@
-import { Arg, Int, ObjectType, Query, Resolver } from "type-graphql";
+import { Arg, Int, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
-import { PaginatedResponse } from "../../../utils/types";
 import { RedditMeme } from "../entities/RedditMeme";
-
-@ObjectType()
-export class PaginatedRedditMemes extends PaginatedResponse(RedditMeme) {}
+import { RedditNew } from "./../entities/RedditNew";
+import { PaginatedRedditMemes, PaginatedRedditNew } from "./../_types";
 
 @Resolver(RedditMeme)
 export class MemeQueryResolver {
@@ -22,6 +20,18 @@ export class MemeQueryResolver {
       .skip(skip)
       .take(realTake)
       .getMany();
+    return {
+      items: memes,
+      hasMore: memes.length === realTake ? true : false,
+    };
+  }
+  @Query(() => PaginatedRedditNew)
+  async redditNew(
+    @Arg("take", () => Int) take: number,
+    @Arg("skip", () => Int) skip: number
+  ): Promise<PaginatedRedditNew> {
+    const realTake = Math.min(50, take);
+    const memes = await RedditNew.find({ take: realTake, skip });
     return {
       items: memes,
       hasMore: memes.length === realTake ? true : false,

@@ -1,0 +1,13 @@
+fragment gasPrices on GasPrices {
+  fast
+  fastest
+  safeLow
+  average
+  block_time
+  blockNum
+  speed
+  safeLowWait
+  avgWait
+  fastWait
+  fastestWait
+}

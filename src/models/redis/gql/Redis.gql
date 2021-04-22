@@ -1,3 +1,5 @@
-mutation RedisGet($key: String!) {
-  redisGet(key: $key)
+query gasPrices() {
+  gasPrices {
+    ...gasPrices
+  }
 }

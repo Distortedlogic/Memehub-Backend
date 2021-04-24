@@ -18,19 +18,23 @@ export class MemeResolver {
   @UseMiddleware(Auth)
   async invest(
     @Arg("betsize", () => Int) betSize: number,
-    @Arg("odds", () => Float) odds: number,
+    @Arg("target", () => Float) target: number,
     @Arg("redditId", () => Float) redditId: string,
     @Ctx() { req: { session } }: ServerContext
   ): Promise<Investment | undefined> {
     const user = await User.findOne(session.userId);
     if (user) {
-      return Investment.create({
-        user,
-        userId: session.userId,
-        betSize,
-        odds,
-        redditId,
-      }).save();
+      if (user.gbp > betSize) {
+        return Investment.create({
+          user,
+          userId: session.userId,
+          betSize,
+          target,
+          redditId,
+        }).save();
+      } else {
+        throw new Error("not enough GBP");
+      }
     } else {
       return undefined;
     }

@@ -27,7 +27,7 @@ export class Investment extends BaseEntity {
 
   @Field(() => Float)
   @Column("float")
-  odds: number;
+  target: number;
 
   @Field(() => Float, { nullable: true })
   @Column("float", { nullable: true })
@@ -55,4 +55,8 @@ export class Investment extends BaseEntity {
   @Field(() => Date)
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Field(() => Int)
+  @Column("int", { nullable: true })
+  profitLoss: number;
 }

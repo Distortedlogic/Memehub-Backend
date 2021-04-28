@@ -4,6 +4,12 @@ query Users {
   }
 }
 
+query User($userId: String!) {
+  user(userId: $userId) {
+    ...user
+  }
+}
+
 query Me {
   me {
     ...user

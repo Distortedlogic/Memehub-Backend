@@ -72,10 +72,7 @@ export class User extends BaseEntity {
   comments: Comment[];
 
   @Field(() => [UserMemeEmoji])
-  @OneToMany(() => UserMemeEmoji, (userMemeEmojis) => userMemeEmojis.user, {
-    cascade: true,
-    onDelete: "CASCADE",
-  })
+  @OneToMany(() => UserMemeEmoji, (userMemeEmojis) => userMemeEmojis.user)
   userMemeEmojis: UserMemeEmoji[];
 
   @Field(() => [MemeVote])

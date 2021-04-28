@@ -1,0 +1,9 @@
+query LatestReddit($take: Int!, $skip: Int!, $view: String!) {
+  latestReddit(take: $take, skip: $skip, view: $view) {
+    items {
+      ...redditMeme
+    }
+    hasMore
+  }
+}
+

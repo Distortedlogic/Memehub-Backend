@@ -1,0 +1,11 @@
+fragment investment on Investment {
+  id
+  redditId
+  betSize
+  target
+  percentile
+  userId
+  createdAt
+  profitLoss
+  type
+}

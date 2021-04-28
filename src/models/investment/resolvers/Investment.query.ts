@@ -11,12 +11,16 @@ export class InvestmentQueryResolver {
   async myInvestments(
     @Ctx() { req: { session } }: ServerContext,
     @Arg("take", () => Int) take: number,
-    @Arg("skip", () => Int) skip: number
+    @Arg("skip", () => Int) skip: number,
+    @Arg("order", () => String) orderStr: string
   ): Promise<PaginatedInvestments> {
     const realTake = Math.min(50, take);
+    if (orderStr) {
+    }
+    const order = { createdAt: "DESC" as const };
     const investments = await Investment.find({
       where: { userId: session.userId },
-      order: { createdAt: "DESC" },
+      order,
       skip,
       take,
     });

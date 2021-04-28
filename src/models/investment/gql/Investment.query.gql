@@ -1,0 +1,8 @@
+query MyInvestments($take: Int!, $skip: Int!, $order: String!) {
+  myInvestments(take: $take, skip: $skip, order: $order) {
+    items {
+      ...investment
+    }
+    hasMore
+  }
+}

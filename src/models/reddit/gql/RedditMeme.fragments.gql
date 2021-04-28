@@ -3,11 +3,8 @@ fragment redditMeme on RedditMeme {
   title
   subreddit
   url
-  upvotes
-  downvotes
-  numComments
-  redditor {
-    id
-    username
+  redditId
+  investment {
+    ...investment
   }
 }

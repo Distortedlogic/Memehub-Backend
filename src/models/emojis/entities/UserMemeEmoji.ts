@@ -23,7 +23,10 @@ export class UserMemeEmoji extends BaseEntity {
   userId: string;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.userMemeEmojis)
+  @ManyToOne(() => User, (user) => user.userMemeEmojis, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   user: User;
 
   @Field()
@@ -31,7 +34,10 @@ export class UserMemeEmoji extends BaseEntity {
   memeId: string;
 
   @Field(() => Meme)
-  @ManyToOne(() => Meme, (meme) => meme.userMemeEmojis)
+  @ManyToOne(() => Meme, (meme) => meme.userMemeEmojis, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   meme: Meme;
 
   @Field()

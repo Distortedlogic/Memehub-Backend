@@ -6,7 +6,6 @@ import {
   Entity,
   ManyToOne,
   PrimaryColumn,
-  UpdateDateColumn,
 } from "typeorm";
 import { User } from "../../user/entities/User";
 
@@ -17,21 +16,37 @@ export class Investment extends BaseEntity {
   @PrimaryColumn("uuid")
   id: string;
 
+  @Field(() => Int)
+  @Column("int", { nullable: true })
+  season: number;
+
   @Field()
   @Column()
   redditId: string;
+
+  @Field()
+  @Column()
+  type: string;
 
   @Field(() => Int)
   @Column("int")
   betSize: number;
 
-  @Field(() => Float)
-  @Column("float")
-  target: number;
+  @Field(() => Int)
+  @Column("int")
+  upvotes: number;
 
   @Field(() => Float, { nullable: true })
   @Column("float", { nullable: true })
+  target: number;
+
+  @Field(() => Float)
+  @Column("float")
   percentile: number;
+
+  @Field(() => Int)
+  @Column("int")
+  profitLoss: number;
 
   @Field()
   @Column()
@@ -44,19 +59,7 @@ export class Investment extends BaseEntity {
   })
   user: User;
 
-  @Field(() => Int)
-  @Column("int", { nullable: true })
-  season: number;
-
   @Field(() => Date)
   @CreateDateColumn()
   createdAt: Date;
-
-  @Field(() => Date)
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @Field(() => Int)
-  @Column("int", { nullable: true })
-  profitLoss: number;
 }

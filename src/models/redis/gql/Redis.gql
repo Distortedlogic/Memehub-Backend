@@ -3,3 +3,7 @@ query gasPrices {
     ...gasPrices
   }
 }
+
+query CurrentSeason {
+  currentSeason
+}

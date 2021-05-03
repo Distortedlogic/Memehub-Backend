@@ -17,7 +17,7 @@ export class Investment extends BaseEntity {
   id: string;
 
   @Field(() => Int)
-  @Column("int", { nullable: true })
+  @Column("int")
   season: number;
 
   @Field()
@@ -48,12 +48,16 @@ export class Investment extends BaseEntity {
   @Column("int")
   profitLoss: number;
 
+  @Field(() => Boolean)
+  @Column("boolean")
+  isYolo: boolean;
+
   @Field()
   @Column()
   userId: string;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.memes, {
+  @ManyToOne(() => User, (user) => user.investments, {
     cascade: true,
     onDelete: "CASCADE",
   })

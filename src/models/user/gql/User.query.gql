@@ -22,18 +22,6 @@ query MeUpload {
   }
 }
 
-query UserProfile($userId: String!) {
-  user(userId: $userId) {
-    ...userProfile
-  }
-}
-
-query MyProfile {
-  me {
-    ...userProfile
-  }
-}
-
 query IsHive {
   isHive
 }

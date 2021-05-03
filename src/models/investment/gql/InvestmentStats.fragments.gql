@@ -1,0 +1,48 @@
+fragment userInvestmentStats on UserInvestmentStats {
+  bestTrade
+  worstTrade
+  profitLoss
+  numTrades
+  numGoodTrades
+}
+
+fragment userRank on UserRank {
+  id
+  username
+  avatar
+  profitLoss
+}
+
+fragment investmentStat on Investment {
+  id
+  betSize
+  target
+  percentile
+  createdAt
+  profitLoss
+  isYolo
+  type
+  user {
+    id
+    username
+    avatar
+  }
+}
+
+fragment investmentStats on InvestmentStats {
+  bestTrade {
+    ...investmentStat
+  }
+  largestYolo {
+    ...investmentStat
+  }
+  daily {
+    ...userRank
+  }
+  weekly {
+    ...userRank
+  }
+  season {
+    ...userRank
+  }
+}

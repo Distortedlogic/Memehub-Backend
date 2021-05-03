@@ -7,5 +7,9 @@ fragment investment on Investment {
   userId
   createdAt
   profitLoss
+  isYolo
   type
+  meme {
+    url
+  }
 }

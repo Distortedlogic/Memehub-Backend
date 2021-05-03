@@ -4,7 +4,6 @@ import {
   InsertEvent,
 } from "typeorm";
 import { percent } from "../../../utils/functions/percent";
-import { User } from "../../user/entities/User";
 import { Meme } from "./Meme";
 import { MemeVote } from "./MemeVote";
 
@@ -14,26 +13,12 @@ export class MemeVoteSubscriber implements EntitySubscriberInterface<MemeVote> {
     return MemeVote;
   }
   async afterInsert(event: InsertEvent<MemeVote>) {
-    const voter = await User.findOne(event.entity.userId);
-    if (!voter) {
-      throw "no voter";
-    }
-    voter.numMemeVotesGiven++;
-    const meme = await Meme.findOne(event.entity.memeId, {
-      relations: ["user"],
-    });
-    if (!meme?.user) {
-      throw "no meme or user";
-    }
-    if (event.entity.upvote) {
-      meme.user.numMemeUpvotesRecieved++;
-      meme.ups++;
+    const meme = await Meme.findOne(event.entity.memeId);
+    if (!meme) {
+      throw "no meme";
     } else {
-      meme.user.numMemeDownvotesRecieved++;
-      meme.downs++;
+      meme.ratio = percent(meme);
+      await meme.save();
     }
-    meme.ratio = percent(meme);
-    await voter.save();
-    await meme.save();
   }
 }

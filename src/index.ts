@@ -28,6 +28,7 @@ import { StartCron } from "./tasks/cron";
 import { emojiSync } from "./tasks/emojiSync";
 import { updateGasPrices } from "./tasks/gasPrices";
 import { hiveSync } from "./tasks/hiveSync";
+import { getSeasonFN, setSeasonRedis } from "./tasks/seasons";
 import { templateSync } from "./tasks/templateSync";
 import { ADMIN_NAME, COOKIE_NAME, __prod__ } from "./utils/constants";
 
@@ -47,6 +48,7 @@ const RedisStore = connectRedis(session);
   hiveSync(hive);
   StartCron();
   await updateGasPrices();
+  await setSeasonRedis(redis);
 
   const pubSub = new RedisPubSub({
     publisher: await createRedisConnection(),
@@ -68,6 +70,7 @@ const RedisStore = connectRedis(session);
       res,
       redis,
       hive,
+      getSeason: getSeasonFN(redis),
       memehubId: memehub ? memehub.id : "",
       userByIdLoader: userByIdLoader(),
       memeUpVotedLoader: memeUpVotedLoader(),

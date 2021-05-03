@@ -1,5 +1,5 @@
-import { Ctx, Query, Resolver } from "type-graphql";
-import { ServerContext } from "../../../ServerContext";
+import { Ctx, Int, Query, Resolver } from "type-graphql";
+import { ServerContext } from "./../../../ServerContext";
 import { GasPrices } from "./../_types";
 
 @Resolver()
@@ -12,5 +12,10 @@ export class RedisResolver {
     } else {
       throw new Error("missing from redis");
     }
+  }
+
+  @Query(() => Int)
+  async currentSeason(@Ctx() { getSeason }: ServerContext): Promise<number> {
+    return getSeason();
   }
 }

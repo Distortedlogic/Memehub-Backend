@@ -4,6 +4,12 @@ query Users {
   }
 }
 
+query User($userId: String!) {
+  user(userId: $userId) {
+    ...user
+  }
+}
+
 query Me {
   me {
     ...user
@@ -13,18 +19,6 @@ query Me {
 query MeUpload {
   me {
     ...userUpload
-  }
-}
-
-query UserProfile($userId: String!) {
-  user(userId: $userId) {
-    ...userProfile
-  }
-}
-
-query MyProfile {
-  me {
-    ...userProfile
   }
 }
 

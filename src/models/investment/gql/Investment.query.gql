@@ -1,0 +1,8 @@
+query UserInvestments($take: Int!, $skip: Int!, $timeframe: String!, $order: String!, $userId: String!, $typeFilter: String!, $isASC: Boolean!, $season: Int!) {
+  userInvestments(take: $take, skip: $skip, timeframe: $timeframe, order: $order, userId: $userId, typeFilter: $typeFilter, isASC: $isASC, season: $season) {
+    items {
+      ...investment
+    }
+    hasMore
+  }
+}

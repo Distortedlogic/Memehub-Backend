@@ -1,0 +1,15 @@
+fragment investment on Investment {
+  id
+  redditId
+  betSize
+  target
+  percentile
+  userId
+  createdAt
+  profitLoss
+  isYolo
+  type
+  meme {
+    url
+  }
+}

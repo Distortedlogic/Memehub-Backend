@@ -1,0 +1,5 @@
+mutation Invest($betSize: Int!, $redditId: String!, $type: String!, $target: Float) {
+  invest(betSize: $betSize, redditId: $redditId, type: $type, target: $target) {
+    ...investment
+  }
+}

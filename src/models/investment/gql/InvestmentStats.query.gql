@@ -1,0 +1,11 @@
+query UserInvestmentStats($userId: String!, $timeframe: String!, $typeFilter: String!, $season: Int!) {
+  userInvestmentStats(userId: $userId, timeframe: $timeframe, typeFilter: $typeFilter, season: $season) {
+    ...userInvestmentStats
+  }
+}
+
+query InvestmentStats {
+  investmentStats {
+    ...investmentStats
+  }
+}

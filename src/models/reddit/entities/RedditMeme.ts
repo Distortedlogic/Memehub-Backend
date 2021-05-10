@@ -19,6 +19,7 @@ export class RedditMeme extends BaseEntity {
   @Column("character varying", { name: "username", length: 20 })
   username: string;
 
+  @Field()
   @Column("character varying", { name: "reddit_id", length: 20 })
   redditId: string;
 
@@ -87,6 +88,10 @@ export class RedditMeme extends BaseEntity {
     length: 20,
   })
   version: string | null;
+
+  @Field(() => Float, { nullable: true })
+  @Column("float", { name: "percentile", nullable: true })
+  percentile: number;
 
   @Field(() => Int)
   @Column("integer", { name: "timestamp" })

@@ -15,10 +15,11 @@ export class StonkQueryResolver {
   @Query(() => PaginatedStonks)
   async stonks(
     @Ctx() { req: { session } }: ServerContext,
-    @Arg("take", () => Int) take: number,
-    @Arg("skip", () => Int) skip: number,
-    @Arg("onlyPositions", () => Boolean) onlyPositions: boolean,
-    @Arg("order") order: string
+    @Arg("onlyPositions", () => Boolean, { nullable: true })
+    onlyPositions?: boolean,
+    @Arg("order", () => String, { nullable: true }) order?: string,
+    @Arg("take", () => Int, { nullable: true }) take?: number,
+    @Arg("skip", () => Int, { nullable: true }) skip?: number
   ): Promise<PaginatedStonks> {
     const createdAt = dayjs().set("h", 0).set("m", 0).set("s", 0).set("ms", 0);
     const stonksq = getConnection()
@@ -37,36 +38,40 @@ export class StonkQueryResolver {
       )
       .andWhere("market.createdAt >= :start", {
         start: createdAt.subtract(MARKET_AGG_PERIOD, "d").toDate(),
-      })
-      .offset(skip)
-      .limit(take);
-    if (onlyPositions) {
-      if (!session.userId) {
-        throw new Error("not authenticated");
-      }
-      const positions = await getConnection()
-        .getRepository(Trade)
-        .createQueryBuilder("trade")
-        .select("trade.name", "name")
-        .groupBy("trade.name")
-        .where("trade.userId=:userId", { userId: session.userId })
-        .having(
-          "SUM(CASE WHEN trade.type = 'buy' THEN trade.position ELSE -trade.position END) > 0"
-        )
-        .getRawMany();
-      if (positions.length === 0) {
-        return { hasMore: false, items: [] };
-      }
-      stonksq.andWhere("template.name IN (:...positions)", {
-        positions: positions.map((position) => position.name),
       });
+    if (order && skip && take) {
+      stonksq.offset(skip).limit(take);
+      if (onlyPositions) {
+        if (!session.userId) {
+          throw new Error("not authenticated");
+        }
+        const positions = await getConnection()
+          .getRepository(Trade)
+          .createQueryBuilder("trade")
+          .select("trade.name", "name")
+          .groupBy("trade.name")
+          .where("trade.userId=:userId", { userId: session.userId })
+          .having(
+            "SUM(CASE WHEN trade.type = 'buy' THEN trade.position ELSE -trade.position END) > 0"
+          )
+          .getRawMany();
+        if (positions.length === 0) {
+          return { hasMore: false, items: [] };
+        }
+        stonksq.andWhere("template.name IN (:...positions)", {
+          positions: positions.map((position) => position.name),
+        });
+      }
+      if (order === "price") {
+        stonksq.orderBy({ price: "DESC" });
+      } else if (order === "marketcap") {
+        stonksq.orderBy({ marketcap: "DESC" });
+      }
+      const stonks: Stonk[] = await stonksq.getRawMany();
+      return { hasMore: true, items: stonks };
+    } else {
+      const stonks: Stonk[] = await stonksq.getRawMany();
+      return { hasMore: false, items: stonks };
     }
-    if (order === "price") {
-      stonksq.orderBy({ price: "DESC" });
-    } else if (order === "marketcap") {
-      stonksq.orderBy({ marketcap: "DESC" });
-    }
-    const stonks: Stonk[] = await stonksq.getRawMany();
-    return { hasMore: true, items: stonks };
   }
 }

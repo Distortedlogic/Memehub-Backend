@@ -18,7 +18,7 @@ export class UserQueryResolver {
   }
   @Query(() => User, { nullable: true })
   async user(@Arg("userId") userId: string): Promise<User | undefined> {
-    return await User.findOne(userId);
+    return User.findOne(userId);
   }
 
   /**

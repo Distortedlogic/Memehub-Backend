@@ -26,7 +26,6 @@ import { Template } from "./models/stonkMarket/entities/Template";
 import { User } from "./models/user/entities/User";
 import { StartCron } from "./tasks/cron";
 import { emojiSync } from "./tasks/emojiSync";
-import { updateGasPrices } from "./tasks/gasPrices";
 import { hiveSync } from "./tasks/hiveSync";
 import { getSeasonFN, setSeasonRedis } from "./tasks/seasons";
 import { templateSync } from "./tasks/templateSync";
@@ -47,7 +46,6 @@ const RedisStore = connectRedis(session);
   if (__prod__ || (await Template.count()) === 0) await templateSync();
   hiveSync(hive);
   StartCron();
-  await updateGasPrices();
   await setSeasonRedis(redis);
 
   const pubSub = new RedisPubSub({

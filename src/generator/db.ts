@@ -3,7 +3,6 @@
 import AWS from "aws-sdk";
 import dayjs from "dayjs";
 import "dotenv-safe/config";
-import { Rank } from "../models/rank/entities/Rank";
 import { createTypeormConnection } from "./../connections/typeormConn";
 import { User } from "./../models/user/entities/User";
 import { BUCKET_BASE_URL } from "./../utils/constants";
@@ -16,7 +15,6 @@ import { getCurrent } from "./utils/getCurrent";
 import { getCurrentUsers } from "./utils/getCurrentUsers";
 import { getRedditMemes } from "./utils/getRedditMemes";
 import { logStats } from "./utils/logStats";
-import { recordRank } from "./utils/recordRank";
 
 AWS.config.update({
   apiVersion: "2010-12-01",
@@ -58,7 +56,6 @@ const getMemeCollection = async () => {
   }
   let current = getCurrent();
   await User.remove(await User.find());
-  conn.createQueryBuilder().delete().from(Rank).execute();
   await createNewUsers(conn, current);
   let counter = 0;
   let now = dayjs();
@@ -74,7 +71,6 @@ const getMemeCollection = async () => {
       await doCommentVoting(conn, userId, current);
     }
     current = current.add(1, "h");
-    await recordRank(conn, current);
     if (current.get("hour") === 0) {
       await logStats(current, now);
       now = dayjs();
